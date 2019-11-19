@@ -1,4 +1,4 @@
-# ______ by Mayonnaise
+# ___InsertProjectNameHere___ by Mayonnaise
 
 Lauren Pehlivanian
 
