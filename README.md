@@ -1,5 +1,5 @@
 # ___InsertProjectNameHere___ by Mayonnaise
-__DescriptionHere__
+___DescriptionHere__
 
 # Roster and Roles
 Lauren Pehlivanian
