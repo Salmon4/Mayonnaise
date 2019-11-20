@@ -4,6 +4,9 @@ Finished devlog and uploaded to doc.
 chowdhuryB -- 2019-11-19 14:22
 Added component map to design doc.
 
+wanA -- 2019-11-19 14:40
+Added Foundation css file and made homepage.html. I also started writing in the homepage.html, creating a simple format with columns. 
+
 chenB -- 2019-11-20 14:50
 Updated README.md with roster and description.
 
