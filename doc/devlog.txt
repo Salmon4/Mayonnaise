@@ -6,3 +6,6 @@ Added component map to design doc.
 
 chenB -- 2019-11-20 14:50
 Updated README.md with roster and description.
+
+pehlivanianL -- 2019-11-19 14:50
+Created outline for root.html, with options to use page with or without logging in.
