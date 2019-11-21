@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en" dir="ltr">
+
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.5.3/dist/css/foundation.min.css"> 
+    {% block header %}
+    <title>{% block title %} {% endblock %} | Mayonnaise</title>
+    {% endblock %}
+</head>
+<header>
+    <center>
+        <a href="/homepage">Mayonnaise News</a>
+    </center>
+</header>
+
+<body>
+    {% block body %} {% endblock %}
+</body>
+<footer>
+    {% block footer %} {% endblock %}
+    <p>&copy; Copyright 2019 Team Mayonnaise -- Lauren Pehlivanian, Albert Wan, Brandon Chen, Biraj Chowdhury</p>
+</footer>
+
+</html>
