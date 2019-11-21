@@ -15,3 +15,8 @@ Biraj Chowdhury
 
 Brandon Chen
   - Stock API
+
+# API Used
+
+
+# Instructions
