@@ -35,26 +35,31 @@ def createAccount():
 
 @app.route("/register", methods=["POST"])
 def register():
-    username = request.form['username']
-    password = request.form['password']
-    password2 = request.form['password2']
-    c.execute("SELECT username FROM users WHERE username = ?", (username, ))
-    a = c.fetchone()
-    if a != None:
-        flash("Account with that username already exists")
-        return redirect(url_for('register'))
-    elif password != password2:
-        flash("Passwords do not match")
-        return redirect(url_for('register'))
-    elif len(password) < 8:
-        flash("Password must be at least 8 characters in length")
-        return redirect(url_for('register'))
+    print(request)
+    if request.method == "POST":
+        username = request.form['username']
+        password = request.form['password']
+        password2 = request.form['password2']
+        c.execute("SELECT username FROM users WHERE username = ?", (username, ))
+        a = c.fetchone()
+        if a != None:
+            flash("Account with that username already exists")
+            return redirect(url_for('createAccount'))
+        elif password != password2:
+            flash("Passwords do not match")
+            return redirect(url_for('createAccount'))
+        elif len(password) < 8:
+            flash("Password must be at least 8 characters in length")
+            return redirect(url_for('createAccount'))
 
+        else:
+            c.execute("INSERT INTO users VALUES (NULL, ?, ?)", (username, password))
+            db.commit()
+            flash("Successfuly created user")
+            return redirect(url_for('login'))
     else:
-        c.execute("INSERT INTO users VALUES (NULL, ?, ?)", (username, password))
-        db.commit()
-        flash("Successfuly created user")
-        return redirect(url_for('login'))
+        flash("GET request")
+        return redirect(url_for('createAccount'))
 
 @app.route("/login")
 def login():
@@ -90,3 +95,6 @@ def home():
 if __name__ == "__main__":
     app.debug = True;
     app.run()
+
+db.commit()
+db.close()
