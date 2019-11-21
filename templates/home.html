@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block header %}
+  {% block title %}Home{% endblock %}
+{% endblock %}
+
+{% block body %}
+  {% for msg in get_flashed_messages() %}
+  <p>{{msg}}</p>
+  {% endfor %}
+  <form action="/logout">
+    <input type="submit" name="logout-button" value="Log out">
+  </form>
+{% endblock %}
