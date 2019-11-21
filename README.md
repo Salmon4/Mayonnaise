@@ -7,6 +7,7 @@ Lauren Pehlivanian
   - Working on News API to display articles.
     - Implementing searches for articles on both sides of political spectrum.
   - Working on Weather API.
+  
 Albert Wan
   - Currency Exchange
 
@@ -15,3 +16,8 @@ Biraj Chowdhury
 
 Brandon Chen
   - Stock API
+
+# API Used
+
+
+# Instructions
