@@ -24,6 +24,10 @@ def checkAuth():
 @app.route("/")
 def root():
     if checkAuth():
+        #metaweather api added. Trying to add variables now. Only New York.
+        u = urllib2.urlopen("https://www.metaweather.com/api/location/2459115/")
+        response = u.read()
+        data = json.loads(response)
         username = session['username']
         flash("Welcome " + username + ". You have been logged in successfully.")
         redirect(url_for('home'))
