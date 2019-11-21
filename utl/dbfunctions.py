@@ -20,7 +20,14 @@ def setup(c):
 #new day: reset topnews table
 def resetnews(c):
 	c.execute("DROP TABLE IF EXISTS topnews")
-	c.execute("CREATE TABLE topnews")
+	c.execute("""CREATE TABLE topnews(
+				datetime text,
+				title text,
+				author text,
+				url text,
+				imageURL text,
+				content text
+				);""")
 
 #deletes all existing tables
 def reset(c):
@@ -32,3 +39,11 @@ def reset(c):
     c.execute("DROP TABLE IF EXISTS topnews")
 
 #==========================================================
+def newUserTable(c, userID):
+	c.execute("CREATE TABLE IF NOT EXISTS ? (area text, preference text)", userID)
+
+def addUserPref(c, userID, pref_area, pref):
+	c.execute("INSERT INTO ? (?, ?)", (userId, pref_area, pref))
+
+def getUserPrefs(c, userID, pref_area):
+	c.execute("SELECT preference FROM ? WHERE area = ?", (userID, pref_area))
