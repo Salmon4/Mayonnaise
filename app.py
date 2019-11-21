@@ -26,15 +26,15 @@ def checkAuth():
 @app.route("/")
 def root():
     #metaweather api added. Trying to add variables now. Only New York.
-    #u = urlopen("https://www.metaweather.com/api/location/2459115/")
-    #response = u.read()
-    #data = json.loads(response)
-    #username = session['username']
+    u = urlopen("https://www.metaweather.com/api/location/2459115/")
+    response = u.read()
+    data = json.loads(response)
+
     if checkAuth():
         flash("Welcome " + username + ". You have been logged in successfully.")
         redirect(url_for('home'))
-    return render_template('homepage.html')
-    #TempToday=data["consolidated_weather"][0]["the_temp"])
+        username = session['username']
+    return render_template('homepage.html', TempToday=data["consolidated_weather"][0]["the_temp"])
 
 
 @app.route("/createAccount")
