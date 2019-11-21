@@ -15,3 +15,8 @@ Created outline for root.html, with options to use page with or without logging 
 
 chenB -- 2019-11-20 11:48
 Created requirement.txt and tested it in new virtual environment in my computer. More testing needed from another computer.
+
+Team -- 2019-11-20
+Actions we will take to improve based on the assigned reading:
+1. We should share code with our teammates to review/debug. You shouldn't be defensive about your errors as debugging helps improve the project. Be like Bill Gates.
+2. Understand formal and informal structures and factors in our programming environment.
