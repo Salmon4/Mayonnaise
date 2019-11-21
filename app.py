@@ -1,4 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
+from urllib.request import urlopen
+import json
 import sqlite3, os
 from utl import dbfunctions
 
@@ -96,6 +98,11 @@ def auth():
 
 @app.route("/home")
 def home():
+    url = urlopen(
+        https://newsapi.org/v2/top-headlines?country=us&apiKey=c10b74d97ec44a1f861474546fd3fc27
+        )
+    response = url.read()
+    data = json.loads(response)['articles']
     return render_template("home.html")
 
 @app.route("/logout")
