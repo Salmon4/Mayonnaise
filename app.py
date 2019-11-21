@@ -25,15 +25,16 @@ def checkAuth():
 
 @app.route("/")
 def root():
+    #metaweather api added. Trying to add variables now. Only New York.
+    #u = urlopen("https://www.metaweather.com/api/location/2459115/")
+    #response = u.read()
+    #data = json.loads(response)
+    #username = session['username']
     if checkAuth():
-        #metaweather api added. Trying to add variables now. Only New York.
-        u = urllib2.urlopen("https://www.metaweather.com/api/location/2459115/")
-        response = u.read()
-        data = json.loads(response)
-        username = session['username']
         flash("Welcome " + username + ". You have been logged in successfully.")
         redirect(url_for('home'))
     return render_template('homepage.html')
+    #TempToday=data["consolidated_weather"][0]["the_temp"])
 
 
 @app.route("/createAccount")
@@ -99,7 +100,7 @@ def auth():
 @app.route("/home")
 def home():
     url = urlopen(
-        https://newsapi.org/v2/top-headlines?country=us&apiKey=c10b74d97ec44a1f861474546fd3fc27
+        "https://newsapi.org/v2/top-headlines?country=us&apiKey=c10b74d97ec44a1f861474546fd3fc27"
         )
     response = url.read()
     data = json.loads(response)['articles']
