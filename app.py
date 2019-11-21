@@ -15,6 +15,7 @@ c = db.cursor() #facilitate db operations
 dbfunctions.setup(c)
 
 def checkAuth():
+    print(session)
     if "userID" in session:
         return True
     else:
@@ -23,6 +24,8 @@ def checkAuth():
 @app.route("/")
 def root():
     if checkAuth():
+        username = session['username']
+        flash("Welcome " + username + ". You have been logged in successfully.")
         redirect(url_for('home'))
     return render_template('homepage.html')
 
