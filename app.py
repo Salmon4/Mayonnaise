@@ -91,6 +91,13 @@ def auth():
 def home():
     return render_template("home.html")
 
+@app.route("/logout")
+def logout():
+    print(session)
+    session.pop('userID')
+    session.pop('username')
+    return redirect(url_for('root'))
+
 
 if __name__ == "__main__":
     app.debug = True;
