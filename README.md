@@ -10,14 +10,20 @@ Lauren Pehlivanian
   
 Albert Wan
   - Currency Exchange
+  -
 
 Biraj Chowdhury
   - Sports API
+  -
 
 Brandon Chen
   - Stock API
+  -
 
 # API Used
-
+  - MetaWeather API
+  - Currency Exchange
+  - Sports API
+  - Stock API
 
 # Instructions
