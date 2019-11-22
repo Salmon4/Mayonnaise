@@ -32,7 +32,14 @@ pehlivanianL -- 2019-11-20 22:05
 Copied over login and register code to html and app files. Tested and made fixes. Added working logout button to home.html and app.
 
 wanA -- 2019-11-21 14:48
-Started on metaweather API and added to app.py. I fixed an error on the homepage.html and added variables for the weather. 
+Started on metaweather API and added to app.py. I fixed an error on the homepage.html and added variables for the weather.
+
+pehlivanianL -- 2019-11-21 14:50
+Began sports page. Tried to retrieve data from MySportsFeeds API but nothing was displayed. Switched to NHL API.
+
+pehlivanianL -- 2019-11-21 22:06
+Fetched team names from NHL API for user to choose team to add to prefs. Dropdown still doesn't work correctly even after debugging.
+
 
 Team -- 2019-11-20
 Actions we will take to improve based on the assigned reading:
