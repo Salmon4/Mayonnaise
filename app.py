@@ -113,6 +113,14 @@ def logout():
     session.pop('username')
     return redirect(url_for('root'))
 
+@app.route("/sports")
+def sports():
+    u = urlopen("https://statsapi.web.nhl.com/api/v1/teams")
+    response = u.read()
+    data = json.loads(response)
+    print(data['teams'][0])
+    return render_template("sports.html", teams=data['teams'][0])
+
 
 if __name__ == "__main__":
     app.debug = True;
