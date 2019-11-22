@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block header %}
+  {% block title %}Sports{% endblock %}
+{% endblock %}
+
+{% block body %}
+  <h2>Most Recent Scores</h2>
+  <p>NHL schedule: https://statsapi.web.nhl.com/api/v1/schedule</p>
+  <ul class="dropdown menu" data-dropdown-menu>
+    <li>
+      <a>Select a team</a>
+      <ul class="menu">
+        {% for team in teams %}
+        <li><a href="#">{{team.name}}</a></li>
+        {% endfor %}
+      </ul>
+    </li>
+  </ul>
+
+  {% for team in teams %}
+  <p>{{team.name}}</p>
+  {%endfor %}
+
+  <ul class="dropdown menu" data-dropdown-menu>
+        <li>
+          <a href="#">Item 1</a>
+          <ul class="menu">
+            <li><a href="#">Item 1A</a></li>
+            <!-- ... -->
+          </ul>
+        </li>
+        <li><a href="#">Item 2</a></li>
+        <li><a href="#">Item 3</a></li>
+        <li><a href="#">Item 4</a></li>
+      </ul>
+{% endblock %}
