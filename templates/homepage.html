@@ -5,10 +5,26 @@
 {% endblock %}
 
 {%block body%}
-<div> Date: {{DateToday}}</div> <br>
-<div> Temperature today: {{TempToday}}</div> <br>
-<div> Lowest today: {{LowestTemp}}</div> <br>
-<div> Highest today: {{HighestTemp}}</div> <br>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.5.3/dist/css/foundation.min.css">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+
+<div class="grid-x grid-padding-x">
+  <div class="large-6 medium-6 cell">
+    <div class="success callout">
+<img src="https://www.metaweather.com/static/img/weather/{{pic}}.svg" width="100" height="20"> <br>
+  <h1>Weather For: {{DateToday}}</h1>
+  <div>Temperature today: {{TempToday}}</div>
+  <div>Lowest today: {{LowestTemp}}</div>
+  <div>Highest today: {{HighestTemp}}</div>
+
+    </div>
+  </div>
+</div>
+
+
     <div class="grid-x grid-padding-x">
       <div class="large-6 medium-6 cell">
         <div class="primary callout">
