@@ -118,9 +118,12 @@ def sports():
     u = urlopen("https://statsapi.web.nhl.com/api/v1/teams")
     response = u.read()
     data = json.loads(response)
-    print(data['teams'][0])
-    return render_template("sports.html", teams=data['teams'][0])
+    print(data['teams'])
+    return render_template("sports.html", teams=data['teams'])
 
+@app.route("/dropdown")
+def dropdown():
+	return render_template("dropdown.html")
 
 if __name__ == "__main__":
     app.debug = True;
