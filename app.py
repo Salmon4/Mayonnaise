@@ -104,7 +104,8 @@ def home():
         )
     response = url.read()
     data = json.loads(response)['articles']
-    return render_template("home.html")
+    print(data)
+    return render_template("home.html",articles = data)
 
 @app.route("/logout")
 def logout():

@@ -12,8 +12,15 @@
     <input type="submit" name="logout-button" value="Log out">
   </form>
 {% endblock %}
-  {% for article in articles%}
-  {% endfor %}
 {% block news %}
-
+<div class="grid-x grid-padding-x">
+{% for article in articles%}
+  <div class="large-4 cell">
+    <h5><a href={{article['url']}}>{{article['title']}}</a></h5>
+    <div class="large-12 cell">
+      <img src={{article['urlToImage']}}>
+    </div>
+  </div>
+  {% endfor %}
+</div>
 {% endblock %}
