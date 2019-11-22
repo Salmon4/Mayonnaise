@@ -1,4 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
+from urllib.request import urlopen
+import json
 import sqlite3, os
 from utl import dbfunctions
 
@@ -23,11 +25,16 @@ def checkAuth():
 
 @app.route("/")
 def root():
+    #metaweather api added. Trying to add variables now. Only New York.
+    u = urlopen("https://www.metaweather.com/api/location/2459115/")
+    response = u.read()
+    data = json.loads(response)
+
     if checkAuth():
-        username = session['username']
         flash("Welcome " + username + ". You have been logged in successfully.")
         redirect(url_for('home'))
-    return render_template('homepage.html')
+        username = session['username']
+    return render_template('homepage.html', TempToday=data["consolidated_weather"][0]["the_temp"])
 
 
 @app.route("/createAccount")
@@ -92,6 +99,11 @@ def auth():
 
 @app.route("/home")
 def home():
+    url = urlopen(
+        "https://newsapi.org/v2/top-headlines?country=us&apiKey=c10b74d97ec44a1f861474546fd3fc27"
+        )
+    response = url.read()
+    data = json.loads(response)['articles']
     return render_template("home.html")
 
 @app.route("/logout")
@@ -100,6 +112,14 @@ def logout():
     session.pop('userID')
     session.pop('username')
     return redirect(url_for('root'))
+
+@app.route("/sports")
+def sports():
+    u = urlopen("https://statsapi.web.nhl.com/api/v1/teams")
+    response = u.read()
+    data = json.loads(response)
+    print(data['teams'][0])
+    return render_template("sports.html", teams=data['teams'][0])
 
 
 if __name__ == "__main__":
