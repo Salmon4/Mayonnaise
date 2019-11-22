@@ -34,7 +34,7 @@ def root():
         flash("Welcome " + username + ". You have been logged in successfully.")
         redirect(url_for('home'))
         username = session['username']
-    return render_template('homepage.html', TempToday=data["consolidated_weather"][0]["the_temp"], HighestTemp=data["consolidated_weather"][0]["max_temp"], LowestTemp=data["consolidated_weather"][0]["min_temp"])
+    return render_template('homepage.html', DateToday=data["consolidated_weather"][0]["applicable_date"], TempToday=data["consolidated_weather"][0]["the_temp"], HighestTemp=data["consolidated_weather"][0]["max_temp"], LowestTemp=data["consolidated_weather"][0]["min_temp"])
 
 
 @app.route("/createAccount")
