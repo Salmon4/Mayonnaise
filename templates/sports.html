@@ -1,10 +1,29 @@
+
 {% extends "base.html" %}
 
 {% block header %}
+
+      <!-- Compressed JavaScript -->
+      <script src = "https://cdnjs.cloudflare.com/ajax/libs/foundation/6.0.1/js/vendor/jquery.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.5.1/dist/js/foundation.min.js" integrity="sha256-WUKHnLrIrx8dew//IpSEmPN/NT3DGAEmIePQYIEJLLs= sha384-53StQWuVbn6figscdDC3xV00aYCPEz3srBdV/QGSXw3f19og3Tq2wTRe0vJqRTEO sha512-X9O+2f1ty1rzBJOC8AXBnuNUdyJg0m8xMKmbt9I3Vu/UOWmSg5zG+dtnje4wAZrKtkopz/PEDClHZ1LXx5IeOw==" crossorigin="anonymous"></script>
+      
   {% block title %}Sports{% endblock %}
 {% endblock %}
 
 {% block body %}
+
+	<form action="/sports" method="get">
+		<label>Select team to add to preferences:
+  <select>
+         {% for team in teams %}
+    <option value="{{team.name}}">{{team.name}}</option>
+    {% endfor %}
+  </select>
+</label>
+	<button class="button primary" action="submit">Submit</button>
+	</form>
+
+<!--
   <h2>Most Recent Scores</h2>
   <p>NHL schedule: https://statsapi.web.nhl.com/api/v1/schedule</p>
   <ul class="dropdown menu" data-dropdown-menu>
@@ -12,26 +31,17 @@
       <a>Select a team</a>
       <ul class="menu">
         {% for team in teams %}
-        <li><a href="#">{{team.name}}</a></li>
+        <button class="hollow button">{{team.name}}</button>
         {% endfor %}
       </ul>
     </li>
-  </ul>
+  </ul> -->
 
-  {% for team in teams %}
-  <p>{{team.name}}</p>
-  {%endfor %}
+      
+            <script>
+         $(document).ready(function() {
+            $(document).foundation();
+         })
+      </script>
 
-  <ul class="dropdown menu" data-dropdown-menu>
-        <li>
-          <a href="#">Item 1</a>
-          <ul class="menu">
-            <li><a href="#">Item 1A</a></li>
-            <!-- ... -->
-          </ul>
-        </li>
-        <li><a href="#">Item 2</a></li>
-        <li><a href="#">Item 3</a></li>
-        <li><a href="#">Item 4</a></li>
-      </ul>
 {% endblock %}
