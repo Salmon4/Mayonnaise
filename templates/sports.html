@@ -3,31 +3,52 @@
 
 {% block header %}
 
-<!-- Compressed JavaScript -->
-<script src = "https://cdnjs.cloudflare.com/ajax/libs/foundation/6.0.1/js/vendor/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.5.1/dist/js/foundation.min.js" integrity="sha256-WUKHnLrIrx8dew//IpSEmPN/NT3DGAEmIePQYIEJLLs= sha384-53StQWuVbn6figscdDC3xV00aYCPEz3srBdV/QGSXw3f19og3Tq2wTRe0vJqRTEO sha512-X9O+2f1ty1rzBJOC8AXBnuNUdyJg0m8xMKmbt9I3Vu/UOWmSg5zG+dtnje4wAZrKtkopz/PEDClHZ1LXx5IeOw==" crossorigin="anonymous"></script>
+  <!-- Compressed JavaScript -->
+  <script src = "https://cdnjs.cloudflare.com/ajax/libs/foundation/6.0.1/js/vendor/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.5.1/dist/js/foundation.min.js" integrity="sha256-WUKHnLrIrx8dew//IpSEmPN/NT3DGAEmIePQYIEJLLs= sha384-53StQWuVbn6figscdDC3xV00aYCPEz3srBdV/QGSXw3f19og3Tq2wTRe0vJqRTEO sha512-X9O+2f1ty1rzBJOC8AXBnuNUdyJg0m8xMKmbt9I3Vu/UOWmSg5zG+dtnje4wAZrKtkopz/PEDClHZ1LXx5IeOw==" crossorigin="anonymous"></script>
 
-{% block title %}Sports{% endblock %}
+  {% block title %}Sports{% endblock %}
 {% endblock %}
 
 {% block body %}
 
-<h2>Your teams:</h2>
-{% for team in user_teams %}
-  <p>{{team}}</p>
-  <br>
-{% endfor %}
+  {% for msg in get_flashed_messages() %}
+  <p>{{msg}}</p>
+  {% endfor %}
 
-<form action="/addsport" method="POST">
-  <label for="team">Select team to add to preferences:</label>
-  <select name="team">
-    <option disabled selected>-- select a team --</option>
-    {% for team in teams %}
-    <option value="{{team.name}}">{{team.name}}</option>
+  {% if loggedin %}
+    <h2>Your teams:</h2>
+    {% for team in user_teams %}
+    <p>{{team}}</p>
+    <br>
     {% endfor %}
-    <input type="submit" value="Submit" name="submit-butom">
-  </select>
-  </form>
+
+    <!-- Cards for each team -->
+    {% for team in user_teams %}
+    <div class="card" style="width: 300px;">
+      <div class="card-divider">
+        <h4>{{team}}</h4>
+      </div>
+      <!-- <img src="assets/img/generic/rectangle-1.jpg"> -->
+      <div class="card-section">
+        <p>This card makes use of the card-divider element.</p>
+      </div>
+    </div>
+    {% endfor %}
+
+    <form action="/addsport" method="POST">
+      <label for="team">Select team to add to preferences:</label>
+      <select name="team">
+        <option disabled selected>-- select a team --</option>
+        {% for team in teams %}
+        <option value="{{team.name}}">{{team.name}}</option>
+        {% endfor %}
+        <input type="submit" value="Submit" name="submit-butom">
+      </select>
+    </form>
+  {% else %}
+    <a href="/login">Login</a> to view and add preferences.
+  {% endif %}
 
 
 <!--
