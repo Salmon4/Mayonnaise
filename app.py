@@ -55,6 +55,9 @@ def register():
         if a != None:
             flash("Account with that username already exists")
             return redirect(url_for('createAccount'))
+        elif " " in username:
+            flash("Username cannot contain spaces")
+            return redirect(url_for('createAccount'))
         elif password != password2:
             flash("Passwords do not match")
             return redirect(url_for('createAccount'))
@@ -64,6 +67,7 @@ def register():
 
         else:
             c.execute("INSERT INTO users VALUES (NULL, ?, ?)", (username, password))
+            dbfunctions.newUserTable(c, username)
             db.commit()
             flash("Successfuly created user")
             return redirect(url_for('login'))
@@ -118,8 +122,14 @@ def sports():
     u = urlopen("https://statsapi.web.nhl.com/api/v1/teams")
     response = u.read()
     data = json.loads(response)
+    # username = session['username']
+    username = "lauren1"
+    userteams=dbfunctions.getUserPrefs(c, username, "nhl_team")
+    if userteams is None:
+        userteams=[]
+    print(userteams)
     #print(data['teams'])
-    return render_template("sports.html", teams=data['teams'])
+    return render_template("sports.html", teams=data['teams'], user_teams=userteams)
 
 @app.route("/dropdown")
 def dropdown():
@@ -128,8 +138,12 @@ def dropdown():
 @app.route("/addsport", methods=["POST"])
 def addsport():
     if request.method=="POST":
-        print(request)
         print(request.form)
+        team = request.form['team']
+        # username = session['username']
+        username = "lauren1"
+        print("INSERT INTO "+username+" ('"+"nhl_team"+"', '"+team+"')")
+        dbfunctions.addUserPref(c, username, "nhl_team", team)
     return redirect(url_for("sports"))
 
 if __name__ == "__main__":
