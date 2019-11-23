@@ -118,12 +118,19 @@ def sports():
     u = urlopen("https://statsapi.web.nhl.com/api/v1/teams")
     response = u.read()
     data = json.loads(response)
-    print(data['teams'])
+    #print(data['teams'])
     return render_template("sports.html", teams=data['teams'])
 
 @app.route("/dropdown")
 def dropdown():
 	return render_template("dropdown.html")
+
+@app.route("/addsport", methods=["POST"])
+def addsport():
+    if request.method=="POST":
+        print(request)
+        print(request.form)
+    return redirect(url_for("sports"))
 
 if __name__ == "__main__":
     app.debug = True;
