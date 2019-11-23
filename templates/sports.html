@@ -3,45 +3,66 @@
 
 {% block header %}
 
-      <!-- Compressed JavaScript -->
-      <script src = "https://cdnjs.cloudflare.com/ajax/libs/foundation/6.0.1/js/vendor/jquery.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.5.1/dist/js/foundation.min.js" integrity="sha256-WUKHnLrIrx8dew//IpSEmPN/NT3DGAEmIePQYIEJLLs= sha384-53StQWuVbn6figscdDC3xV00aYCPEz3srBdV/QGSXw3f19og3Tq2wTRe0vJqRTEO sha512-X9O+2f1ty1rzBJOC8AXBnuNUdyJg0m8xMKmbt9I3Vu/UOWmSg5zG+dtnje4wAZrKtkopz/PEDClHZ1LXx5IeOw==" crossorigin="anonymous"></script>
-      
-  {% block title %}Sports{% endblock %}
+<!-- Compressed JavaScript -->
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/foundation/6.0.1/js/vendor/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.5.1/dist/js/foundation.min.js" integrity="sha256-WUKHnLrIrx8dew//IpSEmPN/NT3DGAEmIePQYIEJLLs= sha384-53StQWuVbn6figscdDC3xV00aYCPEz3srBdV/QGSXw3f19og3Tq2wTRe0vJqRTEO sha512-X9O+2f1ty1rzBJOC8AXBnuNUdyJg0m8xMKmbt9I3Vu/UOWmSg5zG+dtnje4wAZrKtkopz/PEDClHZ1LXx5IeOw==" crossorigin="anonymous"></script>
+
+{% block title %}Sports{% endblock %}
 {% endblock %}
 
 {% block body %}
 
-	<form action="/sports" method="get">
-		<label>Select team to add to preferences:
-  <select>
-         {% for team in teams %}
+<form action="/addsport" method="POST">
+  <label for="team">Select team to add to preferences:</label>
+  <select name="team">
+    <option disabled selected>-- select a team --</option>
+    {% for team in teams %}
     <option value="{{team.name}}">{{team.name}}</option>
     {% endfor %}
+    <input type="submit" value="Submit" name="submit-butom">
   </select>
-</label>
-	<button class="button primary" action="submit">Submit</button>
-	</form>
+  </form>
+
+  <form action="/addsport" method="post">
+  <label for="action">Options:</label>
+  <select name="action" id="action">
+    <option value="help">Help</option>
+    <option value="reset">Reset</option>
+    <option value="submit">Submit</option>
+  </select>
+  <button type="submit" name="submit" value="submit">Do It </button>
+</form>
+
+  <form action="/addsport" method="POST">
+    <label for="username">Username</label>
+    <input type="text" name="username" required>
+    <br>
+    <label for="password">Password</label>
+    <input type="password" name="password" required>
+    <br>
+    <input type="submit" name="login-button" value="Log In">
+    <p>Don't have an account? <a href="/createAccount">Sign Up</a></p>
+  </form>
 
 <!--
-  <h2>Most Recent Scores</h2>
-  <p>NHL schedule: https://statsapi.web.nhl.com/api/v1/schedule</p>
-  <ul class="dropdown menu" data-dropdown-menu>
-    <li>
-      <a>Select a team</a>
-      <ul class="menu">
-        {% for team in teams %}
-        <button class="hollow button">{{team.name}}</button>
-        {% endfor %}
-      </ul>
-    </li>
-  </ul> -->
+<h2>Most Recent Scores</h2>
+<p>NHL schedule: https://statsapi.web.nhl.com/api/v1/schedule</p>
+<ul class="dropdown menu" data-dropdown-menu>
+<li>
+<a>Select a team</a>
+<ul class="menu">
+{% for team in teams %}
+<button class="hollow button">{{team.name}}</button>
+{% endfor %}
+</ul>
+</li>
+</ul> -->
 
-      
-            <script>
-         $(document).ready(function() {
-            $(document).foundation();
-         })
-      </script>
+
+<script>
+  $(document).ready(function() {
+    $(document).foundation();
+  })
+</script>
 
 {% endblock %}
