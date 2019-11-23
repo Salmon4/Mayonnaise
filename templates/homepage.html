@@ -5,8 +5,27 @@
 {% endblock %}
 
 {%block body%}
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.5.3/dist/css/foundation.min.css">
+  <link rel="stylesheet" href="css/app.css">
+</head>
 
-<div> TEST.. Temperature today: {{TempToday}}</div>
+<div class="grid-x grid-padding-x">
+  <div class="large-6 medium-6 cell">
+    <div class="success callout">
+      <h1> {{DateToday}}</h1>
+      <img src="https://www.metaweather.com/static/img/weather/{{pic}}.svg" width="100" height="20"> <br>
+      <h3>Weather in New York</h3>
+      <div>Temperature today: {{TempToday}}</div>
+      <div>Lowest today: {{LowestTemp}}</div>
+      <div>Highest today: {{HighestTemp}}</div>
+
+    </div>
+  </div>
+</div>
+
+
     <div class="grid-x grid-padding-x">
       <div class="large-6 medium-6 cell">
         <div class="primary callout">
@@ -18,7 +37,7 @@
       <div class="large-6 medium-6 cell">
         <div class="primary callout">
           <form action="/createAccount" method="GET">
-            <input type="submit" name="login-button" value="Create Account">
+            <input type="submit" name="createAccount-button" value="Create Account">
           </form>
         </div>
       </div>
@@ -27,7 +46,9 @@
     <div class="grid-x grid-padding-x">
       <div class="large-12 medium-12 cell">
         <div class="primary callout">
-          <button type="button">Use without logging in</button>
+          <form action="/home" method="GET">
+            <input type="submit" name="logout-button" value="Use without logging in">
+          </form>
         </div>
       </div>
     </div>

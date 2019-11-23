@@ -27,3 +27,6 @@ Brandon Chen
   - Stock API
 
 # Instructions
+1. Clone this repo using the SSH or HTTPS
+2. In your virtual environment run $pip install -r requirements.txt
+3. Run $python app.py
