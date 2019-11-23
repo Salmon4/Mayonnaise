@@ -41,7 +41,7 @@ pehlivanianL -- 2019-11-21 22:06
 Fetched team names from NHL API for user to choose team to add to prefs. Dropdown still doesn't work correctly even after debugging.
 
 chenB -- 2019-11-22 23:32
-Fixed issues with tabs not correctly displaying by using url_for to keep track of current tab. Default tab displayed will be the first tab. Updated README.md with some API hyperlinks but haven't found them all yet.
+Fixed issues with tabs not correctly displaying by using url_for to keep track of current tab. Default tab displayed will be the first<br> tab. Updated README.md with some API hyperlinks but haven't found them all yet.
 
 
 Team -- 2019-11-20
