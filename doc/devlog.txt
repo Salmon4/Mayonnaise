@@ -26,7 +26,8 @@ pehlivanianL -- 2019-11-20 14:40
 Began writing sqlite database functions for creating and deleting tables.
 
 pehlivanianL -- 2019-11-20 20:51
-Created base.html and added Foundation stylesheet. Spent a long time debugging and finding the right stylesheet. Made homepage.html extend base.html.
+Created base.html and added Foundation stylesheet. Spent a long time debugging and finding the right stylesheet. Made 
+homepage.html extend base.html.
 
 pehlivanianL -- 2019-11-20 22:05
 Copied over login and register code to html and app files. Tested and made fixes. Added working logout button to home.html and app.
