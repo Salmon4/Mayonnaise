@@ -39,11 +39,12 @@ def reset(c):
     c.execute("DROP TABLE IF EXISTS topnews")
 
 #==========================================================
-def newUserTable(c, userID):
-	c.execute("CREATE TABLE IF NOT EXISTS ? (area text, preference text)", userID)
+def newUserTable(c, username):
+	c.execute("CREATE TABLE IF NOT EXISTS "+username+" (area text, preference text)")
 
-def addUserPref(c, userID, pref_area, pref):
-	c.execute("INSERT INTO ? (?, ?)", (userId, pref_area, pref))
+def addUserPref(c, username, pref_area, pref):
+	c.execute("INSERT INTO "+username+" VALUES('"+pref_area+"', '"+pref+"')")
 
-def getUserPrefs(c, userID, pref_area):
-	c.execute("SELECT preference FROM ? WHERE area = ?", (userID, pref_area))
+def getUserPrefs(c, username, pref_area):
+	c.execute("SELECT preference FROM "+username+" WHERE area = ?", (pref_area, ))
+	return c.fetchall()
