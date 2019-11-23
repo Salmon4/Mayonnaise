@@ -32,7 +32,7 @@ def root():
 
     if checkAuth():
         flash("Welcome " + username + ". You have been logged in successfully.")
-        redirect(url_for('home'))
+        redirect(url_for('home', currentTab = 1))
         username = session['username']
     return render_template('homepage.html', pic=data["consolidated_weather"][0]["weather_state_abbr"],DateToday=data["consolidated_weather"][0]["applicable_date"], TempToday=data["consolidated_weather"][0]["the_temp"], HighestTemp=data["consolidated_weather"][0]["max_temp"], LowestTemp=data["consolidated_weather"][0]["min_temp"])
 
@@ -40,7 +40,7 @@ def root():
 @app.route("/createAccount")
 def createAccount():
     if checkAuth():
-        redirect(url_for('home'))
+        redirect(url_for('home', currentTab = 1))
     return render_template("createAcc.html")
 
 @app.route("/register", methods=["POST"])
@@ -75,7 +75,7 @@ def register():
 def login():
     # if already logged in, don't display login page
     if checkAuth():
-        return redirect(url_for('home'))
+        return redirect(url_for('home', currentTab = 1))
     else:
         return render_template('login.html')
 
@@ -95,16 +95,40 @@ def auth():
         session['userID'] = a[0]
         session['username'] = username
         flash("Welcome " + username + ". You have been logged in successfully.")
-        return redirect(url_for('home'))
+        return redirect(url_for('home',currentTab = 1))
 
-@app.route("/home")
-def home():
+@app.route("/home/<currentTab>")
+def home(currentTab):
     url = urlopen(
         "https://newsapi.org/v2/top-headlines?country=us&apiKey=c10b74d97ec44a1f861474546fd3fc27"
         )
     response = url.read()
     data = json.loads(response)['articles']
-    return render_template("home.html")
+    t1class = "tabs-panel"
+    t2class = "tabs-panel"
+    t3class = "tabs-panel"
+    t4class = "tabs-panel"
+    if (currentTab == '1'):
+        t1class = "tabs-panel is-active"
+        t2class = "tabs-panel"
+        t3class = "tabs-panel"
+        t4class = "tabs-panel"
+    if (currentTab == '2'):
+        t1class = "tabs-panel"
+        t2class = "tabs-panel is-active"
+        t3class = "tabs-panel"
+        t4class = "tabs-panel"
+    if (currentTab == '3'):
+        t1class = "tabs-panel"
+        t2class = "tabs-panel"
+        t3class = "tabs-panel is-active"
+        t4class = "tabs-panel"
+    if (currentTab == '4'):
+        t1class = "tabs-panel"
+        t2class = "tabs-panel"
+        t3class = "tabs-panel"
+        t4class = "tabs-panel is-active"
+    return render_template("home.html", t1=t1class,t2=t2class,t3=t3class,t4=t4class)
 
 @app.route("/logout")
 def logout():
