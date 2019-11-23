@@ -12,6 +12,12 @@
 
 {% block body %}
 
+<h2>Your teams:</h2>
+{% for team in user_teams %}
+  <p>{{team}}</p>
+  <br>
+{% endfor %}
+
 <form action="/addsport" method="POST">
   <label for="team">Select team to add to preferences:</label>
   <select name="team">
@@ -23,26 +29,6 @@
   </select>
   </form>
 
-  <form action="/addsport" method="post">
-  <label for="action">Options:</label>
-  <select name="action" id="action">
-    <option value="help">Help</option>
-    <option value="reset">Reset</option>
-    <option value="submit">Submit</option>
-  </select>
-  <button type="submit" name="submit" value="submit">Do It </button>
-</form>
-
-  <form action="/addsport" method="POST">
-    <label for="username">Username</label>
-    <input type="text" name="username" required>
-    <br>
-    <label for="password">Password</label>
-    <input type="password" name="password" required>
-    <br>
-    <input type="submit" name="login-button" value="Log In">
-    <p>Don't have an account? <a href="/createAccount">Sign Up</a></p>
-  </form>
 
 <!--
 <h2>Most Recent Scores</h2>
