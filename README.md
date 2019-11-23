@@ -21,10 +21,20 @@ Brandon Chen
   -
 
 # API Used
+  - Google News API
+    -https://docs.google.com/document/d/1CpFN3B_IjqiZF39Z2qHuWfZuGm7XfQ8VlK498IXiOVk/edit
+    
   - MetaWeather API
+    -https://docs.google.com/document/d/18uyXB5XPFQoGFJpoa2yQvRPhevc3HaBU4kO-OYN-ieY/edit
+    
   - Currency Exchange
+    -https://docs.google.com/document/d/1yTckLoGBHA-C37hhukXOc76Jh_770L7m3Moj-wMFeUU/edit
+    
   - Sports API
+    -
+    
   - Stock API
+    -
 
 # Instructions
 1. Clone this repo using the SSH or HTTPS
