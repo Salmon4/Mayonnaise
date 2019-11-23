@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 from urllib.request import urlopen
 import json
 import sqlite3, os
-from utl import dbfunctions
+from utl import dbfunctions, sportsfunctions
 
 app = Flask(__name__)
 
@@ -123,13 +123,17 @@ def sports():
     response = u.read()
     data = json.loads(response)
     # username = session['username']
-    username = "lauren1"
-    userteams=dbfunctions.getUserPrefs(c, username, "nhl_team")
-    if userteams is None:
-        userteams=[]
-    print(userteams)
-    #print(data['teams'])
-    return render_template("sports.html", teams=data['teams'], user_teams=userteams)
+    if checkAuth():
+        username = session['username']
+        userteams= sportsfunctions.getTeamsAdded(c, username)
+        allteams=data['teams']
+        userteamsdata = sportsfunctions.getUserTeamData(c, username,userteams, allteams)
+        print(userteamsdata)
+        teamsnotadded= sportsfunctions.getTeamsNotAdded(c, username, allteams)
+        # print(teamsnotadded)
+        return render_template("sports.html", loggedin=True, teams=teamsnotadded, user_teams=userteams)
+    else:
+        return render_template("sports.html", logeedin=False)
 
 @app.route("/dropdown")
 def dropdown():
@@ -140,10 +144,9 @@ def addsport():
     if request.method=="POST":
         print(request.form)
         team = request.form['team']
-        # username = session['username']
-        username = "lauren1"
-        print("INSERT INTO "+username+" ('"+"nhl_team"+"', '"+team+"')")
+        username = session['username']
         dbfunctions.addUserPref(c, username, "nhl_team", team)
+        db.commit()
     return redirect(url_for("sports"))
 
 if __name__ == "__main__":
