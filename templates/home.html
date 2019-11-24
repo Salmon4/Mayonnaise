@@ -1,8 +1,9 @@
 {% extends "base.html" %}
-
 {% block header %}
+  <!--
   {% block title %}Home{% endblock %}
-  <a href="/sports">Sports</a>
+  <a href="/sports">Sports</a
+  -->
 {% endblock %}
 
 {% block body %}
@@ -11,17 +12,7 @@
   {% endfor %}
 
   <div class="md-tabs">
-  <div class="mobile-nav-bar title-bar">
-    <div class="title-bar-left">
 
-    </div>
-    <div class="title-bar-center">
-      <span class="title-bar-text">Material Design Tabs</span>
-    </div>
-    <div class="title-bar-right">
-
-    </div>
-  </div>
 
   <ul class="tabs" data-responsive-accordion-tabs="tabs small-accordion medium-tabs large-tabs" id="collapsing-tabs" data-allow-all-closed="true" data-multi-expand="true">
     <li class="tabs-title is-active"><a href="{{url_for('home', currentTab = 1)}}" >News</a></li>
