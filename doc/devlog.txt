@@ -26,7 +26,7 @@ pehlivanianL -- 2019-11-20 14:40
 Began writing sqlite database functions for creating and deleting tables.
 
 pehlivanianL -- 2019-11-20 20:51
-Created base.html and added Foundation stylesheet. Spent a long time debugging and finding the right stylesheet. Made 
+Created base.html and added Foundation stylesheet. Spent a long time debugging and finding the right stylesheet. Made
 homepage.html extend base.html.
 
 pehlivanianL -- 2019-11-20 22:05
@@ -41,13 +41,23 @@ Began sports page. Tried to retrieve data from MySportsFeeds API but nothing was
 pehlivanianL -- 2019-11-21 22:06
 Fetched team names from NHL API for user to choose team to add to prefs. Dropdown still doesn't work correctly even after debugging.
 
+pehlivanianL -- 2019-11-22 14:55
+Tested dropdown menu for selecting sports team. Used Javascript code found online.
+
 chenB -- 2019-11-22 23:32
-Fixed issues with tabs not correctly displaying by using url_for to keep track of current tab. Default tab displayed will be the 
+Fixed issues with tabs not correctly displaying by using url_for to keep track of current tab. Default tab displayed will be the
 first tab. Updated README.md with some API hyperlinks but haven't found them all yet.
 
+pehlivanianL -- 2019-11-23 10:09
+Finally figured out how to post data from dropdown menu. Displays user's team selections on sports page.
+Added functions to sportsfunctions which returns arrays of teams and data.
+
+pehlivanianL -- 2019-11-23 21:32
+Got data from NHL API for each team the user adds to preferences. Made cards to display the data for each team.
+Made functions in sportsfunctions to retrieve data for a team's most recent score from the API, it displays properly on the card.
 
 Team -- 2019-11-20
 Actions we will take to improve based on the assigned reading:
-1. We should share code with our teammates to review/debug. You shouldn't be defensive about your errors as debugging helps improve 
+1. We should share code with our teammates to review/debug. You shouldn't be defensive about your errors as debugging helps improve
 the project. Be like Bill Gates.
 2. Understand formal and informal structures and factors in our programming environment.
