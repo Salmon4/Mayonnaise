@@ -128,10 +128,11 @@ def sports():
         userteams= sportsfunctions.getTeamsAdded(c, username)
         allteams=data['teams']
         userteamsdata = sportsfunctions.getUserTeamData(c, username,userteams, allteams)
+        userteamsdata = sportsfunctions.addMostRecentGame(userteamsdata)
         print(userteamsdata)
         teamsnotadded= sportsfunctions.getTeamsNotAdded(c, username, allteams)
         # print(teamsnotadded)
-        return render_template("sports.html", loggedin=True, teams=teamsnotadded, user_teams=userteams)
+        return render_template("sports.html", loggedin=True, teams=teamsnotadded, user_teams=userteams, user_team_data=userteamsdata)
     else:
         return render_template("sports.html", logeedin=False)
 
