@@ -25,16 +25,12 @@ def checkAuth():
 
 @app.route("/")
 def root():
-    #metaweather api added. Trying to add variables now. Only New York.
-    u = urlopen("https://www.metaweather.com/api/location/2459115/")
-    response = u.read()
-    data = json.loads(response)
 
     if checkAuth():
         username = session['username']
         flash("Welcome " + username + ". You have been logged in successfully.")
         redirect(url_for('home', currentTab = 1))
-    return render_template('homepage.html', pic=data["consolidated_weather"][0]["weather_state_abbr"],DateToday=data["consolidated_weather"][0]["applicable_date"], TempToday=data["consolidated_weather"][0]["the_temp"], HighestTemp=data["consolidated_weather"][0]["max_temp"], LowestTemp=data["consolidated_weather"][0]["min_temp"])
+    return render_template('homepage.html')
 
 
 @app.route("/createAccount")
@@ -103,41 +99,51 @@ def auth():
 
 @app.route("/home/<currentTab>")
 def home(currentTab):
-    url = urlopen(
-        "https://newsapi.org/v2/top-headlines?country=us&apiKey=c10b74d97ec44a1f861474546fd3fc27"
-        )
-    response = url.read()
-    data = json.loads(response)['articles']
-
-    #exchangeUrl = urlopen("https://api.exchangerate-api.com/v4/latest/USD")
-    #exchangeResponse = exchangeUrl.read()
-    #base = json.loads(exchangeResponse)['base']
 
     t1class = "tabs-panel"
     t2class = "tabs-panel"
     t3class = "tabs-panel"
     t4class = "tabs-panel"
-    if (currentTab == '1'):
+    if (currentTab == '1'): #news
         t1class = "tabs-panel is-active"
         t2class = "tabs-panel"
         t3class = "tabs-panel"
         t4class = "tabs-panel"
+        url = urlopen(
+            "https://newsapi.org/v2/top-headlines?country=us&apiKey=c10b74d97ec44a1f861474546fd3fc27"
+            )
+        response = url.read()
+        data = json.loads(response)['articles']
+        return render_template("home.html", t1=t1class,t2=t2class,t3=t3class,t4=t4class, articles=data)
     if (currentTab == '2'):
-        t1class = "tabs-panel"
+        t1class = "tabs-panel" #weather
         t2class = "tabs-panel is-active"
         t3class = "tabs-panel"
         t4class = "tabs-panel"
-    if (currentTab == '3'):
+        weatherUrl = urlopen("https://www.metaweather.com/api/location/2459115/")
+        weatherResponse = weatherUrl.read()
+        weatherData = json.loads(weatherResponse)
+        return render_template("home.html", t1=t1class,t2=t2class,t3=t3class,t4=t4class,
+                                 pic=weatherData["consolidated_weather"][0]["weather_state_abbr"],DateToday=weatherData["consolidated_weather"][0]["applicable_date"],
+                                 TempToday=weatherData["consolidated_weather"][0]["the_temp"], HighestTemp=weatherData["consolidated_weather"][0]["max_temp"],
+                                 LowestTemp=weatherData["consolidated_weather"][0]["min_temp"]
+                                )
+    if (currentTab == '3'): #sports
         t1class = "tabs-panel"
         t2class = "tabs-panel"
         t3class = "tabs-panel is-active"
         t4class = "tabs-panel"
-    if (currentTab == '4'):
+        return render_template("home.html", t1=t1class,t2=t2class,t3=t3class,t4=t4class
+                                )
+    if (currentTab == '4'): #money
         t1class = "tabs-panel"
         t2class = "tabs-panel"
         t3class = "tabs-panel"
         t4class = "tabs-panel is-active"
-    return render_template("home.html", t1=t1class,t2=t2class,t3=t3class,t4=t4class, articles=data,
+        #exchangeUrl = urlopen("https://api.exchangerate-api.com/v4/latest/USD")
+        #exchangeResponse = exchangeUrl.read()
+        #base = json.loads(exchangeResponse)['base']
+        return render_template("home.html", t1=t1class,t2=t2class,t3=t3class,t4=t4class
                             )
 
 @app.route("/logout")

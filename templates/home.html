@@ -13,7 +13,7 @@
   <div class="md-tabs">
   <div class="mobile-nav-bar title-bar">
     <div class="title-bar-left">
-      
+
     </div>
     <div class="title-bar-center">
       <span class="title-bar-text">Material Design Tabs</span>
@@ -50,7 +50,19 @@
 
     <div class="{{t2}}" id="panel2">
       <!-- ================================================================= WEATHER ======================================================================= -->
-      weather here
+      <div class="grid-x grid-padding-x">
+        <div class="large-6 medium-6 cell">
+          <div class="success callout">
+            <h1> {{DateToday}}</h1>
+            <img src="https://www.metaweather.com/static/img/weather/{{pic}}.svg" width="100" height="20"> <br>
+            <h3>Weather in New York</h3>
+            <div>Temperature today: {{TempToday}}</div>
+            <div>Lowest today: {{LowestTemp}}</div>
+            <div>Highest today: {{HighestTemp}}</div>
+
+          </div>
+        </div>
+      </div>
       <!-- ================================================================= WEATHER ======================================================================= -->
     </div>
 
