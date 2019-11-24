@@ -24,14 +24,28 @@
     {% endfor %}
 
     <!-- Cards for each team -->
-    {% for team in user_teams %}
+    {% for team in user_team_data %}
     <div class="card" style="width: 300px;">
       <div class="card-divider">
-        <h4>{{team}}</h4>
+        <h4>{{team.name}}</h4>
       </div>
       <!-- <img src="assets/img/generic/rectangle-1.jpg"> -->
       <div class="card-section">
-        <p>This card makes use of the card-divider element.</p>
+        <a href="{{team.officialSiteUrl}}">Official Team Site</a>
+        <br>
+        <strong>{{team.venue.city}}, {{team.locationName}}</strong>
+      </div>
+      <div class="card-section">
+        <h6><small>Most Recent Game:</small></h6>
+        {% if team.prevgame == "No games played this season." %}
+          {{team.prevgame}}
+        {% else %}
+          <strong>Date:</strong> {{team.prevgame.gameDate}}
+          <br>
+          {{team.prevgame.teams.away.team.name}} vs. {{team.prevgame.teams.home.team.name}}
+          <br>
+          {{team.prevgame.teams.away.score}} - {{team.prevgame.teams.home.score}}
+        {% endif %}
       </div>
     </div>
     {% endfor %}
