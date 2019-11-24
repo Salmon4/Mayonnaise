@@ -56,6 +56,10 @@ pehlivanianL -- 2019-11-23 21:32
 Got data from NHL API for each team the user adds to preferences. Made cards to display the data for each team.
 Made functions in sportsfunctions to retrieve data for a team's most recent score from the API, it displays properly on the card.
 
+chenB -- 2019-11-23 23:44
+Started foreign currency exchange API. Tested retrieving and displaying base currency but front end needs more work. Added other 
+sports API hyperlink to README.md.
+
 Team -- 2019-11-20
 Actions we will take to improve based on the assigned reading:
 1. We should share code with our teammates to review/debug. You shouldn't be defensive about your errors as debugging helps improve
