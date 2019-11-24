@@ -31,9 +31,9 @@ def root():
     data = json.loads(response)
 
     if checkAuth():
+        username = session['username']
         flash("Welcome " + username + ". You have been logged in successfully.")
         redirect(url_for('home', currentTab = 1))
-        username = session['username']
     return render_template('homepage.html', pic=data["consolidated_weather"][0]["weather_state_abbr"],DateToday=data["consolidated_weather"][0]["applicable_date"], TempToday=data["consolidated_weather"][0]["the_temp"], HighestTemp=data["consolidated_weather"][0]["max_temp"], LowestTemp=data["consolidated_weather"][0]["min_temp"])
 
 
@@ -132,7 +132,7 @@ def home(currentTab):
         t2class = "tabs-panel"
         t3class = "tabs-panel"
         t4class = "tabs-panel is-active"
-    return render_template("home.html", t1=t1class,t2=t2class,t3=t3class,t4=tlass, articles=data)
+    return render_template("home.html", t1=t1class,t2=t2class,t3=t3class,t4=t4class, articles=data)
 
 @app.route("/logout")
 def logout():
@@ -153,7 +153,7 @@ def sports():
         allteams=data['teams']
         userteamsdata = sportsfunctions.getUserTeamData(c, username,userteams, allteams)
         userteamsdata = sportsfunctions.addMostRecentGame(userteamsdata)
-        print(userteamsdata)
+        # print(userteamsdata)
         teamsnotadded= sportsfunctions.getTeamsNotAdded(c, username, allteams)
         # print(teamsnotadded)
         return render_template("sports.html", loggedin=True, teams=teamsnotadded, user_teams=userteams, user_team_data=userteamsdata)
