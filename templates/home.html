@@ -34,7 +34,6 @@
 
   <div class= data-tabs-content="collapsing-tabs">
     <div class="{{t1}}" id="panel1">
-      {% endblock %}
       {% block news %}
       <div class="grid-x grid-padding-x">
       {% for article in articles%}
@@ -70,3 +69,4 @@
   <form action="/logout">
     <input type="submit" name="logout-button" value="Log out">
   </form>
+  {% endblock %}
