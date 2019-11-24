@@ -24,17 +24,29 @@
   </div>
 
   <ul class="tabs" data-responsive-accordion-tabs="tabs small-accordion medium-tabs large-tabs" id="collapsing-tabs" data-allow-all-closed="true" data-multi-expand="true">
-    <li class="tabs-title is-active"><a href="{{url_for('home', currentTab = 1)}}" >Tab 1</a></li>
-    <li class="tabs-title"><a href="{{url_for('home', currentTab = 2)}}" >Tab 2</a></li>
-    <li class="tabs-title"><a href="{{url_for('home', currentTab = 3)}}">Tab 3</a></li>
-    <li class="tabs-title"><a href="{{url_for('home', currentTab = 4)}}" >Tab 4</a></li>
+    <li class="tabs-title is-active"><a href="{{url_for('home', currentTab = 1)}}" >News</a></li>
+    <li class="tabs-title"><a href="{{url_for('home', currentTab = 2)}}" >Weather</a></li>
+    <li class="tabs-title"><a href="{{url_for('home', currentTab = 3)}}">Sports</a></li>
+    <li class="tabs-title"><a href="{{url_for('home', currentTab = 4)}}" >Stocks and Currency Exchange</a></li>
     <div class="slide"></div>
   </ul>
 
 
   <div class= data-tabs-content="collapsing-tabs">
     <div class="{{t1}}" id="panel1">
-      <p> stuff 1 </p>
+      {% endblock %}
+      {% block news %}
+      <div class="grid-x grid-padding-x">
+      {% for article in articles%}
+        <div class="large-4 cell">
+          <h5><a href={{article['url']}}>{{article['title']}}</a></h5>
+          <div class="large-12 cell">
+            <img src={{article['urlToImage']}}>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% endblock %}
     </div>
 
     <div class="{{t2}}" id="panel2">
@@ -58,16 +70,3 @@
   <form action="/logout">
     <input type="submit" name="logout-button" value="Log out">
   </form>
-{% endblock %}
-{% block news %}
-<div class="grid-x grid-padding-x">
-{% for article in articles%}
-  <div class="large-4 cell">
-    <h5><a href={{article['url']}}>{{article['title']}}</a></h5>
-    <div class="large-12 cell">
-      <img src={{article['urlToImage']}}>
-    </div>
-  </div>
-  {% endfor %}
-</div>
-{% endblock %}
