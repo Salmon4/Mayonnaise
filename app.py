@@ -128,7 +128,7 @@ def home(currentTab):
         t2class = "tabs-panel"
         t3class = "tabs-panel"
         t4class = "tabs-panel is-active"
-    return render_template("home.html", t1=t1class,t2=t2class,t3=t3class,t4=tlass, articles=data)
+    return render_template("home.html", t1=t1class,t2=t2class,t3=t3class,t4=t4class, articles=data)
 
 @app.route("/logout")
 def logout():

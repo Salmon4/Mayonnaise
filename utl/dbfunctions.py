@@ -29,6 +29,10 @@ def resetnews(c):
 				content text
 				);""")
 
+def settopnews(news):
+	for article in news:
+		c.execute("INSERT INTO topnews VALUES ")
+
 #deletes all existing tables
 def reset(c):
     #LATER: create loop to delete every single user table
