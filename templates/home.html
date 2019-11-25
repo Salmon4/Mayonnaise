@@ -1,7 +1,9 @@
 {% extends "base.html" %}
-
 {% block header %}
+  <!--
   {% block title %}Home{% endblock %}
+  <a href="/sports">Sports</a
+  -->
 {% endblock %}
 
 {% block body %}
@@ -10,43 +12,62 @@
   {% endfor %}
 
   <div class="md-tabs">
-  <div class="mobile-nav-bar title-bar">
-    <div class="title-bar-left">
-      <button class="menu-icon" type="button"></button>
-    </div>
-    <div class="title-bar-center">
-      <span class="title-bar-text">Material Design Tabs</span>
-    </div>
-    <div class="title-bar-right">
-      <button class="menu-icon" type="button"></button>
-    </div>
-  </div>
+
 
   <ul class="tabs" data-responsive-accordion-tabs="tabs small-accordion medium-tabs large-tabs" id="collapsing-tabs" data-allow-all-closed="true" data-multi-expand="true">
-    <li class="tabs-title is-active"><a href="{{url_for('home', currentTab = 1)}}" >Tab 1</a></li>
-    <li class="tabs-title"><a href="{{url_for('home', currentTab = 2)}}" >Tab 2</a></li>
-    <li class="tabs-title"><a href="{{url_for('home', currentTab = 3)}}">Tab 3</a></li>
-    <li class="tabs-title"><a href="{{url_for('home', currentTab = 4)}}" >Tab 4</a></li>
+    <li class="tabs-title is-active"><a href="{{url_for('home', currentTab = 1)}}" >News</a></li>
+    <li class="tabs-title"><a href="{{url_for('home', currentTab = 2)}}" >Weather</a></li>
+    <li class="tabs-title"><a href="{{url_for('home', currentTab = 3)}}">Sports</a></li>
+    <li class="tabs-title"><a href="{{url_for('home', currentTab = 4)}}" >Stocks and Currency Exchange</a></li>
     <div class="slide"></div>
   </ul>
 
-
   <div class= data-tabs-content="collapsing-tabs">
+
     <div class="{{t1}}" id="panel1">
-      <p> stuff 1 </p>
+      <!-- =================================================================== NEWS ======================================================================== -->
+      <div class="grid-x grid-padding-x">
+        {% for article in articles%}
+          <div class="large-4 cell">
+            <h5><a href={{article['url']}}>{{article['title']}}</a></h5>
+            <div class="large-12 cell">
+              <img src={{article['urlToImage']}}>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <!-- =================================================================== NEWS ======================================================================== -->
     </div>
 
     <div class="{{t2}}" id="panel2">
-      <p> stuff 2 </p>
+      <!-- ================================================================= WEATHER ======================================================================= -->
+      <div class="grid-x grid-padding-x">
+        <div class="large-6 medium-6 cell">
+          <div class="success callout">
+            <h1> {{DateToday}}</h1>
+            <img src="https://www.metaweather.com/static/img/weather/{{pic}}.svg" width="100" height="20"> <br>
+            <h3>Weather in New York</h3>
+            <div>Temperature today: {{TempToday}}</div>
+            <div>Lowest today: {{LowestTemp}}</div>
+            <div>Highest today: {{HighestTemp}}</div>
+
+          </div>
+        </div>
+      </div>
+      <!-- ================================================================= WEATHER ======================================================================= -->
     </div>
 
 
     <div class="{{t3}}" id="panel3">
-      <p> stuff 3 </p>
+      <!-- ================================================================== SPORTS ======================================================================== -->
+      sports here
+      <!-- ================================================================== SPORTS ======================================================================== -->
     </div>
 
     <div class="{{t4}}" id="panel4">
-      <p> stuff 4 </p>
+      <!-- ================================================================== MONEY ======================================================================== -->
+      foreign currency and maybe stock here
+      <!-- ================================================================== MONEY ======================================================================== -->
     </div>
   </div>
 </div>

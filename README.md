@@ -31,7 +31,7 @@ Brandon Chen
     -https://docs.google.com/document/d/1yTckLoGBHA-C37hhukXOc76Jh_770L7m3Moj-wMFeUU/edit
     
   - Sports API
-    -
+    -https://docs.google.com/document/d/1_CkEqysrBYJQ7XZBEWMpMrWhCQb0HPMPLGLknhnDtsA/edit
     
   - Stock API
     -
