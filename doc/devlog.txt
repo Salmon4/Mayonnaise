@@ -78,4 +78,4 @@ Actions we will take to improve based on the assigned reading:
 the project. Be like Bill Gates.
 2. Understand formal and informal structures and factors in our programming environment.
 
-# -HOME STRETCH PLAN-
+"HOME STRETCH PLAN"
