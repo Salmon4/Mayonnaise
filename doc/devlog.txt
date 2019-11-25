@@ -77,3 +77,5 @@ Actions we will take to improve based on the assigned reading:
 1. We should share code with our teammates to review/debug. You shouldn't be defensive about your errors as debugging helps improve
 the project. Be like Bill Gates.
 2. Understand formal and informal structures and factors in our programming environment.
+
+"HOME STRETCH PLAN"
