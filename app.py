@@ -124,9 +124,27 @@ def home(currentTab):
         weatherResponse = weatherUrl.read()
         weatherData = json.loads(weatherResponse)
         return render_template("home.html", t1=t1class,t2=t2class,t3=t3class,t4=t4class,
-                                 pic=weatherData["consolidated_weather"][0]["weather_state_abbr"],DateToday=weatherData["consolidated_weather"][0]["applicable_date"],
-                                 TempToday=weatherData["consolidated_weather"][0]["the_temp"], HighestTemp=weatherData["consolidated_weather"][0]["max_temp"],
-                                 LowestTemp=weatherData["consolidated_weather"][0]["min_temp"]
+                                pic=weatherData["consolidated_weather"][0]["weather_state_abbr"],DateToday=weatherData["consolidated_weather"][0]["applicable_date"],
+                                TempToday=weatherData["consolidated_weather"][0]["the_temp"], HighestTemp=weatherData["consolidated_weather"][0]["max_temp"],
+                                LowestTemp=weatherData["consolidated_weather"][0]["min_temp"],
+                                pic1=weatherData["consolidated_weather"][1]["weather_state_abbr"],DateToday1=weatherData["consolidated_weather"][1]["applicable_date"],
+                                TempToday1=weatherData["consolidated_weather"][1]["the_temp"], HighestTemp1=weatherData["consolidated_weather"][1]["max_temp"],
+                                LowestTemp1=weatherData["consolidated_weather"][1]["min_temp"],
+                                pic2=weatherData["consolidated_weather"][2]["weather_state_abbr"],DateToday2=weatherData["consolidated_weather"][2]["applicable_date"],
+                                TempToday2=weatherData["consolidated_weather"][2]["the_temp"], HighestTemp2=weatherData["consolidated_weather"][2]["max_temp"],
+                                LowestTemp2=weatherData["consolidated_weather"][2]["min_temp"],
+                                pic3=weatherData["consolidated_weather"][3]["weather_state_abbr"],DateToday3=weatherData["consolidated_weather"][3]["applicable_date"],
+                                TempToday3=weatherData["consolidated_weather"][3]["the_temp"], HighestTemp3=weatherData["consolidated_weather"][3]["max_temp"],
+                                LowestTemp3=weatherData["consolidated_weather"][3]["min_temp"],
+                                pic4=weatherData["consolidated_weather"][4]["weather_state_abbr"],DateToday4=weatherData["consolidated_weather"][4]["applicable_date"],
+                                TempToday4=weatherData["consolidated_weather"][4]["the_temp"], HighestTemp4=weatherData["consolidated_weather"][4]["max_temp"],
+                                LowestTemp4=weatherData["consolidated_weather"][4]["min_temp"],
+                                pic5=weatherData["consolidated_weather"][5]["weather_state_abbr"],DateToday5=weatherData["consolidated_weather"][5]["applicable_date"],
+                                TempToday5=weatherData["consolidated_weather"][5]["the_temp"], HighestTemp5=weatherData["consolidated_weather"][5]["max_temp"],
+                                LowestTemp5=weatherData["consolidated_weather"][5]["min_temp"],
+                                pic6=weatherData["consolidated_weather"][6]["weather_state_abbr"],DateToday6=weatherData["consolidated_weather"][6]["applicable_date"],
+                                TempToday6=weatherData["consolidated_weather"][6]["the_temp"], HighestTemp6=weatherData["consolidated_weather"][6]["max_temp"],
+                                LowestTemp6=weatherData["consolidated_weather"][6]["min_temp"],
                                 )
     if (currentTab == '3'): #sports
         t1class = "tabs-panel"
