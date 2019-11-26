@@ -154,8 +154,23 @@ def home(currentTab):
         t2class = "tabs-panel"
         t3class = "tabs-panel is-active"
         t4class = "tabs-panel"
-        return render_template("home.html", t1=t1class,t2=t2class,t3=t3class,t4=t4class
-                                )
+        u = urlopen("https://statsapi.web.nhl.com/api/v1/teams")
+        response = u.read()
+        data = json.loads(response)
+        # username = session['username']
+        if checkAuth():
+            username = session['username']
+            userteams= sportsfunctions.getTeamsAdded(c, username)
+            allteams=data['teams']
+            userteamsdata = sportsfunctions.getUserTeamData(c, username,userteams, allteams)
+            userteamsdata = sportsfunctions.addMostRecentGame(userteamsdata)
+		    # print(userteamsdata)
+            teamsnotadded= sportsfunctions.getTeamsNotAdded(c, username, allteams)
+		    # print(teamsnotadded)
+            return render_template("home.html", t1=t1class,t2=t2class,t3=t3class,t4=t4class, loggedin=True, teams=teamsnotadded, user_teams=userteams, user_team_data=userteamsdata)
+        else:
+            return render_template("home.html", t1=t1class,t2=t2class,t3=t3class,t4=t4class, logeedin=False)
+
     if (currentTab == '4'): #money
         t1class = "tabs-panel"
         t2class = "tabs-panel"
