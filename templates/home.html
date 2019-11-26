@@ -4,6 +4,11 @@
   {% block title %}Home{% endblock %}
   <a href="/sports">Sports</a
   -->
+
+  <!-- Compressed JavaScript -->
+  <script src = "https://cdnjs.cloudflare.com/ajax/libs/foundation/6.0.1/js/vendor/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.5.1/dist/js/foundation.min.js" integrity="sha256-WUKHnLrIrx8dew//IpSEmPN/NT3DGAEmIePQYIEJLLs= sha384-53StQWuVbn6figscdDC3xV00aYCPEz3srBdV/QGSXw3f19og3Tq2wTRe0vJqRTEO sha512-X9O+2f1ty1rzBJOC8AXBnuNUdyJg0m8xMKmbt9I3Vu/UOWmSg5zG+dtnje4wAZrKtkopz/PEDClHZ1LXx5IeOw==" crossorigin="anonymous"></script>
+
 {% endblock %}
 
 {% block body %}
@@ -41,18 +46,77 @@
 
     <div class="{{t2}}" id="panel2">
       <!-- ================================================================= WEATHER ======================================================================= -->
+      <h3>Weather in New York</h3>
       <div class="grid-x grid-padding-x">
         <div class="large-6 medium-6 cell">
           <div class="success callout">
             <h1> {{DateToday}}</h1>
             <img src="https://www.metaweather.com/static/img/weather/{{pic}}.svg" width="100" height="20"> <br>
-            <h3>Weather in New York</h3>
+
             <div>Temperature today: {{TempToday}}</div>
             <div>Lowest today: {{LowestTemp}}</div>
             <div>Highest today: {{HighestTemp}}</div>
 
           </div>
         </div>
+      </div> <br>
+      <div class="grid-x grid-padding-x">
+        <div class="large-2 large-2 large-2 large-2 cell large-2 cell">
+          <div class="secondary callout">
+            <h5> {{DateToday1}}</h5>
+            <img src="https://www.metaweather.com/static/img/weather/{{pic}}.svg" width="100" height="20"> <br>
+
+            <div>Temperature: {{TempToday1}}</div>
+            <div>Lowest: {{LowestTemp1}}</div>
+            <div>Highest: {{HighestTemp1}}</div>
+
+          </div>
+        </div>
+        <div class="large-2 large-2 large-2 large-2 cell large-2 cell">
+          <div class="secondary callout">
+            <h5> {{DateToday2}}</h5>
+            <img src="https://www.metaweather.com/static/img/weather/{{pic}}.svg" width="100" height="20"> <br>
+
+            <div>Temperature: {{TempToday2}}</div>
+            <div>Lowest: {{LowestTemp2}}</div>
+            <div>Highest: {{HighestTemp2}}</div>
+
+          </div>
+        </div>
+        <div class="large-2 large-2 large-2 large-2 cell large-2 cell">
+          <div class="secondary callout">
+            <h5> {{DateToday3}}</h5>
+            <img src="https://www.metaweather.com/static/img/weather/{{pic}}.svg" width="100" height="20"> <br>
+
+            <div>Temperature: {{TempToday3}}</div>
+            <div>Lowest: {{LowestTemp3}}</div>
+            <div>Highest: {{HighestTemp3}}</div>
+
+          </div>
+        </div>
+        <div class="large-2 large-2 large-2 large-2 cell large-2 cell">
+          <div class="secondary callout">
+            <h5> {{DateToday4}}</h5>
+            <img src="https://www.metaweather.com/static/img/weather/{{pic}}.svg" width="100" height="20"> <br>
+
+            <div>Temperature: {{TempToday4}}</div>
+            <div>Lowest: {{LowestTemp4}}</div>
+            <div>Highest: {{HighestTemp4}}</div>
+
+          </div>
+        </div>
+      </div>
+      <div class="large-2 large-2 large-2 large-2 cell large-2 cell">
+        <div class="secondary callout">
+          <h5> {{DateToday5}}</h5>
+          <img src="https://www.metaweather.com/static/img/weather/{{pic}}.svg" width="100" height="20"> <br>
+
+          <div>Temperature: {{TempToday5}}</div>
+          <div>Lowest: {{LowestTemp5}}</div>
+          <div>Highest: {{HighestTemp5}}</div>
+
+        </div>
+      </div>
       </div>
       <!-- ================================================================= WEATHER ======================================================================= -->
     </div>
@@ -60,7 +124,83 @@
 
     <div class="{{t3}}" id="panel3">
       <!-- ================================================================== SPORTS ======================================================================== -->
-      sports here
+				{% for msg in get_flashed_messages() %}
+					<p>{{msg}}</p>
+				{% endfor %}
+
+				{% if loggedin %}
+					<!-- <h2>Your teams:</h2>
+					{% for team in user_teams %}
+					<p>{{team}}</p>
+					<br>
+					{% endfor %} -->
+
+					<!-- Cards for each team -->
+          <div class="row">
+					{% for team in user_team_data %}
+          <div class="columns medium-3">
+					<div class="card" style="width: 350px;">
+						<div class="card-divider">
+						  <h4 style="text-align:center;">{{team.name}}</h4>
+						</div>
+						<!-- <img src="assets/img/generic/rectangle-1.jpg"> -->
+						<div class="card-section">
+						  <a href="{{team.officialSiteUrl}}">Official Team Site</a>
+						  <br>
+						  <strong>{{team.venue.city}}, {{team.locationName}}</strong>
+						</div>
+						<div class="card-section">
+						  <h6><small>Most Recent Game:</small></h6>
+						  {% if team.prevgame == "No games played this season." %}
+						    {{team.prevgame}}
+						  {% else %}
+						    <strong>Date:</strong> {{team.prevgame.gameDate}}
+						    <br>
+						    {{team.prevgame.teams.away.team.name}} vs. {{team.prevgame.teams.home.team.name}}
+						    <br>
+						    {{team.prevgame.teams.away.score}} - {{team.prevgame.teams.home.score}}
+						  {% endif %}
+						</div>
+					</div>
+        </div>
+					{% endfor %}
+        </div>
+
+					<form action="/addsport" method="POST">
+						<label for="team">Select team to add to preferences:</label>
+						<select name="team">
+						  <option disabled selected>-- select a team --</option>
+						  {% for team in teams %}
+						  <option value="{{team.name}}">{{team.name}}</option>
+						  {% endfor %}
+						  <input type="submit" value="Submit" name="submit-butom">
+						</select>
+					</form>
+				{% else %}
+					<a href="/login">Login</a> to view and add preferences.
+				{% endif %}
+
+
+			<!--
+			<h2>Most Recent Scores</h2>
+			<p>NHL schedule: https://statsapi.web.nhl.com/api/v1/schedule</p>
+			<ul class="dropdown menu" data-dropdown-menu>
+			<li>
+			<a>Select a team</a>
+			<ul class="menu">
+			{% for team in teams %}
+			<button class="hollow button">{{team.name}}</button>
+			{% endfor %}
+			</ul>
+			</li>
+			</ul> -->
+
+
+			<script>
+				$(document).ready(function() {
+					$(document).foundation();
+				})
+			</script>
       <!-- ================================================================== SPORTS ======================================================================== -->
     </div>
 
