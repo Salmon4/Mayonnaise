@@ -63,6 +63,8 @@ chenB -- 2019-11-23 23:44
 Started foreign currency exchange API. Tested retrieving and displaying base currency but front end needs more work. Added other
 sports API hyperlink to README.md.
 
+wanA --2019-11-23 23:45
+Finished adding weeks for the weather. Now it shows 5 days in advance from the orginal. Also, I tried to make it look good by using grids.
 chenB -- 2019-11-24 14:00
 Separated each API so they load when needed not all at the same time. Added topbar to basics and moved weather to under its tab.
 
