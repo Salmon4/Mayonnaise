@@ -79,3 +79,6 @@ the project. Be like Bill Gates.
 2. Understand formal and informal structures and factors in our programming environment.
 
 "HOME STRETCH PLAN"
+1. Finish displaying all necessary API data (stock/foreign currency exchange).
+2. Finish personalizing any data with user's preference.
+3. Beautify the website.
