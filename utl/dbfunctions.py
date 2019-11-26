@@ -13,11 +13,11 @@ def setup(c):
 				title text,
 				author text,
 				url text,
-				imageURL text,
-				content text
+				imageURL text
 				);""")
 
 #new day: reset topnews table
+
 def resetnews(c):
 	c.execute("DROP TABLE IF EXISTS topnews")
 	c.execute("""CREATE TABLE topnews(
@@ -25,13 +25,15 @@ def resetnews(c):
 				title text,
 				author text,
 				url text,
-				imageURL text,
-				content text
+				imageURL text
 				);""")
 
-def settopnews(news):
-	for article in news:
-		c.execute("INSERT INTO topnews VALUES ")
+#def settopnews(news):
+	#for article in news:
+		#image = article['urlToImage']
+		#if (image == null):
+
+		#c.execute("INSERT INTO topnews VALUES(?,?,?,?,?)",[1,2,3,4])
 
 #deletes all existing tables
 def reset(c):
