@@ -5,32 +5,31 @@
 {% block body %}
 
     <!-- ================================================================= WEATHER ======================================================================= -->
-    <h3>Weather in New York</h3>
-    <div class="grid-x grid-padding-x">
-      <div class="large-10 medium-10 columns">
-        <div class="success callout">
-          <h1> {{DateToday}}</h1>
-          <img src="https://www.metaweather.com/static/img/weather/{{pic}}.svg" width="100" height="20"> <br>
+    <h3>Weather in New York (celsius)</h3>
+    <div class="success callout">
+    <div class="row">
+      <div class="small-2 large-4 columns">
 
-          <div>Temperature today: {{TempToday}}</div>
-          <div>Lowest today: {{LowestTemp}}</div>
-          <div>Highest today: {{HighestTemp}}</div>
 
-        </div>
-          <div class="medium-6 columns">
-            <div class="success callout">
-              Humidity: {{humidity}}
-              <br>
-              WindSpeed: {{windspeed}}
-            </div>
-          </div>
+        <h1> {{DateToday}}</h1>
+
+        <img src="https://www.metaweather.com/static/img/weather/{{pic}}.svg" width="100" height="20"> <br>
+        <div>Temperature today: {{TempToday}}</div>
+        <div>Lowest today: {{LowestTemp}}</div>
+        <div>Highest today: {{HighestTemp}}</div>
       </div>
-    </div>
+          <div class="small-4 large-4 columns">
+            Humidity: {{humidity}}
+            <br>
+            WindSpeed: {{windspeed}}
+          </div>
+        </div>
+      </div>
     <div class="grid-x grid-padding-x">
       <div class="small-2 cell">
         <div class="secondary callout">
           <h5> {{DateToday1}}</h5>
-          <img src="https://www.metaweather.com/static/img/weather/{{pic}}.svg" width="50" height="10"> <br>
+          <img src="https://www.metaweather.com/static/img/weather/{{pic1}}.svg" width="50" height="10"> <br>
 
           <div>Temperature: {{TempToday1}}</div>
           <div>Lowest: {{LowestTemp1}}</div>
@@ -41,7 +40,7 @@
       <div class="small-2 cell">
         <div class="secondary callout">
           <h5> {{DateToday2}}</h5>
-          <img src="https://www.metaweather.com/static/img/weather/{{pic}}.svg" width="50" height="10"> <br>
+          <img src="https://www.metaweather.com/static/img/weather/{{pic2}}.svg" width="50" height="10"> <br>
 
           <div>Temperature: {{TempToday2}}</div>
           <div>Lowest: {{LowestTemp2}}</div>
@@ -52,7 +51,7 @@
       <div class="small-2 cell">
         <div class="secondary callout">
           <h5> {{DateToday3}}</h5>
-          <img src="https://www.metaweather.com/static/img/weather/{{pic}}.svg" width="50" height="10"> <br>
+          <img src="https://www.metaweather.com/static/img/weather/{{pic3}}.svg" width="50" height="10"> <br>
 
           <div>Temperature: {{TempToday3}}</div>
           <div>Lowest: {{LowestTemp3}}</div>
@@ -63,7 +62,7 @@
       <div class="small-2 cell">
         <div class="secondary callout">
           <h5> {{DateToday4}}</h5>
-          <img src="https://www.metaweather.com/static/img/weather/{{pic}}.svg" width="50" height="10"> <br>
+          <img src="https://www.metaweather.com/static/img/weather/{{pic4}}.svg" width="50" height="10"> <br>
 
           <div>Temperature: {{TempToday4}}</div>
           <div>Lowest: {{LowestTemp4}}</div>
@@ -75,7 +74,7 @@
     <div class="small-2 cell">
       <div class="secondary callout">
         <h5> {{DateToday5}}</h5>
-        <img src="https://www.metaweather.com/static/img/weather/{{pic}}.svg" width="50" height="10"> <br>
+        <img src="https://www.metaweather.com/static/img/weather/{{pic5}}.svg" width="50" height="10"> <br>
 
         <div>Temperature: {{TempToday5}}</div>
         <div>Lowest: {{LowestTemp5}}</div>
