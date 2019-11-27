@@ -144,10 +144,10 @@ def weather():
 
 @app.route("/money")
 def money():
-        #exchangeUrl = urlopen("https://api.exchangerate-api.com/v4/latest/USD")
-        #exchangeResponse = exchangeUrl.read()
-        #base = json.loads(exchangeResponse)['base']
-        return render_template("money.html")
+        exchangeUrl = urlopen("https://api.exchangerate-api.com/v4/latest/USD")
+        exchangeResponse = exchangeUrl.read()
+        base = json.loads(exchangeResponse)['base']
+        return render_template("money.html", b = base)
 
 @app.route("/account")
 def account():
