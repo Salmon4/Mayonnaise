@@ -74,6 +74,10 @@ Started work on the news api, began trying to prevent multiple calls to the api 
 chenB -- 2019-11-24 21:17
 Updated sitemap to include account tab for personalizing data.
 
+chenB -- 2019-11-24 20:09
+Changed formatting of how apis get displayed. Added an account tab and html. It will prompt you to login or create an account if you
+want to. It will soon be able to manage overall personalizations. Updated sitemap.
+
 Team -- 2019-11-20
 Actions we will take to improve based on the assigned reading:
 1. We should share code with our teammates to review/debug. You shouldn't be defensive about your errors as debugging helps improve
