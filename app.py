@@ -99,12 +99,17 @@ def auth():
 
 @app.route("/news")
 def news():
-    url = urlopen(
-        "https://newsapi.org/v2/top-headlines?country=us&apiKey=c10b74d97ec44a1f861474546fd3fc27"
-        )
-    response = url.read()
-    data = json.loads(response)['articles']
-    return render_template("news.html", articles=data)
+    news = dbfunctions.gettopnews(c)
+    print(news)
+    if (not(dbfunctions.settopnews(c,news))):
+        url = urlopen(
+            "https://newsapi.org/v2/top-headlines?country=us&apiKey=c10b74d97ec44a1f861474546fd3fc27"
+            )
+        response = url.read()
+        data = json.loads(response)['articles']
+        dbfunctions.settopnews(c,data)
+        news = dbfunctions.gettopnews(c)
+    return render_template("news.html", articles=news)
 
 @app.route("/weather")
 def weather():
@@ -155,7 +160,7 @@ def account():
         loggedIn = False
         return render_template("account.html", login = False)
 
-                    
+
 
 @app.route("/logout")
 def logout():
