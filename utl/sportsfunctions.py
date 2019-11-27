@@ -42,3 +42,20 @@ def addMostRecentGame(teamdata):
         else:
             teamdata[i]['prevgame'] = "No games played this season."
     return teamdata
+    
+#adds next game info to teamdata
+#parameter: data of user pref's teams (getUserTeamData)
+def addNextGame(teamdata):
+    out = {}
+    for i in range(len(teamdata)):
+        team = teamdata[i]
+        teamID = team['id']
+        u = urlopen("https://statsapi.web.nhl.com/api/v1/teams/"+str(teamID)+"?expand=team.schedule.next")
+        response = u.read()
+        data = json.loads(response)
+        print(data)
+        if "nextGameSchedule" in data['teams'][0]:
+            teamdata[i]['nextgame'] = data['teams'][0]['nextGameSchedule']['dates'][0]['games'][0]
+        else:
+            teamdata[i]['nextgame'] = "No games played this season."
+    return teamdata
