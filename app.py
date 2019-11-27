@@ -100,8 +100,7 @@ def auth():
 @app.route("/news")
 def news():
     news = dbfunctions.gettopnews(c)
-    print(news)
-    if (not(dbfunctions.settopnews(c,news))):
+    if (dbfunctions.checkRecency(c)):
         url = urlopen(
             "https://newsapi.org/v2/top-headlines?country=us&apiKey=c10b74d97ec44a1f861474546fd3fc27"
             )

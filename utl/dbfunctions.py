@@ -1,7 +1,7 @@
 import sqlite3   #enable control of an sqlite database
 import csv       #facilitate CSV I/O
 from datetime import date #for checking recency of topnews table
-
+lastHitApi = ""
 #create 2 general tables
 def setup(c):
 	c.execute("""CREATE TABLE IF NOT EXISTS users(
@@ -33,16 +33,20 @@ def resetnews(c):
 				url text,
 				imageURL text
 				);""")
+def checkRecency(c):
+	global lastHitApi
+	dateToday = date.today()
+	if (gettopnews(c) != []):
+		print(dateToday)
+		if (dateToday == lastHitApi):
+			return False
+	else:
+		lastHitApi= dateToday
+		return True
+	return True
 
 
 def settopnews(c,news):
-	if (gettopnews(c) != []):
-		articleDate = news[0];
-		print(articleDate)
-		dateToday = date.today();
-		print(dateToday)
-		if (articleDate == dateToday):
-			return True
 	resetnews(c)
 	for article in news:
 		image = article['urlToImage']
