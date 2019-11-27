@@ -75,8 +75,12 @@ chenB -- 2019-11-24 21:17
 Updated sitemap to include account tab for personalizing data.
 
 chenB -- 2019-11-24 20:09
-Changed formatting of how apis get displayed. Added an account tab and html. It will prompt you to login or create an account if you
-want to. It will soon be able to manage overall personalizations. Updated sitemap.
+Changed formatting of how apis get displayed. Added an account tab and html. It will prompt you to login or create an account if
+you want to. It will soon be able to manage overall personalizations. Updated sitemap.
+
+chenB -- 2019-11-27 14:39
+Got the base money in currency exchange tab to display along with all of the other foreign currency rates per 1 base dollar.
+
 
 Team -- 2019-11-20
 Actions we will take to improve based on the assigned reading:
