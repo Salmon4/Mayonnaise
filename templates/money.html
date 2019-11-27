@@ -4,4 +4,9 @@
 
 {% block body %}
   {{b}}
+
+  {% for key in d %}
+    {{key}} = {{d.get(key)}} <br>
+  {% endfor %}
+
 {% endblock %}

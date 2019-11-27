@@ -147,7 +147,8 @@ def money():
         exchangeUrl = urlopen("https://api.exchangerate-api.com/v4/latest/USD")
         exchangeResponse = exchangeUrl.read()
         base = json.loads(exchangeResponse)['base']
-        return render_template("money.html", b = base)
+        allData = json.loads(exchangeResponse)['rates']
+        return render_template("money.html", b = base, d = allData)
 
 @app.route("/account")
 def account():
