@@ -63,6 +63,8 @@ chenB -- 2019-11-23 23:44
 Started foreign currency exchange API. Tested retrieving and displaying base currency but front end needs more work. Added other
 sports API hyperlink to README.md.
 
+wanA --2019-11-23 23:45
+Finished adding weeks for the weather. Now it shows 5 days in advance from the orginal. Also, I tried to make it look good by using grids.
 chenB -- 2019-11-24 14:00
 Separated each API so they load when needed not all at the same time. Added topbar to basics and moved weather to under its tab.
 
@@ -71,6 +73,10 @@ Started work on the news api, began trying to prevent multiple calls to the api 
 
 chenB -- 2019-11-24 21:17
 Updated sitemap to include account tab for personalizing data.
+
+chenB -- 2019-11-24 20:09
+Changed formatting of how apis get displayed. Added an account tab and html. It will prompt you to login or create an account if you
+want to. It will soon be able to manage overall personalizations. Updated sitemap.
 
 Team -- 2019-11-20
 Actions we will take to improve based on the assigned reading:
