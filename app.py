@@ -95,92 +95,67 @@ def auth():
         session['userID'] = a[0]
         session['username'] = username
         flash("Welcome " + username + ". You have been logged in successfully.")
-        return redirect(url_for('home',currentTab = 1))
+        return redirect(url_for('account'))
 
-@app.route("/home/<currentTab>")
-def home(currentTab):
+@app.route("/news")
+def news():
+    url = urlopen(
+        "https://newsapi.org/v2/top-headlines?country=us&apiKey=c10b74d97ec44a1f861474546fd3fc27"
+        )
+    response = url.read()
+    data = json.loads(response)['articles']
+    return render_template("news.html", articles=data)
 
-    t1class = "tabs-panel"
-    t2class = "tabs-panel"
-    t3class = "tabs-panel"
-    t4class = "tabs-panel"
-    if (currentTab == '1'): #news
-        t1class = "tabs-panel is-active"
-        t2class = "tabs-panel"
-        t3class = "tabs-panel"
-        t4class = "tabs-panel"
-        url = urlopen(
-            "https://newsapi.org/v2/top-headlines?country=us&apiKey=c10b74d97ec44a1f861474546fd3fc27"
-            )
-        response = url.read()
-        data = json.loads(response)['articles']
-        return render_template("home.html", t1=t1class,t2=t2class,t3=t3class,t4=t4class, articles=data)
-    if (currentTab == '2'):
-        t1class = "tabs-panel" #weather
-        t2class = "tabs-panel is-active"
-        t3class = "tabs-panel"
-        t4class = "tabs-panel"
-        weatherUrl = urlopen("https://www.metaweather.com/api/location/2459115/")
-        weatherResponse = weatherUrl.read()
-        weatherData = json.loads(weatherResponse)
-        return render_template("home.html", t1=t1class,t2=t2class,t3=t3class,t4=t4class,
-                                pic=weatherData["consolidated_weather"][0]["weather_state_abbr"],DateToday=weatherData["consolidated_weather"][0]["applicable_date"],
-                                TempToday='%.7s' % weatherData["consolidated_weather"][0]["the_temp"], HighestTemp='%.7s' % weatherData["consolidated_weather"][0]["max_temp"],
-                                LowestTemp='%.7s' % weatherData["consolidated_weather"][0]["min_temp"], humidity='%.7s' % weatherData["consolidated_weather"][0]["humidity"],
-                                windspeed='%.7s' % weatherData["consolidated_weather"][0]["wind_speed"],
+@app.route("/weather")
+def weather():
+    weatherUrl = urlopen("https://www.metaweather.com/api/location/2459115/")
+    weatherResponse = weatherUrl.read()
+    weatherData = json.loads(weatherResponse)
+    return render_template("weather.html",
+                            pic=weatherData["consolidated_weather"][0]["weather_state_abbr"],DateToday=weatherData["consolidated_weather"][0]["applicable_date"],
+                            TempToday='%.7s' % weatherData["consolidated_weather"][0]["the_temp"], HighestTemp='%.7s' % weatherData["consolidated_weather"][0]["max_temp"],
+                            LowestTemp='%.7s' % weatherData["consolidated_weather"][0]["min_temp"], humidity='%.7s' % weatherData["consolidated_weather"][0]["humidity"],
+                            windspeed='%.7s' % weatherData["consolidated_weather"][0]["wind_speed"],
 
-                                pic1=weatherData["consolidated_weather"][1]["weather_state_abbr"],DateToday1=weatherData["consolidated_weather"][1]["applicable_date"],
-                                TempToday1='%.7s' % weatherData["consolidated_weather"][1]["the_temp"], HighestTemp1='%.7s' % weatherData["consolidated_weather"][1]["max_temp"],
-                                LowestTemp1='%.7s' % weatherData["consolidated_weather"][1]["min_temp"],
+                            pic1=weatherData["consolidated_weather"][1]["weather_state_abbr"],DateToday1=weatherData["consolidated_weather"][1]["applicable_date"],
+                            TempToday1='%.7s' % weatherData["consolidated_weather"][1]["the_temp"], HighestTemp1='%.7s' % weatherData["consolidated_weather"][1]["max_temp"],
+                            LowestTemp1='%.7s' % weatherData["consolidated_weather"][1]["min_temp"],
 
-                                pic2=weatherData["consolidated_weather"][2]["weather_state_abbr"],DateToday2=weatherData["consolidated_weather"][2]["applicable_date"],
-                                TempToday2='%.7s' % weatherData["consolidated_weather"][2]["the_temp"], HighestTemp2='%.7s' % weatherData["consolidated_weather"][2]["max_temp"],
-                                LowestTemp2='%.7s' % weatherData["consolidated_weather"][2]["min_temp"],
+                            pic2=weatherData["consolidated_weather"][2]["weather_state_abbr"],DateToday2=weatherData["consolidated_weather"][2]["applicable_date"],
+                            TempToday2='%.7s' % weatherData["consolidated_weather"][2]["the_temp"], HighestTemp2='%.7s' % weatherData["consolidated_weather"][2]["max_temp"],
+                            LowestTemp2='%.7s' % weatherData["consolidated_weather"][2]["min_temp"],
 
-                                pic3=weatherData["consolidated_weather"][3]["weather_state_abbr"],DateToday3=weatherData["consolidated_weather"][3]["applicable_date"],
-                                TempToday3='%.7s' % weatherData["consolidated_weather"][3]["the_temp"], HighestTemp3='%.7s' % weatherData["consolidated_weather"][3]["max_temp"],
-                                LowestTemp3='%.7s' % weatherData["consolidated_weather"][3]["min_temp"],
+                            pic3=weatherData["consolidated_weather"][3]["weather_state_abbr"],DateToday3=weatherData["consolidated_weather"][3]["applicable_date"],
+                            TempToday3='%.7s' % weatherData["consolidated_weather"][3]["the_temp"], HighestTemp3='%.7s' % weatherData["consolidated_weather"][3]["max_temp"],
+                            LowestTemp3='%.7s' % weatherData["consolidated_weather"][3]["min_temp"],
 
-                                pic4=weatherData["consolidated_weather"][4]["weather_state_abbr"],DateToday4=weatherData["consolidated_weather"][4]["applicable_date"],
-                                TempToday4='%.7s' % weatherData["consolidated_weather"][4]["the_temp"], HighestTemp4= '%.7s' % weatherData["consolidated_weather"][4]["max_temp"] ,
-                                LowestTemp4='%.7s' % weatherData["consolidated_weather"][4]["min_temp"],
-                                
-                                pic5=weatherData["consolidated_weather"][5]["weather_state_abbr"],DateToday5=weatherData["consolidated_weather"][5]["applicable_date"],
-                                TempToday5='%.7s' % weatherData["consolidated_weather"][5]["the_temp"], HighestTemp5='%.7s' % weatherData["consolidated_weather"][5]["max_temp"],
-                                LowestTemp5='%.7s' % weatherData["consolidated_weather"][5]["min_temp"]
-                                )
-    if (currentTab == '3'): #sports
-        t1class = "tabs-panel"
-        t2class = "tabs-panel"
-        t3class = "tabs-panel is-active"
-        t4class = "tabs-panel"
-        u = urlopen("https://statsapi.web.nhl.com/api/v1/teams")
-        response = u.read()
-        data = json.loads(response)
-        # username = session['username']
-        if checkAuth():
-            username = session['username']
-            userteams= sportsfunctions.getTeamsAdded(c, username)
-            allteams=data['teams']
-            userteamsdata = sportsfunctions.getUserTeamData(c, username,userteams, allteams)
-            userteamsdata = sportsfunctions.addMostRecentGame(userteamsdata)
-		    # print(userteamsdata)
-            teamsnotadded= sportsfunctions.getTeamsNotAdded(c, username, allteams)
-		    # print(teamsnotadded)
-            return render_template("home.html", t1=t1class,t2=t2class,t3=t3class,t4=t4class, loggedin=True, teams=teamsnotadded, user_teams=userteams, user_team_data=userteamsdata)
-        else:
-            return render_template("home.html", t1=t1class,t2=t2class,t3=t3class,t4=t4class, logeedin=False)
+                            pic4=weatherData["consolidated_weather"][4]["weather_state_abbr"],DateToday4=weatherData["consolidated_weather"][4]["applicable_date"],
+                            TempToday4='%.7s' % weatherData["consolidated_weather"][4]["the_temp"], HighestTemp4= '%.7s' % weatherData["consolidated_weather"][4]["max_temp"] ,
+                            LowestTemp4='%.7s' % weatherData["consolidated_weather"][4]["min_temp"],
 
-    if (currentTab == '4'): #money
-        t1class = "tabs-panel"
-        t2class = "tabs-panel"
-        t3class = "tabs-panel"
-        t4class = "tabs-panel is-active"
+                            pic5=weatherData["consolidated_weather"][5]["weather_state_abbr"],DateToday5=weatherData["consolidated_weather"][5]["applicable_date"],
+                            TempToday5='%.7s' % weatherData["consolidated_weather"][5]["the_temp"], HighestTemp5='%.7s' % weatherData["consolidated_weather"][5]["max_temp"],
+                            LowestTemp5='%.7s' % weatherData["consolidated_weather"][5]["min_temp"]
+                            )
+
+@app.route("/money")
+def money():
         #exchangeUrl = urlopen("https://api.exchangerate-api.com/v4/latest/USD")
         #exchangeResponse = exchangeUrl.read()
         #base = json.loads(exchangeResponse)['base']
-        return render_template("home.html", t1=t1class,t2=t2class,t3=t3class,t4=t4class, articles=data
-                            )
+        return render_template("money.html")
+
+@app.route("/account")
+def account():
+    if (checkAuth()):
+        username = session['username']
+        loggedIn = True
+        return render_template("account.html", login = True, user = username)
+    else:
+        loggedIn = False
+        return render_template("account.html", login = False)
+
+                    
 
 @app.route("/logout")
 def logout():

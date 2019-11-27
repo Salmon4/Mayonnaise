@@ -15,11 +15,20 @@
       <div class="title-bar-left">
       </div>
       <div class="title-bar-center">
-        <span class="title-bar-text"><a href="{{url_for('home', currentTab = 1)}}">Mayonnaise News</a></span>
+        <span class="title-bar-text"><a href="/news">Mayonnaise News</a></span>
       </div>
       <div class="title-bar-right">
       </div>
     </div>
+
+    <ul class="tabs" data-responsive-accordion-tabs="tabs small-accordion medium-tabs large-tabs" id="collapsing-tabs" data-allow-all-closed="true" data-multi-expand="true">
+      <li class="tabs-title"><a href="/account" >Account</a></li>
+      <li class="tabs-title"><a href="/news" >News</a></li>
+      <li class="tabs-title"><a href="/weather" >Weather</a></li>
+      <li class="tabs-title"><a href="/sports">Sports</a></li>
+      <li class="tabs-title"><a href="/money" >Currency Exchange</a></li>
+      <div class="slide"></div>
+    </ul>
 
 </header>
 
