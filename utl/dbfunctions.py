@@ -1,6 +1,6 @@
 import sqlite3   #enable control of an sqlite database
 import csv       #facilitate CSV I/O
-
+from datetime import date #for checking recency of topnews table
 #create 2 general tables
 def setup(c):
 	c.execute("""CREATE TABLE IF NOT EXISTS users(
@@ -13,8 +13,7 @@ def setup(c):
 				title text,
 				author text,
 				url text,
-				imageURL text,
-				content text
+				imageURL text
 				);""")
 
 #new day: reset topnews table
@@ -25,13 +24,30 @@ def resetnews(c):
 				title text,
 				author text,
 				url text,
-				imageURL text,
-				content text
+				imageURL text
 				);""")
 
-def settopnews(news):
+def settopnews(c,news):
+	date = news[0]['publishedAt'][0:10];
+	dateToday = date.today();
+	if (date == dateToday):
+		return
 	for article in news:
-		c.execute("INSERT INTO topnews VALUES ")
+		image = article['urlToImage']
+		author = article['author']
+		url = article['url']
+		datetime = article['publishedAt']
+		title = article['title']
+		if (image == None):
+			image = "newspaper.jpg"
+		if (author == None)
+			author = "None"
+		c.execute(
+		"INSERT INTO topnews VALUES("+datetime+","+title+","+author+","url+","image+")"
+		)
+	return
+
+
 
 #deletes all existing tables
 def reset(c):
