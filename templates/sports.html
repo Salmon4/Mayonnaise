@@ -43,12 +43,22 @@
 						  {% if team.prevgame == "No games played this season." %}
 						    {{team.prevgame}}
 						  {% else %}
-						    <strong>Date:</strong> {{team.prevgame.gameDate}}
+						    <strong>Date:</strong> {{team.prevgame.gameDate.split('T')[0]}}
 						    <br>
-						    {{team.prevgame.teams.away.team.name}} vs. {{team.prevgame.teams.home.team.name}}
+						    {% if team.prevgame.teams.away.score > team.prevgame.teams.home.score %} 
+						    <span style="color:green">{{team.prevgame.teams.away.team.name}}</span> vs. <span style="color:red">{{team.prevgame.teams.home.team.name}}</span>
+						    <br>						    
+						    <span style="color:green">{{team.prevgame.teams.away.score}}</span> - <span style="color:red">{{team.prevgame.teams.home.score}}</span>
+						    {% elif team.prevgame.teams.away.score < team.prevgame.teams.home.score %}
+						    <span style="color:red">{{team.prevgame.teams.away.team.name}}</span> vs. <span style="color:green">{{team.prevgame.teams.home.team.name}}</span>
+						    <br> 
+						    <span style="color:red">{{team.prevgame.teams.away.score}}</span> - <span style="color:green">{{team.prevgame.teams.home.score}}</span>
+						    {% else %}
+						    <span>{{team.prevgame.teams.away.team.name}}</span> vs. <span>{{team.prevgame.teams.home.team.name}}</span>
 						    <br>
-						    {{team.prevgame.teams.away.score}} - {{team.prevgame.teams.home.score}}
-						  {% endif %}
+						    <span>{{team.prevgame.teams.away.score}} - {{team.prevgame.teams.home.score}}</span>
+						    {% endif %}
+						 {% endif %}
 						</div>
 					</div>
         </div>
