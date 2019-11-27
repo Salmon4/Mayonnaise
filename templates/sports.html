@@ -17,74 +17,79 @@
   <p>{{msg}}</p>
   {% endfor %}
 
-  {% if loggedin %}
-    <h2>Your teams:</h2>
-    {% for team in user_teams %}
-    <p>{{team}}</p>
-    <br>
-    {% endfor %}
+				{% if loggedin %}
+					<!-- <h2>Your teams:</h2>
+					{% for team in user_teams %}
+					<p>{{team}}</p>
+					<br>
+					{% endfor %} -->
 
-    <!-- Cards for each team -->
-    {% for team in user_team_data %}
-    <div class="card" style="width: 300px;">
-      <div class="card-divider">
-        <h4>{{team.name}}</h4>
-      </div>
-      <!-- <img src="assets/img/generic/rectangle-1.jpg"> -->
-      <div class="card-section">
-        <a href="{{team.officialSiteUrl}}">Official Team Site</a>
-        <br>
-        <strong>{{team.venue.city}}, {{team.locationName}}</strong>
-      </div>
-      <div class="card-section">
-        <h6><small>Most Recent Game:</small></h6>
-        {% if team.prevgame == "No games played this season." %}
-          {{team.prevgame}}
-        {% else %}
-          <strong>Date:</strong> {{team.prevgame.gameDate}}
-          <br>
-          {{team.prevgame.teams.away.team.name}} vs. {{team.prevgame.teams.home.team.name}}
-          <br>
-          {{team.prevgame.teams.away.score}} - {{team.prevgame.teams.home.score}}
-        {% endif %}
-      </div>
-    </div>
-    {% endfor %}
+					<!-- Cards for each team -->
+          <div class="grid-x grid-padding-x">
+					{% for team in user_team_data %}
+          <div class="columns medium-3">
+					<div class="card" style="width: 350px;">
+						<div class="card-divider">
+						  <h4 style="text-align:center;">{{team.name}}</h4>
+						</div>
+						<!-- <img src="assets/img/generic/rectangle-1.jpg"> -->
+						<div class="card-section">
+						  <a href="{{team.officialSiteUrl}}">Official Team Site</a>
+						  <br>
+						  <strong>{{team.venue.city}}, {{team.locationName}}</strong>
+						</div>
+						<div class="card-section">
+						  <h6><small>Most Recent Game:</small></h6>
+						  {% if team.prevgame == "No games played this season." %}
+						    {{team.prevgame}}
+						  {% else %}
+						    <strong>Date:</strong> {{team.prevgame.gameDate}}
+						    <br>
+						    {{team.prevgame.teams.away.team.name}} vs. {{team.prevgame.teams.home.team.name}}
+						    <br>
+						    {{team.prevgame.teams.away.score}} - {{team.prevgame.teams.home.score}}
+						  {% endif %}
+						</div>
+					</div>
+        </div>
+					{% endfor %}
+        </div>
 
-    <form action="/addsport" method="POST">
-      <label for="team">Select team to add to preferences:</label>
-      <select name="team">
-        <option disabled selected>-- select a team --</option>
-        {% for team in teams %}
-        <option value="{{team.name}}">{{team.name}}</option>
-        {% endfor %}
-        <input type="submit" value="Submit" name="submit-butom">
-      </select>
-    </form>
-  {% else %}
-    <a href="/login">Login</a> to view and add preferences.
-  {% endif %}
-
-
-<!--
-<h2>Most Recent Scores</h2>
-<p>NHL schedule: https://statsapi.web.nhl.com/api/v1/schedule</p>
-<ul class="dropdown menu" data-dropdown-menu>
-<li>
-<a>Select a team</a>
-<ul class="menu">
-{% for team in teams %}
-<button class="hollow button">{{team.name}}</button>
-{% endfor %}
-</ul>
-</li>
-</ul> -->
+					<form action="/addsport" method="POST">
+						<label for="team">Select team to add to preferences:</label>
+						<select name="team">
+						  <option disabled selected>-- select a team --</option>
+						  {% for team in teams %}
+						  <option value="{{team.name}}">{{team.name}}</option>
+						  {% endfor %}
+						  <input type="submit" value="Submit" name="submit-butom">
+						</select>
+					</form>
+				{% else %}
+					<a href="/login">Login</a> to view and add preferences.
+				{% endif %}
 
 
-<script>
-  $(document).ready(function() {
-    $(document).foundation();
-  })
-</script>
+			<!--
+			<h2>Most Recent Scores</h2>
+			<p>NHL schedule: https://statsapi.web.nhl.com/api/v1/schedule</p>
+			<ul class="dropdown menu" data-dropdown-menu>
+			<li>
+			<a>Select a team</a>
+			<ul class="menu">
+			{% for team in teams %}
+			<button class="hollow button">{{team.name}}</button>
+			{% endfor %}
+			</ul>
+			</li>
+			</ul> -->
+
+
+			<script>
+				$(document).ready(function() {
+					$(document).foundation();
+				})
+			</script>
+
 
 {% endblock %}
