@@ -34,7 +34,7 @@ Brandon Chen
     -https://docs.google.com/document/d/1_CkEqysrBYJQ7XZBEWMpMrWhCQb0HPMPLGLknhnDtsA/edit
     
   - Stock API
-    -
+    
 
 # Instructions
 1. Clone this repo using the SSH or HTTPS
