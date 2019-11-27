@@ -6,7 +6,11 @@
   Your base currency is: {{b}}
 
   {% for key in d %}
-    {{key}} = {{d.get(key)}} <br>
+  <div class="large-3 large-3 large-3 large-3 cell">
+  <div class="primary callout">
+    <p>{{key}} = {{d.get(key)}} </p>
+  </div>
+</div>
   {% endfor %}
 
 {% endblock %}
