@@ -148,7 +148,7 @@ def money():
         exchangeResponse = exchangeUrl.read()
         base = json.loads(exchangeResponse)['base']
         allData = json.loads(exchangeResponse)['rates']
-        return render_template("money.html", b = base, d = allData)
+        return render_template("money.html", b = base, d = allData, count = 1)
 
 @app.route("/account")
 def account():

@@ -3,14 +3,26 @@
 {% endblock %}
 
 {% block body %}
-  Your base currency is: {{b}}
-
+Your base currency is: {{b}} <br>
+  <div class="grid-x grid-padding-x">
   {% for key in d %}
-  <div class="large-3 large-3 large-3 large-3 cell">
-  <div class="primary callout">
-    <p>{{key}} = {{d.get(key)}} </p>
-  </div>
-</div>
-  {% endfor %}
+  {% if (loop.index ) % 4 == 0 %}
+    <div class="large-3 large-3 large-3 large-3 cell">
+      <div class="primary callout">
+        <p>{{key}} = {{d.get(key)}} </p>
+      </div>
+    </div>
+    </div>
+    <div class="grid-x grid-padding-x">
 
+  {% else %}
+    <div class="large-3 large-3 large-3 large-3 cell">
+      <div class="primary callout">
+        <p>{{key}} = {{d.get(key)}} </p>
+      </div>
+    </div>
+
+  {% endif %}
+  {% endfor %}
+  </div>
 {% endblock %}
