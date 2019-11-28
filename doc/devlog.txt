@@ -81,6 +81,9 @@ you want to. It will soon be able to manage overall personalizations. Updated si
 chenB -- 2019-11-27 14:39
 Got the base money in currency exchange tab to display along with all of the other foreign currency rates per 1 base dollar.
 
+chenB -- 2019-11-27 22:28
+Place each currency exchange rates into cards in a 4 column grid format with base currency at the top.
+
 
 Team -- 2019-11-20
 Actions we will take to improve based on the assigned reading:
