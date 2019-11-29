@@ -15,7 +15,15 @@ res = conn.getresponse()
 data = res.read()
 
 # print(data.decode("utf-8"))
-print(data)
+#print(data)
+print("\n\n")
+testd = [("Ghost", 2), ("gost", 3)]
+print(len(testd))
+inn = False
+for tuple in testd:
+    if "gost" in tuple:
+        inn=True
+print(inn)
 
 # import requests
 #
