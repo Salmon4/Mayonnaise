@@ -181,6 +181,7 @@ def sports():
         allteams=data['teams']
         userteamsdata = sportsfunctions.getUserTeamData(c, username,userteams, allteams)
         userteamsdata = sportsfunctions.addMostRecentGame(userteamsdata)
+        userteamsdata = sportsfunctions.addNextGame(userteamsdata)
         # print(userteamsdata)
         teamsnotadded= sportsfunctions.getTeamsNotAdded(c, username, allteams)
         # print(teamsnotadded)
