@@ -174,6 +174,8 @@ def sports():
     u = urlopen("https://statsapi.web.nhl.com/api/v1/teams")
     response = u.read()
     data = json.loads(response)
+    NHLtodayscores = sportsfunctions.getNHLTodayScores(c)
+    print(NHLtodayscores)
     # username = session['username']
     if checkAuth():
         username = session['username']
@@ -185,9 +187,9 @@ def sports():
         # print(userteamsdata)
         teamsnotadded= sportsfunctions.getTeamsNotAdded(c, username, allteams)
         # print(teamsnotadded)
-        return render_template("sports.html", loggedin=True, teams=teamsnotadded, user_teams=userteams, user_team_data=userteamsdata)
+        return render_template("sports.html", loggedin=True, teams=teamsnotadded, user_teams=userteams, user_team_data=userteamsdata, NHLtoday=NHLtodayscores)
     else:
-        return render_template("sports.html", logeedin=False)
+        return render_template("sports.html", logeedin=False, NHLtoday=NHLtodayscores)
 
 @app.route("/dropdown")
 def dropdown():
