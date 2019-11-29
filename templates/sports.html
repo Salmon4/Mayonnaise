@@ -27,8 +27,8 @@
 					<!-- Cards for each team -->
           <div class="grid-x grid-padding-x">
 					{% for team in user_team_data %}
-          <div class="columns medium-3">
-					<div class="card" style="width: 350px;">
+          <div class="columns medium-4">
+					<div class="card" style="width: 400px; padding=15px">
 						<div class="card-divider">
 						  <h4 style="text-align:center;">{{team.name}}</h4>
 						</div>
@@ -39,19 +39,20 @@
 						  <strong>{{team.venue.city}}, {{team.locationName}}</strong>
 						</div>
 						<div class="card-section">
+              <br>
 						  <h6><small>Most Recent Game:</small></h6>
 						  {% if team.prevgame == "No games played this season." %}
 						    {{team.prevgame}}
 						  {% else %}
 						    <strong>Date:</strong> {{team.prevgame.gameDate.split('T')[0]}}
 						    <br>
-						    {% if team.prevgame.teams.away.score > team.prevgame.teams.home.score %} 
+						    {% if team.prevgame.teams.away.score > team.prevgame.teams.home.score %}
 						    <span style="color:green">{{team.prevgame.teams.away.team.name}}</span> vs. <span style="color:red">{{team.prevgame.teams.home.team.name}}</span>
-						    <br>						    
+						    <br>
 						    <span style="color:green">{{team.prevgame.teams.away.score}}</span> - <span style="color:red">{{team.prevgame.teams.home.score}}</span>
 						    {% elif team.prevgame.teams.away.score < team.prevgame.teams.home.score %}
 						    <span style="color:red">{{team.prevgame.teams.away.team.name}}</span> vs. <span style="color:green">{{team.prevgame.teams.home.team.name}}</span>
-						    <br> 
+						    <br>
 						    <span style="color:red">{{team.prevgame.teams.away.score}}</span> - <span style="color:green">{{team.prevgame.teams.home.score}}</span>
 						    {% else %}
 						    <span>{{team.prevgame.teams.away.team.name}}</span> vs. <span>{{team.prevgame.teams.home.team.name}}</span>
@@ -59,6 +60,14 @@
 						    <span>{{team.prevgame.teams.away.score}} - {{team.prevgame.teams.home.score}}</span>
 						    {% endif %}
 						 {% endif %}
+             <h6><small>Next Game:</small></h6>
+             {% if team.nextgame == "No upcoming games." %}
+                {{team.nextgame}}
+            {% else %}
+                <strong>Date:</strong> {{team.nextgame.gameDate.split('T')[0]}}
+                <br>
+                <span>{{team.prevgame.teams.away.team.name}} vs. {{team.prevgame.teams.home.team.name}}</span>
+             {% endif %}
 						</div>
 					</div>
         </div>
