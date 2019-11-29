@@ -17,6 +17,32 @@
   <p>{{msg}}</p>
   {% endfor %}
 
+  <h1>NHL</h1>
+  <h3><small>Today's Scores:</small></h3>
+  <div class="grid-x grid-padding-x">
+  {% for game in NHLtoday %}
+    <div class="columns medium-4">
+      <div class="card" style="width: 400px; padding=15px">
+        {% if game[4] > game[5] %}
+        <span style="color:green">{{game[2]}}</span> vs. <span style="color:red">{{game[3]}}</span>
+        <br>
+        <span style="color:green">{{game[4]}}</span> - <span style="color:red">{{game[5]}}</span>
+        {% elif game[4] < game[5] %}
+        <span style="color:red">{{game[2]}}</span> vs. <span style="color:green">{{game[3]}}</span>
+        <br>
+        <span style="color:red">{{game[4]}}</span> - <span style="color:green">{{game[5]}}</span>
+        {% else %}
+        <span>{{game[2]}}</span> vs. <span>{{game[3]}}</span>
+        <br>
+        <span>{{game[4]}} - {{game[5]}}</span>
+        {% endif %}
+      </div>
+    </div>
+
+
+  {% endfor %}
+  </div>
+
 				{% if loggedin %}
 					<!-- <h2>Your teams:</h2>
 					{% for team in user_teams %}
@@ -25,6 +51,8 @@
 					{% endfor %} -->
 
 					<!-- Cards for each team -->
+
+      <h3><small>Scores From Your Teams:</small></h3>
           <div class="grid-x grid-padding-x">
 					{% for team in user_team_data %}
           <div class="columns medium-4">
