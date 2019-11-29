@@ -16,6 +16,14 @@ def setup(c):
 				url text,
 				imageURL text
 				);""")
+	c.execute("""CREATE TABLE IF NOT EXISTS nhl_scores(
+				datetime text,
+				gameID integer,
+				home text,
+				away text,
+				home_score integer,
+				away_score integer
+				);""")
 
 def gettopnews(c):
 	c.execute("SELECT * FROM topnews")
