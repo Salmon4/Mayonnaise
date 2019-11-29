@@ -42,7 +42,7 @@ def addMostRecentGame(teamdata):
         else:
             teamdata[i]['prevgame'] = "No games played this season."
     return teamdata
-    
+
 #adds next game info to teamdata
 #parameter: data of user pref's teams (getUserTeamData)
 def addNextGame(teamdata):
@@ -57,5 +57,5 @@ def addNextGame(teamdata):
         if "nextGameSchedule" in data['teams'][0]:
             teamdata[i]['nextgame'] = data['teams'][0]['nextGameSchedule']['dates'][0]['games'][0]
         else:
-            teamdata[i]['nextgame'] = "No games played this season."
+            teamdata[i]['nextgame'] = "No upcoming games."
     return teamdata
