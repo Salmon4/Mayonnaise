@@ -4,11 +4,24 @@
 
 {% block body %}
 
+<style>
+  .column {
+    float: left;
+    width: 25%;
+  }
+
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  </style>
+
     <!-- ================================================================= WEATHER ======================================================================= -->
     <h3>Weather in New York (celsius)</h3>
     <div class="success callout">
     <div class="row">
-      <div class="small-2 large-4 columns">
+      <div class="column">
 
 
         <h1> {{DateToday}}</h1>
@@ -18,12 +31,15 @@
         <div>Lowest today: {{LowestTemp}}</div>
         <div>Highest today: {{HighestTemp}}</div>
       </div>
-          <div class="small-4 large-4 columns">
+      <div class = "column">
+        <br>
+        <br>
+        <br>
             Humidity: {{humidity}}
             <br>
             WindSpeed: {{windspeed}}
-          </div>
         </div>
+      </div>
       </div>
     <div class="grid-x grid-padding-x">
       <div class="small-2 cell">
