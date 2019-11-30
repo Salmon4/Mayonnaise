@@ -19,27 +19,31 @@
 
     <!-- ================================================================= WEATHER ======================================================================= -->
     <h3>Weather in New York (celsius)</h3>
-    <div class="success callout">
-    <div class="row">
-      <div class="column">
+      <div class="grid-x grid-padding-x">
+        <div class="medium-10 cell">
+          <div class="success callout">
+          <div class="row">
+            <div class="column">
 
 
-        <h1> {{DateToday}}</h1>
+              <h1> {{DateToday}}</h1>
 
-        <img src="https://www.metaweather.com/static/img/weather/{{pic}}.svg" width="100" height="20"> <br>
-        <div>Temperature today: {{TempToday}}</div>
-        <div>Lowest today: {{LowestTemp}}</div>
-        <div>Highest today: {{HighestTemp}}</div>
-      </div>
-      <div class = "column">
-        <br>
-        <br>
-        <br>
-            Humidity: {{humidity}}
-            <br>
-            WindSpeed: {{windspeed}}
+              <img src="https://www.metaweather.com/static/img/weather/{{pic}}.svg" width="100" height="20"> <br>
+              <div>Temperature today: {{TempToday}}</div>
+              <div>Lowest today: {{LowestTemp}}</div>
+              <div>Highest today: {{HighestTemp}}</div>
+            </div>
+            <div class = "column">
+              <br>
+              <br>
+              <br>
+                  Humidity: {{humidity}}
+                  <br>
+                  WindSpeed: {{windspeed}}
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
       </div>
     <div class="grid-x grid-padding-x">
       <div class="small-2 cell">
