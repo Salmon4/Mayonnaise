@@ -14,6 +14,9 @@
           <input type="search" name="search" placeholder="Search..." class="animated-search-form" required>
           <input type="submit" value='Search'>
       </form>
+      <br>
+      <h4>Today's Top Headlines</h4>
+      <br>
       <div class="grid-x grid-padding-x">
           {% for article in articles%}
           <div class="large-4 cell">
@@ -21,7 +24,8 @@
               <div class="large-12 cell">
                   <img src={{article[4]}}>
               </div>
-              <p>{{article[5]}}</p>
+              <p>{{article[5]}}</p><br>
+              <p>{{article[0][0:10]}}</p>
           </div>
           {% endfor %}
       </div>
