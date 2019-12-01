@@ -89,6 +89,7 @@ def reset(c):
 #==========================================================
 def newUserTable(c, username):
 	c.execute("CREATE TABLE IF NOT EXISTS "+username+" (area text, preference text)")
+	addUserPref(c, username, "base_currency", "USD")
 
 def addUserPref(c, username, pref_area, pref):
 	c.execute("INSERT INTO "+username+" VALUES('"+pref_area+"', '"+pref+"')")
@@ -96,3 +97,6 @@ def addUserPref(c, username, pref_area, pref):
 def getUserPrefs(c, username, pref_area):
 	c.execute("SELECT preference FROM "+username+" WHERE area = ?", (pref_area, ))
 	return c.fetchall()
+
+def updatePref(c , username, pref_area, pref):
+	c.execute("UPDATE "+username+" SET preference = '"+pref+"' WHERE area = ?", (pref_area,))

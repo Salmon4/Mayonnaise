@@ -153,21 +153,39 @@ def weather():
 
 @app.route("/money/<amount>")
 def money(amount):
-        exchangeUrl = urlopen("https://api.exchangerate-api.com/v4/latest/USD")
+        if (checkAuth()):
+            tableBase = dbfunctions.getUserPrefs(c, session['username'], "base_currency")
+            first = tableBase[0]
+            exchangeUrl = urlopen("https://api.exchangerate-api.com/v4/latest/" + first[0])
+        else:
+            exchangeUrl = urlopen("https://api.exchangerate-api.com/v4/latest/USD")
         exchangeResponse = exchangeUrl.read()
         base = json.loads(exchangeResponse)['base']
         allData = json.loads(exchangeResponse)['rates']
         print(amount)
         am = float(amount)
-        return render_template("money.html", b = base, d = allData, count = 1
-                                , a = am)
+        if (checkAuth()):
+            tableBase2 = dbfunctions.getUserPrefs(c, session['username'], "base_currency")
+            first2 = tableBase[0]
+            return render_template("money.html", b = first2, d = allData, count = 1
+                                    , a = am, loggedIn = True)
+        else:
+            return render_template("money.html", b = base, d = allData, count = 1
+                                    , a = am, loggedIn = False)
 
-@app.route("/moneyprocess", methods=['POST','GET'])
+@app.route("/moneyprocess", methods=['POST','GET']) #changes the amount converted
 def moneyprocess():
     i = request.form['amount']
     info = float(i)
     return redirect(url_for('money', amount = info))
 
+@app.route("/changeBase/<am>", methods=['POST'])
+def changeBase(am):
+    newBase = request.form['base']
+    username = session['username']
+    dbfunctions.updatePref(c, username, "base_currency", newBase)
+    db.commit()
+    return redirect(url_for('money', amount = am))
 
 @app.route("/account")
 def account():
