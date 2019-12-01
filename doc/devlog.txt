@@ -106,6 +106,10 @@ pehlivanianL -- 2019-11-29 10:19
 Added function to get 3 scores from today's schedule. Created nhl_today table, and function resets the table each day.
 Added code to print today's score (formatted) in sports.html in cards, regardless of whether the user is logged in.
 
+chenB -- 2019-11-30 19:03
+Added function that allows the user to input how much of the base currency they want to convert. Displayed foreign currency will change
+accordingly and is in floats to account for cents. Default is 1.
+
 Team -- 2019-11-20
 Actions we will take to improve based on the assigned reading:
 1. We should share code with our teammates to review/debug. You shouldn't be defensive about your errors as debugging helps improve

@@ -3,6 +3,7 @@ from urllib.request import urlopen
 import json
 import sqlite3, os
 from utl import dbfunctions, sportsfunctions
+from newsapi import NewsApiClient
 
 app = Flask(__name__)
 
@@ -25,7 +26,6 @@ def checkAuth():
 
 @app.route("/")
 def root():
-
     if checkAuth():
         username = session['username']
         flash("Welcome " + username + ". You have been logged in successfully.")
@@ -99,16 +99,25 @@ def auth():
 
 @app.route("/news")
 def news():
+    if (not(checkAuth())):
+        flash("Login to create preferences")
     news = dbfunctions.gettopnews(c)
     if (dbfunctions.checkRecency(c)):
-        url = urlopen(
-            "https://newsapi.org/v2/top-headlines?country=us&apiKey=c10b74d97ec44a1f861474546fd3fc27"
-            )
-        response = url.read()
-        data = json.loads(response)['articles']
+        newsapi = NewsApiClient(api_key='c10b74d97ec44a1f861474546fd3fc27')
+        top_headlines = newsapi.get_top_headlines(language='en',country='us')
+        data = top_headlines['articles']
         dbfunctions.settopnews(c,data)
         news = dbfunctions.gettopnews(c)
     return render_template("news.html", articles=news)
+
+@app.route("/search", methods=['POST'])
+def search():
+    print(request.form)
+    Search = request.form['search']
+    newsapi = NewsApiClient(api_key='c10b74d97ec44a1f861474546fd3fc27')
+    news = newsapi.get_everything(q=Search,language='en',page=1)
+    print(news)
+    return render_template("searchnews.html", search = Search, articles = news['articles'])
 
 @app.route("/weather")
 def weather():
@@ -142,13 +151,23 @@ def weather():
                             LowestTemp5='%.7s' % weatherData["consolidated_weather"][5]["min_temp"]
                             )
 
-@app.route("/money")
-def money():
+@app.route("/money/<amount>")
+def money(amount):
         exchangeUrl = urlopen("https://api.exchangerate-api.com/v4/latest/USD")
         exchangeResponse = exchangeUrl.read()
         base = json.loads(exchangeResponse)['base']
         allData = json.loads(exchangeResponse)['rates']
-        return render_template("money.html", b = base, d = allData, count = 1)
+        print(amount)
+        am = float(amount)
+        return render_template("money.html", b = base, d = allData, count = 1
+                                , a = am)
+
+@app.route("/moneyprocess", methods=['POST','GET'])
+def moneyprocess():
+    i = request.form['amount']
+    info = float(i)
+    return redirect(url_for('money', amount = info))
+
 
 @app.route("/account")
 def account():
@@ -159,8 +178,6 @@ def account():
     else:
         loggedIn = False
         return render_template("account.html", login = False)
-
-
 
 @app.route("/logout")
 def logout():
