@@ -151,13 +151,23 @@ def weather():
                             LowestTemp5='%.7s' % weatherData["consolidated_weather"][5]["min_temp"]
                             )
 
-@app.route("/money")
-def money():
+@app.route("/money/<amount>")
+def money(amount):
         exchangeUrl = urlopen("https://api.exchangerate-api.com/v4/latest/USD")
         exchangeResponse = exchangeUrl.read()
         base = json.loads(exchangeResponse)['base']
         allData = json.loads(exchangeResponse)['rates']
-        return render_template("money.html", b = base, d = allData, count = 1)
+        print(amount)
+        am = float(amount)
+        return render_template("money.html", b = base, d = allData, count = 1
+                                , a = am)
+
+@app.route("/moneyprocess", methods=['POST','GET'])
+def moneyprocess():
+    i = request.form['amount']
+    info = float(i)
+    return redirect(url_for('money', amount = info))
+
 
 @app.route("/account")
 def account():

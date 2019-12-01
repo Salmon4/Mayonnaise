@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.5.3/dist/css/foundation.min.css">
-  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" type="text/css" href="css/app.css">
     {% block header %}
     <title>{% block title %} {% endblock %} | Mayonnaise</title>
     {% endblock %}
@@ -26,7 +26,7 @@
       <li class="tabs-title"><a href="/news" >News</a></li>
       <li class="tabs-title"><a href="/weather" >Weather</a></li>
       <li class="tabs-title"><a href="/sports">Sports</a></li>
-      <li class="tabs-title"><a href="/money" >Currency Exchange</a></li>
+      <li class="tabs-title"><a href={{url_for('money', amount = 1)}} >Currency Exchange</a></li>
       <div class="slide"></div>
     </ul>
 
