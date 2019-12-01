@@ -3,6 +3,7 @@ from urllib.request import urlopen
 import json
 import sqlite3, os
 from utl import dbfunctions, sportsfunctions
+from newsapi import NewsApiClient
 
 app = Flask(__name__)
 
@@ -25,7 +26,6 @@ def checkAuth():
 
 @app.route("/")
 def root():
-
     if checkAuth():
         username = session['username']
         flash("Welcome " + username + ". You have been logged in successfully.")
@@ -99,16 +99,25 @@ def auth():
 
 @app.route("/news")
 def news():
+    if (not(checkAuth())):
+        flash("Login to create preferences")
     news = dbfunctions.gettopnews(c)
     if (dbfunctions.checkRecency(c)):
-        url = urlopen(
-            "https://newsapi.org/v2/top-headlines?country=us&apiKey=c10b74d97ec44a1f861474546fd3fc27"
-            )
-        response = url.read()
-        data = json.loads(response)['articles']
+        newsapi = NewsApiClient(api_key='c10b74d97ec44a1f861474546fd3fc27')
+        top_headlines = newsapi.get_top_headlines(language='en',country='us')
+        data = top_headlines['articles']
         dbfunctions.settopnews(c,data)
         news = dbfunctions.gettopnews(c)
     return render_template("news.html", articles=news)
+
+@app.route("/search", methods=['POST'])
+def search():
+    print(request.form)
+    Search = request.form['search']
+    newsapi = NewsApiClient(api_key='c10b74d97ec44a1f861474546fd3fc27')
+    news = newsapi.get_everything(q=Search,language='en',page=1)
+    print(news)
+    return render_template("searchnews.html", search = Search, articles = news['articles'])
 
 @app.route("/weather")
 def weather():
@@ -159,8 +168,6 @@ def account():
     else:
         loggedIn = False
         return render_template("account.html", login = False)
-
-
 
 @app.route("/logout")
 def logout():

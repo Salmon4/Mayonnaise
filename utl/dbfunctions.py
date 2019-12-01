@@ -14,7 +14,8 @@ def setup(c):
 				title text,
 				author text,
 				url text,
-				imageURL text
+				imageURL text,
+				description text
 				);""")
 	c.execute("""CREATE TABLE IF NOT EXISTS nhl_scores(
 				datetime text,
@@ -39,7 +40,8 @@ def resetnews(c):
 				title text,
 				author text,
 				url text,
-				imageURL text
+				imageURL text,
+				description text
 				);""")
 def checkRecency(c):
 	global lastHitApi
@@ -62,12 +64,15 @@ def settopnews(c,news):
 		url = article['url']
 		datetime = article['publishedAt']
 		title = article['title']
+		description = article['description']
+		if (description == None):
+			description = "None"
 		if (image == None):
-			image = "/newspaper.jpg"
+			image = "newspaper.jpg"
 		if (author == None):
 			author = "N/A"
 		c.execute(
-		"INSERT INTO topnews VALUES(?,?,?,?,?)",(datetime,title,author,url,image,)
+		"INSERT INTO topnews VALUES(?,?,?,?,?,?)",(datetime,title,author,url,image,description,)
 		)
 	return False
 
