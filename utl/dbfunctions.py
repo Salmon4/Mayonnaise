@@ -23,7 +23,17 @@ def setup(c):
 				home text,
 				away text,
 				home_score integer,
-				away_score integer
+				away_score integer,
+				status text
+				);""")
+	c.execute("""CREATE TABLE IF NOT EXISTS nba_scores(
+				datetime text,
+				gameID integer,
+				home text,
+				away text,
+				home_score integer,
+				away_score integer,
+				status text
 				);""")
 
 def gettopnews(c):
