@@ -15,6 +15,8 @@ DB_FILE = "mayonnaise.db"
 db = sqlite3.connect(DB_FILE, check_same_thread=False) #open if file exists, otherwise create
 c = db.cursor() #facilitate db operations
 
+c.execute("DROP TABLE nhl_scores")
+
 dbfunctions.setup(c)
 
 def checkAuth():
