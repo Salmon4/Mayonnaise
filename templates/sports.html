@@ -17,6 +17,45 @@
   <p>{{msg}}</p>
   {% endfor %}
 
+  <h1>NBA</h1>
+  <h3><small>Today's Scores:</small></h3>
+  <div class="grid-x grid-padding-x">
+  {% for game in NBAtoday %}
+    <div class="columns medium-4">
+      <div class="card" style="width: 400px; padding=15px">
+        {% if game[6] == "Final" %}
+
+          {% if game[4] > game[5] %}
+          <span> <strong style="color:green">{{game[2]}}> vs. <strong style="color:red">{{game[3]}}</span>
+          <!-- <br> -->
+          <span> <strong style="color:green">{{game[4]}}> - <strong style="color:red">{{game[5]}}</span>
+          {% elif game[4] < game[5] %}
+          <span> <strong style="color:red">{{game[2]}}> vs. <strong style="color:green">{{game[3]}}</span>
+          <!-- <br> -->
+          <span> <strong style="color:red">{{game[4]}}> - <strong style="color:green">{{game[5]}}</span>
+          {% else %}
+          <span><strong>{{game[2]}}</strong> vs. <strong>{{game[3]}}</strong></span>
+          <!-- <br> -->
+          <span>{{game[4]}} - {{game[5]}}</span>
+          {% endif %}
+
+        {% elif "Qtr" in game[6] %}
+        <h6 style="color:red">Live:</h6>
+        <span><strong>{{game[2]}}</strong> vs. <strong>{{game[3]}}</strong></span>
+        <span>{{game[4]}} - {{game[5]}}</span>
+
+        {% else %}
+        <h6><small>Upcoming:</small></h6>
+        <span>game[6]</span>
+        {{game[2]}} vs. {{game[3]}}
+        {% endif %}
+      </div>
+    </div>
+
+
+  {% endfor %}
+  </div>
+
   <h1>NHL</h1>
   <h3><small>Today's Scores:</small></h3>
   <div class="grid-x grid-padding-x">
