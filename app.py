@@ -99,8 +99,9 @@ def auth():
 
 @app.route("/news")
 def news():
+    loggedIn = True
     if (not(checkAuth())):
-        flash("Login to create preferences")
+        loggedIn = False
     news = dbfunctions.gettopnews(c)
     if (dbfunctions.checkRecency(c)):
         newsapi = NewsApiClient(api_key='c10b74d97ec44a1f861474546fd3fc27')
@@ -108,48 +109,97 @@ def news():
         data = top_headlines['articles']
         dbfunctions.settopnews(c,data)
         news = dbfunctions.gettopnews(c)
-    return render_template("news.html", articles=news)
+    return render_template("news.html",bool = loggedIn, articles=news)
+
+@app.route("/yourNews")
+def usernews():
+    if (not(checkAuth())):
+        return redirect(url_for('news'))
+    user = session['username']
+    types = ['business','health','general','science','technology','sports','entertainment']
+    yourPrefs = dbfunctions.getUserPrefs(c,user,'news')
+    news = []
+    print(yourPrefs)
+    for pref in yourPrefs:
+        if (pref != []):
+            pref = pref[0]
+        if (not (dbfunctions.iscategoryRecent(c,pref))):
+            newsapi = NewsApiClient(api_key='c10b74d97ec44a1f861474546fd3fc27')
+            data = newsapi.get_top_headlines(language='en',country='us',category=pref,page = 1)['articles']
+            dbfunctions.setnews(c,data,pref)
+        news.extend(dbfunctions.getnewscategory(c,pref))
+    return render_template("yourNews.html",categories = types,articles = news)
+
+@app.route("/addcategory", methods = ['POST'])
+def addcategory():
+    if (not(checkAuth())):
+        return redirect(url_for('news'))
+    user = session['username']
+    newPref = request.form['category']
+    dbfunctions.addUserPref(c,user,'news',newPref)
+    flash("Added " + newPref + " to your Preferences")
+    return redirect(url_for('usernews'))
 
 @app.route("/search", methods=['POST'])
 def search():
-    print(request.form)
     Search = request.form['search']
     newsapi = NewsApiClient(api_key='c10b74d97ec44a1f861474546fd3fc27')
-    news = newsapi.get_everything(q=Search,language='en',page=1)
-    print(news)
-    return render_template("searchnews.html", search = Search, articles = news['articles'])
+    news = newsapi.get_everything(q=Search,language='en',page=1)['articles']
+    return render_template("searchnews.html", search = Search, articles = news)
 
 @app.route("/weather")
 def weather():
-    weatherUrl = urlopen("https://www.metaweather.com/api/location/2459115/")
+    if (checkAuth()):
+        tableBase = dbfunctions.getUserPrefs(c, session['username'], "location")
+        first = tableBase[0]
+        weatherUrl = urlopen("https://www.metaweather.com/api/location/" + first[0])
+        log = True
+    else:
+        weatherUrl = urlopen("https://www.metaweather.com/api/location/2459115/")
+        log = False
+    allLocations = {'New York':'2459115','London':'44418','San Francisco':'2487956', 'Canada':'23424775', 'Mexico':'23424900',
+    'Boston':'2367105', 'Chicago':'2379574', 'Brazil':'23424768', 'United Kingdom':'23424975'}
+
+    }
     weatherResponse = weatherUrl.read()
     weatherData = json.loads(weatherResponse)
-    return render_template("weather.html",
+    currentLocation = json.loads(weatherResponse)['title']
+    return render_template("weather.html", allL=allLocations, location = currentLocation,
+                            loggedIn = log,
                             pic=weatherData["consolidated_weather"][0]["weather_state_abbr"],DateToday=weatherData["consolidated_weather"][0]["applicable_date"],
-                            TempToday='%.7s' % weatherData["consolidated_weather"][0]["the_temp"], HighestTemp='%.7s' % weatherData["consolidated_weather"][0]["max_temp"],
-                            LowestTemp='%.7s' % weatherData["consolidated_weather"][0]["min_temp"], humidity='%.7s' % weatherData["consolidated_weather"][0]["humidity"],
-                            windspeed='%.7s' % weatherData["consolidated_weather"][0]["wind_speed"],
+                            TempToday='%.6s' % weatherData["consolidated_weather"][0]["the_temp"], HighestTemp='%.6s' % weatherData["consolidated_weather"][0]["max_temp"],
+                            LowestTemp='%.6s' % weatherData["consolidated_weather"][0]["min_temp"], humidity='%.6s' % weatherData["consolidated_weather"][0]["humidity"],
+                            windspeed='%.6s' % weatherData["consolidated_weather"][0]["wind_speed"],
 
                             pic1=weatherData["consolidated_weather"][1]["weather_state_abbr"],DateToday1=weatherData["consolidated_weather"][1]["applicable_date"],
-                            TempToday1='%.7s' % weatherData["consolidated_weather"][1]["the_temp"], HighestTemp1='%.7s' % weatherData["consolidated_weather"][1]["max_temp"],
-                            LowestTemp1='%.7s' % weatherData["consolidated_weather"][1]["min_temp"],
+                            TempToday1='%.6s' % weatherData["consolidated_weather"][1]["the_temp"], HighestTemp1='%.6s' % weatherData["consolidated_weather"][1]["max_temp"],
+                            LowestTemp1='%.6s' % weatherData["consolidated_weather"][1]["min_temp"],
 
                             pic2=weatherData["consolidated_weather"][2]["weather_state_abbr"],DateToday2=weatherData["consolidated_weather"][2]["applicable_date"],
-                            TempToday2='%.7s' % weatherData["consolidated_weather"][2]["the_temp"], HighestTemp2='%.7s' % weatherData["consolidated_weather"][2]["max_temp"],
-                            LowestTemp2='%.7s' % weatherData["consolidated_weather"][2]["min_temp"],
+                            TempToday2='%.6s' % weatherData["consolidated_weather"][2]["the_temp"], HighestTemp2='%.6s' % weatherData["consolidated_weather"][2]["max_temp"],
+                            LowestTemp2='%.6s' % weatherData["consolidated_weather"][2]["min_temp"],
 
                             pic3=weatherData["consolidated_weather"][3]["weather_state_abbr"],DateToday3=weatherData["consolidated_weather"][3]["applicable_date"],
-                            TempToday3='%.7s' % weatherData["consolidated_weather"][3]["the_temp"], HighestTemp3='%.7s' % weatherData["consolidated_weather"][3]["max_temp"],
-                            LowestTemp3='%.7s' % weatherData["consolidated_weather"][3]["min_temp"],
+                            TempToday3='%.6s' % weatherData["consolidated_weather"][3]["the_temp"], HighestTemp3='%.6s' % weatherData["consolidated_weather"][3]["max_temp"],
+                            LowestTemp3='%.6s' % weatherData["consolidated_weather"][3]["min_temp"],
 
                             pic4=weatherData["consolidated_weather"][4]["weather_state_abbr"],DateToday4=weatherData["consolidated_weather"][4]["applicable_date"],
-                            TempToday4='%.7s' % weatherData["consolidated_weather"][4]["the_temp"], HighestTemp4= '%.7s' % weatherData["consolidated_weather"][4]["max_temp"] ,
-                            LowestTemp4='%.7s' % weatherData["consolidated_weather"][4]["min_temp"],
+                            TempToday4='%.6s' % weatherData["consolidated_weather"][4]["the_temp"], HighestTemp4= '%.6s' % weatherData["consolidated_weather"][4]["max_temp"] ,
+                            LowestTemp4='%.6s' % weatherData["consolidated_weather"][4]["min_temp"],
 
                             pic5=weatherData["consolidated_weather"][5]["weather_state_abbr"],DateToday5=weatherData["consolidated_weather"][5]["applicable_date"],
-                            TempToday5='%.7s' % weatherData["consolidated_weather"][5]["the_temp"], HighestTemp5='%.7s' % weatherData["consolidated_weather"][5]["max_temp"],
-                            LowestTemp5='%.7s' % weatherData["consolidated_weather"][5]["min_temp"]
+                            TempToday5='%.6s' % weatherData["consolidated_weather"][5]["the_temp"], HighestTemp5='%.6s' % weatherData["consolidated_weather"][5]["max_temp"],
+                            LowestTemp5='%.6s' % weatherData["consolidated_weather"][5]["min_temp"]
                             )
+
+@app.route("/changeLocation", methods=['POST'])
+def changeLocation():
+    newLocation = request.form['location']
+    username = session['username']
+    dbfunctions.updatePref(c, username, "location", newLocation)
+    db.commit()
+    return redirect(url_for('weather'))
+
 
 @app.route("/money/<amount>")
 def money(amount):
@@ -172,12 +222,12 @@ def money(amount):
         else:
             return render_template("money.html", b = base, d = allData, count = 1
                                     , a = am, loggedIn = False)
-
-@app.route("/moneyprocess", methods=['POST','GET']) #changes the amount converted
+@app.route("/moneyprocess", methods=['POST','GET'])
 def moneyprocess():
     i = request.form['amount']
     info = float(i)
     return redirect(url_for('money', amount = info))
+
 
 @app.route("/changeBase/<am>", methods=['POST'])
 def changeBase(am):
@@ -186,6 +236,7 @@ def changeBase(am):
     dbfunctions.updatePref(c, username, "base_currency", newBase)
     db.commit()
     return redirect(url_for('money', amount = am))
+
 
 @app.route("/account")
 def account():

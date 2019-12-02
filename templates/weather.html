@@ -18,7 +18,20 @@
   </style>
 
     <!-- ================================================================= WEATHER ======================================================================= -->
-    <h3>Weather in New York (celsius)</h3>
+    {% if loggedIn %}
+      Your base currency is:
+      <form action="/changeLocation" method="POST">
+        <select name="location">
+          <option disabled selected>{{location}}</option>
+          {% for place in allL %}
+            <option value="{{allL.get(place)}}">{{place}}</option>
+          {% endfor %}
+          <input type="submit" value="Submit" name="submit-butom">
+        </select>
+      </form>
+    {% endif %}
+
+    <h3>Weather in {{location}}</h3>
       <div class="grid-x grid-padding-x">
         <div class="medium-10 cell">
           <div class="success callout">
@@ -29,9 +42,9 @@
               <h1> {{DateToday}}</h1>
 
               <img src="https://www.metaweather.com/static/img/weather/{{pic}}.svg" width="100" height="20"> <br>
-              <div>Temperature today: {{TempToday}}</div>
-              <div>Lowest today: {{LowestTemp}}</div>
-              <div>Highest today: {{HighestTemp}}</div>
+              <div>Temperature today: {{TempToday}} °C</div>
+              <div>Lowest today: {{LowestTemp}} °C</div>
+              <div>Highest today: {{HighestTemp}} °C</div>
             </div>
             <div class = "column">
               <br>
@@ -51,9 +64,9 @@
           <h5> {{DateToday1}}</h5>
           <img src="https://www.metaweather.com/static/img/weather/{{pic1}}.svg" width="50" height="10"> <br>
 
-          <div>Temperature: {{TempToday1}}</div>
-          <div>Lowest: {{LowestTemp1}}</div>
-          <div>Highest: {{HighestTemp1}}</div>
+          <div>Temperature: {{TempToday1}} °C</div>
+          <div>Lowest: {{LowestTemp1}} °C</div>
+          <div>Highest: {{HighestTemp1}} °C</div>
 
         </div>
       </div>
@@ -62,20 +75,20 @@
           <h5> {{DateToday2}}</h5>
           <img src="https://www.metaweather.com/static/img/weather/{{pic2}}.svg" width="50" height="10"> <br>
 
-          <div>Temperature: {{TempToday2}}</div>
-          <div>Lowest: {{LowestTemp2}}</div>
-          <div>Highest: {{HighestTemp2}}</div>
+          <div>Temperature: {{TempToday2}} °C</div>
+          <div>Lowest: {{LowestTemp2}} °C</div>
+          <div>Highest: {{HighestTemp2}} °C</div>
 
         </div>
       </div>
       <div class="small-2 cell">
         <div class="secondary callout">
-          <h5> {{DateToday3}}</h5>
+          <h5> {{DateToday3}} °C</h5>
           <img src="https://www.metaweather.com/static/img/weather/{{pic3}}.svg" width="50" height="10"> <br>
 
-          <div>Temperature: {{TempToday3}}</div>
-          <div>Lowest: {{LowestTemp3}}</div>
-          <div>Highest: {{HighestTemp3}}</div>
+          <div>Temperature: {{TempToday3}} °C</div>
+          <div>Lowest: {{LowestTemp3}} °C</div>
+          <div>Highest: {{HighestTemp3}} °C</div>
 
         </div>
       </div>
@@ -84,9 +97,9 @@
           <h5> {{DateToday4}}</h5>
           <img src="https://www.metaweather.com/static/img/weather/{{pic4}}.svg" width="50" height="10"> <br>
 
-          <div>Temperature: {{TempToday4}}</div>
-          <div>Lowest: {{LowestTemp4}}</div>
-          <div>Highest: {{HighestTemp4}}</div>
+          <div>Temperature: {{TempToday4}} °C</div>
+          <div>Lowest: {{LowestTemp4}} °C</div>
+          <div>Highest: {{HighestTemp4}} °C</div>
 
         </div>
       </div>
@@ -96,9 +109,9 @@
         <h5> {{DateToday5}}</h5>
         <img src="https://www.metaweather.com/static/img/weather/{{pic5}}.svg" width="50" height="10"> <br>
 
-        <div>Temperature: {{TempToday5}}</div>
-        <div>Lowest: {{LowestTemp5}}</div>
-        <div>Highest: {{HighestTemp5}}</div>
+        <div>Temperature: {{TempToday5}} °C</div>
+        <div>Lowest: {{LowestTemp5}} °C</div>
+        <div>Highest: {{HighestTemp5}} °C</div>
 
       </div>
     </div>

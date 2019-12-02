@@ -5,12 +5,10 @@ Mayonnaise News is a website that gives information on current topics like news,
 # Roster and Roles
 Lauren Pehlivanian
   - Working on News API to display articles.
-    - Implementing searches for articles on both sides of political spectrum.
-  - Working on Weather API.
+    - Implementing searches for articles on both sides of political spectrum
   
 Albert Wan
-  - Currency Exchange
-  -
+  - Working on metaweather API.
 
 Biraj Chowdhury
   - Sports API

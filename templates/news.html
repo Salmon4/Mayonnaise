@@ -15,7 +15,15 @@
           <input type="submit" value='Search'>
       </form>
       <br>
-      <h4>Today's Top Headlines</h4>
+      {% if bool %}
+      <form action='/yourNews'>
+          <input type='submit' value="Go To Your News">
+      </form>
+      {% else %}
+            <a href="/login">Login</a> to add preferences.
+      {% endif %}
+      <br><br>
+      <h4>Today's Top Headlines for the United States</h4>
       <br>
       <div class="grid-x grid-padding-x">
           {% for article in articles%}
