@@ -23,17 +23,24 @@
   {% for game in NHLtoday %}
     <div class="columns medium-4">
       <div class="card" style="width: 400px; padding=15px">
-        {% if game[4] > game[5] %}
-        <span style="color:green">{{game[2]}}</span> vs. <span style="color:red">{{game[3]}}</span>
-        <br>
-        <span style="color:green">{{game[4]}}</span> - <span style="color:red">{{game[5]}}</span>
+        {% if game[6] == "Scheduled" %}
+        <h6><small>Upcoming:</small></h6>
+        {{game[2]}} vs. {{game[3]}}
+        {% elif "In Progress" in game[6] %}
+        <h6 style="color:red">Live:</h6>
+        <span><strong>{{game[2]}}</strong> vs. <strong>{{game[3]}}</strong></span>
+        <span>{{game[4]}} - {{game[5]}}</span>
+        {% elif game[4] > game[5] %}
+        <span> <strong style="color:green">{{game[2]}}> vs. <strong style="color:red">{{game[3]}}</span>
+        <!-- <br> -->
+        <span> <strong style="color:green">{{game[4]}}> - <strong style="color:red">{{game[5]}}</span>
         {% elif game[4] < game[5] %}
-        <span style="color:red">{{game[2]}}</span> vs. <span style="color:green">{{game[3]}}</span>
-        <br>
-        <span style="color:red">{{game[4]}}</span> - <span style="color:green">{{game[5]}}</span>
+        <span> <strong style="color:red">{{game[2]}}> vs. <strong style="color:green">{{game[3]}}</span>
+        <!-- <br> -->
+        <span> <strong style="color:red">{{game[4]}}> - <strong style="color:green">{{game[5]}}</span>
         {% else %}
-        <span>{{game[2]}}</span> vs. <span>{{game[3]}}</span>
-        <br>
+        <span><strong>{{game[2]}}</strong> vs. <strong>{{game[3]}}</strong></span>
+        <!-- <br> -->
         <span>{{game[4]}} - {{game[5]}}</span>
         {% endif %}
       </div>
@@ -94,7 +101,7 @@
             {% else %}
                 <strong>Date:</strong> {{team.nextgame.gameDate.split('T')[0]}}
                 <br>
-                <span>{{team.prevgame.teams.away.team.name}} vs. {{team.prevgame.teams.home.team.name}}</span>
+                <span>{{team.nextgame.teams.away.team.name}} vs. {{team.nextgame.teams.home.team.name}}</span>
              {% endif %}
 						</div>
 					</div>
