@@ -116,7 +116,7 @@ def usernews():
     if (not(checkAuth())):
         return redirect(url_for('news'))
     user = session['username']
-    types = ['business','health','general','science','techonology','sports','entertainment']
+    types = ['business','health','general','science','technology','sports','entertainment']
     yourPrefs = dbfunctions.getUserPrefs(c,user,'news')
     news = []
     print(yourPrefs)
