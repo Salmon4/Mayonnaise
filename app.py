@@ -101,6 +101,8 @@ def auth():
 def news():
     if (not(checkAuth())):
         flash("Login to create preferences")
+    else:
+        loggedIn = True
     news = dbfunctions.gettopnews(c)
     if (dbfunctions.checkRecency(c)):
         newsapi = NewsApiClient(api_key='c10b74d97ec44a1f861474546fd3fc27')
@@ -110,13 +112,13 @@ def news():
         news = dbfunctions.gettopnews(c)
     return render_template("news.html", articles=news)
 
+
+
 @app.route("/search", methods=['POST'])
 def search():
-    print(request.form)
     Search = request.form['search']
     newsapi = NewsApiClient(api_key='c10b74d97ec44a1f861474546fd3fc27')
     news = newsapi.get_everything(q=Search,language='en',page=1)
-    print(news)
     return render_template("searchnews.html", search = Search, articles = news['articles'])
 
 @app.route("/weather")
