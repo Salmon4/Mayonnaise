@@ -110,7 +110,7 @@ def resetsports(c):
 				description text
 				);""")
 
-def resettechonology(c):
+def resettechnology(c):
 	c.execute("DROP TABLE IF EXISTS technology")
 	c.execute("""CREATE TABLE technology(
 				datetime text,

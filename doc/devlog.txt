@@ -129,6 +129,9 @@ chenB -- 2019-12-1 21:59
 In weather tab, you can change the location of the weather displayed when logged in. It will also associate that location with your 
 account for your next session. Default location is New York.
 
+wanA -- 2019-12-2 14:50
+Finished celsius and added more locations.
+
 Team -- 2019-11-20
 Actions we will take to improve based on the assigned reading:
 1. We should share code with our teammates to review/debug. You shouldn't be defensive about your errors as debugging helps improve
