@@ -1,21 +1,48 @@
-import http.client
+import http.client, requests
 
-conn = http.client.HTTPSConnection("free-nba.p.rapidapi.com")
+# # HTTP.CLIENT
+# conn = http.client.HTTPSConnection("free-nba.p.rapidapi.com")
+#
+# headers = {
+#     'x-rapidapi-host': "free-nba.p.rapidapi.com",
+#     'x-rapidapi-key': "eedd51b020mshc462a1043ca26dep113106jsn43a6a1a8e712"
+#     }
+#
+# # conn.request("GET", "/games/%7Bid%7D", headers=headers)
+# # conn.request("GET", "/games?page=0&per_page=1", headers=headers)
+# conn.request("GET", "/games?seasons[]=2019&dates[]=2019-12-01", headers=headers)
+#
+#
+# res = conn.getresponse()
+# data = res.read()
+#
+#
+#
+#
+# print(data.decode("utf-8"))
+# print(data[0])
+# print(data[150])
+# print(data[1530])
+
+#REQUESTS
+import requests
+
+url = "https://free-nba.p.rapidapi.com/games"
+
+querystring = {"page":"0","per_page":"25"}
 
 headers = {
     'x-rapidapi-host': "free-nba.p.rapidapi.com",
     'x-rapidapi-key': "eedd51b020mshc462a1043ca26dep113106jsn43a6a1a8e712"
     }
 
-# conn.request("GET", "/games/%7Bid%7D", headers=headers)
-# conn.request("GET", "/games?page=0&per_page=1", headers=headers)
-conn.request("GET", "/games?seasons[]=2019&dates[]=2019-12-01", headers=headers)
+response = requests.request("GET", url, headers=headers, params=querystring)
+data = response.json()
+print(response.json())
 
-res = conn.getresponse()
-data = res.read()
 
-# print(data.decode("utf-8"))
-print(data)
+
+#print(data)
 # print("\n\n")
 # testd = [("Ghost", 2), ("gost", 3)]
 # print(len(testd))
