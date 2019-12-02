@@ -97,3 +97,21 @@ def addNextGame(teamdata):
         else:
             teamdata[i]['nextgame'] = "No upcoming games."
     return teamdata
+
+#--------------NFL-------------------------------------------------------------------------------
+#gets all teams
+def getNFLTeams():
+    u = urlopen("https://api.sportsdata.io/v3/nfl/scores/json/Teams?key=e02ffffce823403aa4fc815b9aa7f667")
+    response = u.read()
+    data = json.loads(response)
+    return data
+
+#gets all players on a given team
+#teamname = its abbreviation
+def getNFLPlayers(teamname):
+    u = urlopen("https://api.sportsdata.io/v3/nfl/scores/json/Players/"+teamname+"?key=e02ffffce823403aa4fc815b9aa7f667")
+    response = u.read()
+    data = json.loads(response)
+    return data
+
+#gets current standings (top 3 teams)
