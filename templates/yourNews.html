@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block header %}
+{% endblock %}
+
+{% block body %}
+    <br>
+    <form action='/news'>
+        <input type='submit' value="Back to Top Headlines">
+    </form>
+    <br>
+    {% for msg in get_flashed_messages() %}
+        <p>{{msg}}</p>
+        <br>
+    {% endfor %}
+    <br>
+    <form action="/addcategory" method="POST">
+        <label for="category">Select A Category You Wish To Follow:</label>
+        <select name="category">
+            <option disabled selected>--  --</option>
+            {% for category in categories %}
+                <option value={{category}}>{{category}}</option>
+            {% endfor %}
+            <input type="submit" value="Submit" name="submit-butom">
+        </select>
+    </form>
+    <br>
+    <h5>Your News </h5>
+    <div class="grid-x grid-padding-x">
+        {% for article in articles%}
+        <div class="large-4 cell">
+            <h5><a href={{article[3]}}>{{article[1]}}</a></h5>
+            <div class="large-12 cell">
+                <img src={{article[4]}}>
+            </div>
+            <p>{{article[5]}}</p><br>
+            <p>{{article[0][0:10]}}</p>
+        </div>
+        {% endfor %}
+{% endblock %}

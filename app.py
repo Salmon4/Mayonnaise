@@ -99,10 +99,9 @@ def auth():
 
 @app.route("/news")
 def news():
+    loggedIn = True
     if (not(checkAuth())):
-        flash("Login to create preferences")
-    else:
-        loggedIn = True
+        loggedIn = False
     news = dbfunctions.gettopnews(c)
     if (dbfunctions.checkRecency(c)):
         newsapi = NewsApiClient(api_key='c10b74d97ec44a1f861474546fd3fc27')
@@ -110,16 +109,43 @@ def news():
         data = top_headlines['articles']
         dbfunctions.settopnews(c,data)
         news = dbfunctions.gettopnews(c)
-    return render_template("news.html", articles=news)
+    return render_template("news.html",bool = loggedIn, articles=news)
 
+@app.route("/yourNews")
+def usernews():
+    if (not(checkAuth())):
+        return redirect(url_for('news'))
+    user = session['username']
+    types = ['business','health','general','science','techonology','sports','entertainment']
+    yourPrefs = dbfunctions.getUserPrefs(c,user,'news')
+    news = []
+    print(yourPrefs)
+    for pref in yourPrefs:
+        if (pref != []):
+            pref = pref[0]
+        if (not (dbfunctions.iscategoryRecent(c,pref))):
+            newsapi = NewsApiClient(api_key='c10b74d97ec44a1f861474546fd3fc27')
+            data = newsapi.get_top_headlines(language='en',country='us',category=pref,page = 1)['articles']
+            dbfunctions.setnews(c,data,pref)
+        news.extend(dbfunctions.getnewscategory(c,pref))
+    return render_template("yourNews.html",categories = types,articles = news)
 
+@app.route("/addcategory", methods = ['POST'])
+def addcategory():
+    if (not(checkAuth())):
+        return redirect(url_for('news'))
+    user = session['username']
+    newPref = request.form['category']
+    dbfunctions.addUserPref(c,user,'news',newPref)
+    flash("Added " + newPref + " to your Preferences")
+    return redirect(url_for('usernews'))
 
 @app.route("/search", methods=['POST'])
 def search():
     Search = request.form['search']
     newsapi = NewsApiClient(api_key='c10b74d97ec44a1f861474546fd3fc27')
-    news = newsapi.get_everything(q=Search,language='en',page=1)
-    return render_template("searchnews.html", search = Search, articles = news['articles'])
+    news = newsapi.get_everything(q=Search,language='en',page=1)['articles']
+    return render_template("searchnews.html", search = Search, articles = news)
 
 @app.route("/weather")
 def weather():
@@ -155,39 +181,21 @@ def weather():
 
 @app.route("/money/<amount>")
 def money(amount):
-        if (checkAuth()):
-            tableBase = dbfunctions.getUserPrefs(c, session['username'], "base_currency")
-            first = tableBase[0]
-            exchangeUrl = urlopen("https://api.exchangerate-api.com/v4/latest/" + first[0])
-        else:
-            exchangeUrl = urlopen("https://api.exchangerate-api.com/v4/latest/USD")
+        exchangeUrl = urlopen("https://api.exchangerate-api.com/v4/latest/USD")
         exchangeResponse = exchangeUrl.read()
         base = json.loads(exchangeResponse)['base']
         allData = json.loads(exchangeResponse)['rates']
         print(amount)
         am = float(amount)
-        if (checkAuth()):
-            tableBase2 = dbfunctions.getUserPrefs(c, session['username'], "base_currency")
-            first2 = tableBase[0]
-            return render_template("money.html", b = first2, d = allData, count = 1
-                                    , a = am, loggedIn = True)
-        else:
-            return render_template("money.html", b = base, d = allData, count = 1
-                                    , a = am, loggedIn = False)
+        return render_template("money.html", b = base, d = allData, count = 1
+                                , a = am)
 
-@app.route("/moneyprocess", methods=['POST','GET']) #changes the amount converted
+@app.route("/moneyprocess", methods=['POST','GET'])
 def moneyprocess():
     i = request.form['amount']
     info = float(i)
     return redirect(url_for('money', amount = info))
 
-@app.route("/changeBase/<am>", methods=['POST'])
-def changeBase(am):
-    newBase = request.form['base']
-    username = session['username']
-    dbfunctions.updatePref(c, username, "base_currency", newBase)
-    db.commit()
-    return redirect(url_for('money', amount = am))
 
 @app.route("/account")
 def account():

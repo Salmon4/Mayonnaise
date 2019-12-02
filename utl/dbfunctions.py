@@ -43,16 +43,94 @@ def resetnews(c):
 				imageURL text,
 				description text
 				);""")
+
+def resetbusiness(c):
+	c.execute("DROP TABLE IF EXISTS business")
+	c.execute("""CREATE TABLE business(
+				datetime text,
+				title text,
+				author text,
+				url text,
+				imageURL text,
+				description text
+				);""")
+
+def resethealth(c):
+	c.execute("DROP TABLE IF EXISTS health")
+	c.execute("""CREATE TABLE health(
+				datetime text,
+				title text,
+				author text,
+				url text,
+				imageURL text,
+				description text
+				);""")
+
+def resetentertainment(c):
+	c.execute("DROP TABLE IF EXISTS entertainment")
+	c.execute("""CREATE TABLE entertainment(
+				datetime text,
+				title text,
+				author text,
+				url text,
+				imageURL text,
+				description text
+				);""")
+
+def resetscience(c):
+	c.execute("DROP TABLE IF EXISTS science")
+	c.execute("""CREATE TABLE science(
+				datetime text,
+				title text,
+				author text,
+				url text,
+				imageURL text,
+				description text
+				);""")
+
+def resetgeneral(c):
+	c.execute("DROP TABLE IF EXISTS general")
+	c.execute("""CREATE TABLE general(
+				datetime text,
+				title text,
+				author text,
+				url text,
+				imageURL text,
+				description text
+				);""")
+
+def resetsports(c):
+	c.execute("DROP TABLE IF EXISTS sports")
+	c.execute("""CREATE TABLE sports(
+				datetime text,
+				title text,
+				author text,
+				url text,
+				imageURL text,
+				description text
+				);""")
+
+def resettechonology(c):
+	c.execute("DROP TABLE IF EXISTS technology")
+	c.execute("""CREATE TABLE technology(
+				datetime text,
+				title text,
+				author text,
+				url text,
+				imageURL text,
+				description text
+				);""")
+
 def checkRecency(c):
 	global lastHitApi
 	dateToday = date.today()
 	if (gettopnews(c) != []):
-		print(dateToday)
 		if (dateToday == lastHitApi):
 			return False
 	else:
 		lastHitApi= dateToday
 		return True
+	lastHitApi= dateToday
 	return True
 
 
@@ -74,8 +152,148 @@ def settopnews(c,news):
 		c.execute(
 		"INSERT INTO topnews VALUES(?,?,?,?,?,?)",(datetime,title,author,url,image,description,)
 		)
+
+def getnewscategory(c,category):
+	c.execute("SELECT * FROM " + category)
+	news = c.fetchall()
+	return news
+
+def iscategoryRecent(c,category):
+	dateToday = date.today()
+	if (getnewscategory(c,category) != []):
+		news = getnewscategory(c,category)
+		todayDate = news[0][0][0:10]
+		if (todayDate == dateToday):
+			return True
 	return False
 
+def setnews(c,news,category):
+	if (category == "business"):
+		resetbusiness(c)
+		for article in news:
+			image = article['urlToImage']
+			author = article['author']
+			url = article['url']
+			datetime = article['publishedAt']
+			title = article['title']
+			description = article['description']
+			if (description == None):
+				description = "None"
+			if (image == None):
+				image = "newspaper.jpg"
+			if (author == None):
+				author = "N/A"
+			c.execute(
+				"INSERT INTO business VALUES(?,?,?,?,?,?)",(datetime,title,author,url,image,description,)
+				)
+	if (category == "science"):
+		resetscience(c)
+		for article in news:
+			image = article['urlToImage']
+			author = article['author']
+			url = article['url']
+			datetime = article['publishedAt']
+			title = article['title']
+			description = article['description']
+			if (description == None):
+				description = "None"
+			if (image == None):
+				image = "newspaper.jpg"
+			if (author == None):
+				author = "N/A"
+			c.execute(
+				"INSERT INTO science VALUES(?,?,?,?,?,?)",(datetime,title,author,url,image,description,)
+				)
+	if (category == "sports"):
+		resetsports(c)
+		for article in news:
+			image = article['urlToImage']
+			author = article['author']
+			url = article['url']
+			datetime = article['publishedAt']
+			title = article['title']
+			description = article['description']
+			if (description == None):
+				description = "None"
+			if (image == None):
+				image = "newspaper.jpg"
+			if (author == None):
+				author = "N/A"
+			c.execute(
+				"INSERT INTO sports VALUES(?,?,?,?,?,?)",(datetime,title,author,url,image,description,)
+				)
+	if (category == "general"):
+		resetgeneral(c)
+		for article in news:
+			image = article['urlToImage']
+			author = article['author']
+			url = article['url']
+			datetime = article['publishedAt']
+			title = article['title']
+			description = article['description']
+			if (description == None):
+				description = "None"
+			if (image == None):
+				image = "newspaper.jpg"
+			if (author == None):
+				author = "N/A"
+			c.execute(
+				"INSERT INTO general VALUES(?,?,?,?,?,?)",(datetime,title,author,url,image,description,)
+				)
+	if (category == "health"):
+		resethealth(c)
+		for article in news:
+			image = article['urlToImage']
+			author = article['author']
+			url = article['url']
+			datetime = article['publishedAt']
+			title = article['title']
+			description = article['description']
+			if (description == None):
+				description = "None"
+			if (image == None):
+				image = "newspaper.jpg"
+			if (author == None):
+				author = "N/A"
+			c.execute(
+				"INSERT INTO health VALUES(?,?,?,?,?,?)",(datetime,title,author,url,image,description,)
+				)
+	if (category == "technology"):
+		resettechnology(c)
+		for article in news:
+			image = article['urlToImage']
+			author = article['author']
+			url = article['url']
+			datetime = article['publishedAt']
+			title = article['title']
+			description = article['description']
+			if (description == None):
+				description = "None"
+			if (image == None):
+				image = "newspaper.jpg"
+			if (author == None):
+				author = "N/A"
+			c.execute(
+				"INSERT INTO technology VALUES(?,?,?,?,?,?)",(datetime,title,author,url,image,description,)
+				)
+	if (category == "entertainment"):
+		resetentertainment(c)
+		for article in news:
+			image = article['urlToImage']
+			author = article['author']
+			url = article['url']
+			datetime = article['publishedAt']
+			title = article['title']
+			description = article['description']
+			if (description == None):
+				description = "None"
+			if (image == None):
+				image = "newspaper.jpg"
+			if (author == None):
+				author = "N/A"
+			c.execute(
+				"INSERT INTO entertainment VALUES(?,?,?,?,?,?)",(datetime,title,author,url,image,description,)
+				)
 
 #deletes all existing tables
 def reset(c):
