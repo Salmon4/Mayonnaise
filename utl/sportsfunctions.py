@@ -1,4 +1,4 @@
-import sqlite3, json, datetime
+import sqlite3, json, datetime, http.client
 from utl import dbfunctions
 from urllib.request import urlopen
 
@@ -50,15 +50,18 @@ def getNHLTodayScores(c):
     if len(scores) < 3:
         for game in data:
             gamePk = game['gamePk']
-            print(gamePk)
+            # print(gamePk)
             #check if this gamePk is already in the table
             if len(scores) == 0:
-                c.execute("INSERT INTO nhl_scores VALUES (?, ?, ?, ?, ?, ?)", (date, gamePk, game['teams']['home']['team']['name'],  game['teams']['away']['team']['name'], game['teams']['home']['score'], game['teams']['away']['score']))
+                c.execute("INSERT INTO nhl_scores VALUES (?, ?, ?, ?, ?, ?, ?)", (date, gamePk, game['teams']['home']['team']['name'],  game['teams']['away']['team']['name'], game['teams']['home']['score'], game['teams']['away']['score'], game['status']['detailedState']))
             else:
                 for tuple in scores:
-                    print(tuple)
+                    # print(tuple)
                     if gamePk not in tuple:
-                        c.execute("INSERT INTO nhl_scores VALUES (?, ?, ?, ?, ?, ?)", (date, gamePk, game['teams']['home']['team']['name'],  game['teams']['away']['team']['name'], game['teams']['home']['score'], game['teams']['away']['score']))
+                        c.execute("INSERT INTO nhl_scores VALUES (?, ?, ?, ?, ?, ?, ?)", (date, gamePk, game['teams']['home']['team']['name'],  game['teams']['away']['team']['name'], game['teams']['home']['score'], game['teams']['away']['score'], game['status']['detailedState']))
+                    #if game is already in table, but was in progress/not started before, update:
+                    elif game[6].__contains__("In Progress") or game[6].__contains__("Scheduled"):
+                        c.execute("UPDATE nhl_scores SET home_score = ?, away_score = ?, status = ? WHERE gamePk = ? ", (game['teams']['home']['score'], game['teams']['away']['score'], game['status']['detailedState'], gamePk))
     #by nowthe table is updated, so return data from the table.
     c.execute("SELECT * FROM nhl_scores;")
     scores = c.fetchall()
@@ -97,3 +100,41 @@ def addNextGame(teamdata):
         else:
             teamdata[i]['nextgame'] = "No upcoming games."
     return teamdata
+
+#----NBA---------------------------------------------------------------------------------------------------------------------------
+def getNBAToday(c):
+    c.execute("SELECT * FROM nba_scores;")
+    scores = c.fetchall()
+    #print(len(scores))
+    #delete data from table if it's outdated:
+    # if len(scores) > 0 && scores[0][0].split("T")[0] != date:
+    if len(scores) > 0 and scores[0][0] != date:
+        c.execute("DELETE FROM nba_scores;")
+    conn = http.client.HTTPSConnection("free-nba.p.rapidapi.com")
+    headers = {
+        'x-rapidapi-host': "free-nba.p.rapidapi.com",
+        'x-rapidapi-key': "eedd51b020mshc462a1043ca26dep113106jsn43a6a1a8e712"
+        }
+    conn.request("GET", "/games?seasons[]=2019&dates[]=2019-12-01", headers=headers)
+    res = conn.getresponse()
+    data = res.read()
+    data = data[0]
+    if len(scores) < 3:
+        for game in data:
+            gameID = game['id']
+            # print(gamePk)
+            #check if this gamePk is already in the table
+            if len(scores) == 0:
+                c.execute("INSERT INTO nba_scores VALUES (?, ?, ?, ?, ?, ?, ?)", (date, gameID, game['home_team']['full_name'],  game['visitor_team']['full_name'], game['home_team_score'], game['visitor_team_score'], game['status']))
+            else:
+                for tuple in scores:
+                    # print(tuple)
+                    if gamePk not in tuple:
+                        c.execute("INSERT INTO nba_scores VALUES (?, ?, ?, ?, ?, ?, ?)", (date, gameID, game['home_team']['full_name'],  game['visitor_team']['full_name'], game['home_team_score'], game['visitor_team_score'], game['status']))
+                    #if game is already in table, but was in progress/not started before, update:
+                    elif game[6] != "Final":
+                        c.execute("UPDATE nhl_scores SET home_score = ?, away_score = ?, status = ? WHERE gamePk = ? ", (game['teams']['home']['score'], game['teams']['away']['score'], game['status']['detailedState'], gamePk))
+    #by nowthe table is updated, so return data from the table.
+    c.execute("SELECT * FROM nhl_scores;")
+    scores = c.fetchall()
+    return scores
