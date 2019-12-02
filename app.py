@@ -164,29 +164,29 @@ def weather():
     return render_template("weather.html", allL=allLocations, location = currentLocation,
                             loggedIn = log,
                             pic=weatherData["consolidated_weather"][0]["weather_state_abbr"],DateToday=weatherData["consolidated_weather"][0]["applicable_date"],
-                            TempToday='%.7s' % weatherData["consolidated_weather"][0]["the_temp"], HighestTemp='%.7s' % weatherData["consolidated_weather"][0]["max_temp"],
-                            LowestTemp='%.7s' % weatherData["consolidated_weather"][0]["min_temp"], humidity='%.7s' % weatherData["consolidated_weather"][0]["humidity"],
-                            windspeed='%.7s' % weatherData["consolidated_weather"][0]["wind_speed"],
+                            TempToday='%.6s' % weatherData["consolidated_weather"][0]["the_temp"], HighestTemp='%.6s' % weatherData["consolidated_weather"][0]["max_temp"],
+                            LowestTemp='%.6s' % weatherData["consolidated_weather"][0]["min_temp"], humidity='%.6s' % weatherData["consolidated_weather"][0]["humidity"],
+                            windspeed='%.6s' % weatherData["consolidated_weather"][0]["wind_speed"],
 
                             pic1=weatherData["consolidated_weather"][1]["weather_state_abbr"],DateToday1=weatherData["consolidated_weather"][1]["applicable_date"],
-                            TempToday1='%.7s' % weatherData["consolidated_weather"][1]["the_temp"], HighestTemp1='%.7s' % weatherData["consolidated_weather"][1]["max_temp"],
-                            LowestTemp1='%.7s' % weatherData["consolidated_weather"][1]["min_temp"],
+                            TempToday1='%.6s' % weatherData["consolidated_weather"][1]["the_temp"], HighestTemp1='%.6s' % weatherData["consolidated_weather"][1]["max_temp"],
+                            LowestTemp1='%.6s' % weatherData["consolidated_weather"][1]["min_temp"],
 
                             pic2=weatherData["consolidated_weather"][2]["weather_state_abbr"],DateToday2=weatherData["consolidated_weather"][2]["applicable_date"],
-                            TempToday2='%.7s' % weatherData["consolidated_weather"][2]["the_temp"], HighestTemp2='%.7s' % weatherData["consolidated_weather"][2]["max_temp"],
-                            LowestTemp2='%.7s' % weatherData["consolidated_weather"][2]["min_temp"],
+                            TempToday2='%.6s' % weatherData["consolidated_weather"][2]["the_temp"], HighestTemp2='%.6s' % weatherData["consolidated_weather"][2]["max_temp"],
+                            LowestTemp2='%.6s' % weatherData["consolidated_weather"][2]["min_temp"],
 
                             pic3=weatherData["consolidated_weather"][3]["weather_state_abbr"],DateToday3=weatherData["consolidated_weather"][3]["applicable_date"],
-                            TempToday3='%.7s' % weatherData["consolidated_weather"][3]["the_temp"], HighestTemp3='%.7s' % weatherData["consolidated_weather"][3]["max_temp"],
-                            LowestTemp3='%.7s' % weatherData["consolidated_weather"][3]["min_temp"],
+                            TempToday3='%.6s' % weatherData["consolidated_weather"][3]["the_temp"], HighestTemp3='%.6s' % weatherData["consolidated_weather"][3]["max_temp"],
+                            LowestTemp3='%.6s' % weatherData["consolidated_weather"][3]["min_temp"],
 
                             pic4=weatherData["consolidated_weather"][4]["weather_state_abbr"],DateToday4=weatherData["consolidated_weather"][4]["applicable_date"],
-                            TempToday4='%.7s' % weatherData["consolidated_weather"][4]["the_temp"], HighestTemp4= '%.7s' % weatherData["consolidated_weather"][4]["max_temp"] ,
-                            LowestTemp4='%.7s' % weatherData["consolidated_weather"][4]["min_temp"],
+                            TempToday4='%.6s' % weatherData["consolidated_weather"][4]["the_temp"], HighestTemp4= '%.6s' % weatherData["consolidated_weather"][4]["max_temp"] ,
+                            LowestTemp4='%.6s' % weatherData["consolidated_weather"][4]["min_temp"],
 
                             pic5=weatherData["consolidated_weather"][5]["weather_state_abbr"],DateToday5=weatherData["consolidated_weather"][5]["applicable_date"],
-                            TempToday5='%.7s' % weatherData["consolidated_weather"][5]["the_temp"], HighestTemp5='%.7s' % weatherData["consolidated_weather"][5]["max_temp"],
-                            LowestTemp5='%.7s' % weatherData["consolidated_weather"][5]["min_temp"]
+                            TempToday5='%.6s' % weatherData["consolidated_weather"][5]["the_temp"], HighestTemp5='%.6s' % weatherData["consolidated_weather"][5]["max_temp"],
+                            LowestTemp5='%.6s' % weatherData["consolidated_weather"][5]["min_temp"]
                             )
 
 @app.route("/changeLocation", methods=['POST'])
