@@ -160,7 +160,7 @@ def weather():
     allLocations = {'New York':'2459115','London':'44418','San Francisco':'2487956', 'Canada':'23424775', 'Mexico':'23424900',
     'Boston':'2367105', 'Chicago':'2379574', 'Brazil':'23424768', 'United Kingdom':'23424975'}
 
-    }
+
     weatherResponse = weatherUrl.read()
     weatherData = json.loads(weatherResponse)
     currentLocation = json.loads(weatherResponse)['title']
@@ -261,7 +261,10 @@ def sports():
     response = u.read()
     data = json.loads(response)
     NHLtodayscores = sportsfunctions.getNHLTodayScores(c)
-    print(NHLtodayscores)
+    NBAtodayscores = sportsfunctions.getNBAToday(c)
+    print(NBAtodayscores)
+    db.commit()
+    #print(NHLtodayscores)
     # username = session['username']
     if checkAuth():
         username = session['username']
@@ -273,9 +276,9 @@ def sports():
         # print(userteamsdata)
         teamsnotadded= sportsfunctions.getTeamsNotAdded(c, username, allteams)
         # print(teamsnotadded)
-        return render_template("sports.html", loggedin=True, teams=teamsnotadded, user_teams=userteams, user_team_data=userteamsdata, NHLtoday=NHLtodayscores)
+        return render_template("sports.html", loggedin=True, teams=teamsnotadded, user_teams=userteams, user_team_data=userteamsdata, NHLtoday=NHLtodayscores, NBAtoday=NBAtodayscores)
     else:
-        return render_template("sports.html", logeedin=False, NHLtoday=NHLtodayscores)
+        return render_template("sports.html", logeedin=False, NHLtoday=NHLtodayscores, NBAtoday=NBAtodayscores)
 
 @app.route("/dropdown")
 def dropdown():
