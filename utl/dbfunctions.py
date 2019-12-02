@@ -308,6 +308,7 @@ def reset(c):
 def newUserTable(c, username):
 	c.execute("CREATE TABLE IF NOT EXISTS "+username+" (area text, preference text)")
 	addUserPref(c, username, "base_currency", "USD")
+	addUserPref(c, username, "location", "2459115")
 
 def addUserPref(c, username, pref_area, pref):
 	c.execute("INSERT INTO "+username+" VALUES('"+pref_area+"', '"+pref+"')")

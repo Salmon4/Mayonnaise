@@ -117,10 +117,16 @@ chenB -- 2019-12-1 16:29
 Able to change the base currency when converting money. It is always USD by default when account is created but afterwards both amount
 and currency type is remembered when changed.
 
+<<<<<<< HEAD
 chowdhuryB -- 2019-12-2 00:01
 Added personalization for news. Users can now choose out of 7 catergories and news that fall into those catergories will be displayed for the user.
 Added catergories tables in the database that store news from each user so the news api is only hit once every day.
 Added buttons that allow users to switch back and forth between their personalized news and the top stories
+=======
+chenB -- 2019-12-1 21:59
+In weather tab, you can change the location of the weather displayed when logged in. It will also associate that location with your 
+account for your next session. Default location is New York.
+>>>>>>> c8d2bdb251a9624b265134287a886bf45b11d473
 
 Team -- 2019-11-20
 Actions we will take to improve based on the assigned reading:

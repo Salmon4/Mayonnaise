@@ -149,10 +149,20 @@ def search():
 
 @app.route("/weather")
 def weather():
-    weatherUrl = urlopen("https://www.metaweather.com/api/location/2459115/")
+    if (checkAuth()):
+        tableBase = dbfunctions.getUserPrefs(c, session['username'], "location")
+        first = tableBase[0]
+        weatherUrl = urlopen("https://www.metaweather.com/api/location/" + first[0])
+        log = True
+    else:
+        weatherUrl = urlopen("https://www.metaweather.com/api/location/2459115/")
+        log = False
+    allLocations = {'New York':'2459115','London':'44418','San Francisco':'2487956'}
     weatherResponse = weatherUrl.read()
     weatherData = json.loads(weatherResponse)
-    return render_template("weather.html",
+    currentLocation = json.loads(weatherResponse)['title']
+    return render_template("weather.html", allL=allLocations, location = currentLocation,
+                            loggedIn = log,
                             pic=weatherData["consolidated_weather"][0]["weather_state_abbr"],DateToday=weatherData["consolidated_weather"][0]["applicable_date"],
                             TempToday='%.7s' % weatherData["consolidated_weather"][0]["the_temp"], HighestTemp='%.7s' % weatherData["consolidated_weather"][0]["max_temp"],
                             LowestTemp='%.7s' % weatherData["consolidated_weather"][0]["min_temp"], humidity='%.7s' % weatherData["consolidated_weather"][0]["humidity"],
@@ -178,6 +188,14 @@ def weather():
                             TempToday5='%.7s' % weatherData["consolidated_weather"][5]["the_temp"], HighestTemp5='%.7s' % weatherData["consolidated_weather"][5]["max_temp"],
                             LowestTemp5='%.7s' % weatherData["consolidated_weather"][5]["min_temp"]
                             )
+
+@app.route("/changeLocation", methods=['POST'])
+def changeLocation():
+    newLocation = request.form['location']
+    username = session['username']
+    dbfunctions.updatePref(c, username, "location", newLocation)
+    db.commit()
+    return redirect(url_for('weather'))
 
 @app.route("/money/<amount>")
 def money(amount):
