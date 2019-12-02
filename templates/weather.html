@@ -18,7 +18,20 @@
   </style>
 
     <!-- ================================================================= WEATHER ======================================================================= -->
-    <h3>Weather in New York (celsius)</h3>
+    {% if loggedIn %}
+      Your base currency is:
+      <form action="/changeLocation" method="POST">
+        <select name="location">
+          <option disabled selected>{{location}}</option>
+          {% for place in allL %}
+            <option value="{{allL.get(place)}}">{{place}}</option>
+          {% endfor %}
+          <input type="submit" value="Submit" name="submit-butom">
+        </select>
+      </form>
+    {% endif %}
+
+    <h3>Weather in {{location}} (celsius)</h3>
       <div class="grid-x grid-padding-x">
         <div class="medium-10 cell">
           <div class="success callout">
