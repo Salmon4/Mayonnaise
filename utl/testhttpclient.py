@@ -9,21 +9,21 @@ headers = {
 
 # conn.request("GET", "/games/%7Bid%7D", headers=headers)
 # conn.request("GET", "/games?page=0&per_page=1", headers=headers)
-conn.request("GET", "/games?seasons[]=2019&dates[]=2019-11-27", headers=headers)
+conn.request("GET", "/games?seasons[]=2019&dates[]=2019-12-01", headers=headers)
 
 res = conn.getresponse()
 data = res.read()
 
 # print(data.decode("utf-8"))
-#print(data)
-print("\n\n")
-testd = [("Ghost", 2), ("gost", 3)]
-print(len(testd))
-inn = False
-for tuple in testd:
-    if "gost" in tuple:
-        inn=True
-print(inn)
+print(data)
+# print("\n\n")
+# testd = [("Ghost", 2), ("gost", 3)]
+# print(len(testd))
+# inn = False
+# for tuple in testd:
+#     if "gost" in tuple:
+#         inn=True
+# print(inn)
 
 # import requests
 #
