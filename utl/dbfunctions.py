@@ -4,11 +4,13 @@ from datetime import date #for checking recency of topnews table
 lastHitApi = ""
 #create 2 general tables
 def setup(c):
+	#this keeps track of all the accounts created
 	c.execute("""CREATE TABLE IF NOT EXISTS users(
 				userID integer PRIMARY KEY,
 				username text,
 				password text
 				);""")
+	#table with all of the news articles
 	c.execute("""CREATE TABLE IF NOT EXISTS topnews(
 				datetime text,
 				title text,
@@ -17,6 +19,7 @@ def setup(c):
 				imageURL text,
 				description text
 				);""")
+	#table with hockey stuff
 	c.execute("""CREATE TABLE IF NOT EXISTS nhl_scores(
 				datetime text,
 				gameID integer,
@@ -26,6 +29,7 @@ def setup(c):
 				away_score integer,
 				status text
 				);""")
+	#table with basketball stuff
 	c.execute("""CREATE TABLE IF NOT EXISTS nba_scores(
 				datetime text,
 				gameID integer,
@@ -36,14 +40,14 @@ def setup(c):
 				status text
 				);""")
 
-def gettopnews(c):
+def gettopnews(c):#gets all articles
 	c.execute("SELECT * FROM topnews")
 	news = c.fetchall()
 	return news
 
 #new day: reset topnews table
 
-def resetnews(c):
+def resetnews(c):#resets news table to a blank state
 	c.execute("DROP TABLE IF EXISTS topnews")
 	c.execute("""CREATE TABLE topnews(
 				datetime text,
@@ -54,7 +58,7 @@ def resetnews(c):
 				description text
 				);""")
 
-def resetbusiness(c):
+def resetbusiness(c): #resets business news articles table
 	c.execute("DROP TABLE IF EXISTS business")
 	c.execute("""CREATE TABLE business(
 				datetime text,
@@ -65,7 +69,7 @@ def resetbusiness(c):
 				description text
 				);""")
 
-def resethealth(c):
+def resethealth(c): #resets health news articles table
 	c.execute("DROP TABLE IF EXISTS health")
 	c.execute("""CREATE TABLE health(
 				datetime text,
@@ -76,7 +80,7 @@ def resethealth(c):
 				description text
 				);""")
 
-def resetentertainment(c):
+def resetentertainment(c): #resets entertainment news articles table
 	c.execute("DROP TABLE IF EXISTS entertainment")
 	c.execute("""CREATE TABLE entertainment(
 				datetime text,
@@ -87,7 +91,7 @@ def resetentertainment(c):
 				description text
 				);""")
 
-def resetscience(c):
+def resetscience(c):  #resets science news article table
 	c.execute("DROP TABLE IF EXISTS science")
 	c.execute("""CREATE TABLE science(
 				datetime text,
@@ -98,7 +102,7 @@ def resetscience(c):
 				description text
 				);""")
 
-def resetgeneral(c):
+def resetgeneral(c): #resets general news article table
 	c.execute("DROP TABLE IF EXISTS general")
 	c.execute("""CREATE TABLE general(
 				datetime text,
@@ -109,7 +113,7 @@ def resetgeneral(c):
 				description text
 				);""")
 
-def resetsports(c):
+def resetsports(c): #resets sport news article table
 	c.execute("DROP TABLE IF EXISTS sports")
 	c.execute("""CREATE TABLE sports(
 				datetime text,
@@ -120,7 +124,7 @@ def resetsports(c):
 				description text
 				);""")
 
-def resettechnology(c):
+def resettechnology(c): #resets technology news article table
 	c.execute("DROP TABLE IF EXISTS technology")
 	c.execute("""CREATE TABLE technology(
 				datetime text,
@@ -131,7 +135,7 @@ def resettechnology(c):
 				description text
 				);""")
 
-def checkRecency(c):
+def checkRecency(c): #checks if the news article in the database are up to date
 	global lastHitApi
 	dateToday = date.today()
 	if (gettopnews(c) != []):
@@ -144,7 +148,7 @@ def checkRecency(c):
 	return True
 
 
-def settopnews(c,news):
+def settopnews(c,news): #updates news article table to the latest one
 	resetnews(c)
 	for article in news:
 		image = article['urlToImage']
@@ -163,12 +167,12 @@ def settopnews(c,news):
 		"INSERT INTO topnews VALUES(?,?,?,?,?,?)",(datetime,title,author,url,image,description,)
 		)
 
-def getnewscategory(c,category):
+def getnewscategory(c,category): #gets all news article categories into a dict
 	c.execute("SELECT * FROM " + category)
 	news = c.fetchall()
 	return news
 
-def iscategoryRecent(c,category):
+def iscategoryRecent(c,category): #checks if the category of news is up to date
 	dateToday = date.today()
 	if (getnewscategory(c,category) != []):
 		news = getnewscategory(c,category)
@@ -177,7 +181,7 @@ def iscategoryRecent(c,category):
 			return True
 	return False
 
-def setnews(c,news,category):
+def setnews(c,news,category): #if category of news isn't up to date, it will update the inputted category
 	if (category == "business"):
 		resetbusiness(c)
 		for article in news:
@@ -315,17 +319,17 @@ def reset(c):
     c.execute("DROP TABLE IF EXISTS topnews")
 
 #==========================================================
-def newUserTable(c, username):
+def newUserTable(c, username): #creates a table for the new user when the user creates an account
 	c.execute("CREATE TABLE IF NOT EXISTS "+username+" (area text, preference text)")
 	addUserPref(c, username, "base_currency", "USD")
 	addUserPref(c, username, "location", "2459115")
 
-def addUserPref(c, username, pref_area, pref):
+def addUserPref(c, username, pref_area, pref): #addes a row with the user's preference in the preference area into the user's table
 	c.execute("INSERT INTO "+username+" VALUES('"+pref_area+"', '"+pref+"')")
 
-def getUserPrefs(c, username, pref_area):
+def getUserPrefs(c, username, pref_area): #gets all rows of the specified user with the matching preference area
 	c.execute("SELECT preference FROM "+username+" WHERE area = ?", (pref_area, ))
 	return c.fetchall()
 
-def updatePref(c , username, pref_area, pref):
+def updatePref(c , username, pref_area, pref): #updates prefence row of specified area with the new preference of the user
 	c.execute("UPDATE "+username+" SET preference = '"+pref+"' WHERE area = ?", (pref_area,))
