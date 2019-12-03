@@ -1,4 +1,4 @@
-import sqlite3, json, datetime, http.client, requests
+import sqlite3, json, datetime, requests
 from utl import dbfunctions
 from urllib.request import urlopen
 
@@ -110,7 +110,7 @@ def getNBAToday(c):
     if len(scores) > 0 and scores[0][0] != date:
         c.execute("DELETE FROM nba_scores;")
     url = "https://free-nba.p.rapidapi.com/games"
-    querystring = {"page":"0","per_page":"25"}
+    querystring = {"date":"2019-12-02"}
     headers = {
         'x-rapidapi-host': "free-nba.p.rapidapi.com",
         'x-rapidapi-key': "eedd51b020mshc462a1043ca26dep113106jsn43a6a1a8e712"
@@ -118,20 +118,20 @@ def getNBAToday(c):
     response = requests.request("GET", url, headers=headers, params=querystring)
     data = response.json()
     data = data['data']
-    # print(data)
+    print(data)
     if len(scores) < 3:
         for game in data:
             gameID = game['id']
             # print(gamePk)
             #check if this gamePk is already in the table
             if len(scores) == 0:
-                print("len=0inserting")
+                #print("len=0inserting")
                 c.execute("INSERT INTO nba_scores VALUES (?, ?, ?, ?, ?, ?, ?)", (date, gameID, game['home_team']['full_name'],  game['visitor_team']['full_name'], game['home_team_score'], game['visitor_team_score'], game['status']))
             else:
                 for tuple in scores:
                     # print(tuple)
                     if gameID not in tuple:
-                        print("inserting")
+                        #print("inserting")
                         c.execute("INSERT INTO nba_scores VALUES (?, ?, ?, ?, ?, ?, ?)", (date, gameID, game['home_team']['full_name'],  game['visitor_team']['full_name'], game['home_team_score'], game['visitor_team_score'], game['status']))
                     #if game is already in table, but was in progress/not started before, update:
                     elif game[6] != "Final":
