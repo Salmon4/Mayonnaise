@@ -29,7 +29,7 @@ def root():
     if checkAuth(): #checks if the user is logged in
         username = session['username']
         flash("Welcome " + username + ". You have been logged in successfully.")
-        return redirect(url_for('account'))
+        return redirect(url_for('account')) #if logged in, redirects to account page
     return render_template('homepage.html')
 
 
@@ -38,7 +38,7 @@ def createAccount():
     return render_template("createAcc.html")
 
 @app.route("/logout")
-def logOut():
+def logOut(): #logs out the user and redirects to login page
     if checkAuth():
         session.pop('userID')
     return redirect("account")
@@ -52,20 +52,20 @@ def register():
         password2 = request.form['password2']
         c.execute("SELECT username FROM users WHERE username = ?", (username, ))
         a = c.fetchone()
-        if a != None:
+        if a != None: #checks for duplicate usernames
             flash("Account with that username already exists")
             return redirect(url_for('createAccount'))
-        elif " " in username:
+        elif " " in username: #checks for spaces cause spaces suck
             flash("Username cannot contain spaces")
             return redirect(url_for('createAccount'))
-        elif password != password2:
+        elif password != password2: #checks if both passwords are the same
             flash("Passwords do not match")
             return redirect(url_for('createAccount'))
-        elif len(password) < 8:
+        elif len(password) < 8: #passwords must have a minimum length of 8
             flash("Password must be at least 8 characters in length")
             return redirect(url_for('createAccount'))
 
-        else:
+        else: #successfully created an account
             c.execute("INSERT INTO users VALUES (NULL, ?, ?)", (username, password))
             dbfunctions.newUserTable(c, username)
             db.commit()
@@ -99,13 +99,13 @@ def auth():
     password = request.form['password']
     c.execute("SELECT userID, password FROM users WHERE username = ?", (username, ))
     a = c.fetchone()
-    if a == None:
-        flash("No user found with given username")
+    if a == None: #checks login username and password
+        flash("No user found with given username") #no given username in database
         return redirect(url_for('login'))
     elif password != a[1]:
-        flash("Incorrect password")
+        flash("Incorrect password") #password is incorrect for given username
         return redirect(url_for('login'))
-    else:
+    else: #successfully pass the tests
         session['userID'] = a[0]
         session['username'] = username
         flash("Welcome " + username + ". You have been logged in successfully.")
@@ -130,7 +130,7 @@ def usernews():
     if (not(checkAuth())):
         return redirect(url_for('news'))
     user = session['username']
-    types = ['business','health','general','science','technology','sports','entertainment']
+    types = ['business','health','general','science','technology','sports','entertainment'] #all the categories of news
     yourPrefs = dbfunctions.getUserPrefs(c,user,'news')
     news = []
     print(yourPrefs)
@@ -163,21 +163,23 @@ def search():
 
 @app.route("/weather")
 def weather():
-    if (checkAuth()):
+    if (checkAuth()): #checks if logged in
+        #if logged in, location is changeable
         tableBase = dbfunctions.getUserPrefs(c, session['username'], "location")
         first = tableBase[0]
         weatherUrl = urlopen("https://www.metaweather.com/api/location/" + first[0])
         log = True
     else:
+        #otherwise it isn't
         weatherUrl = urlopen("https://www.metaweather.com/api/location/2459115/")
         log = False
     allLocations = {'New York':'2459115','London':'44418','San Francisco':'2487956', 'Canada':'23424775',
-    'Boston':'2367105', 'Chicago':'2379574', 'United Kingdom':'23424975'}
+    'Boston':'2367105', 'Chicago':'2379574', 'United Kingdom':'23424975'} #this is all of our locations that the user can look at with the Where On Earth ID (WOE)
 
 
     weatherResponse = weatherUrl.read()
     weatherData = json.loads(weatherResponse)
-    currentLocation = json.loads(weatherResponse)['title']
+    currentLocation = json.loads(weatherResponse)['title'] #the name of the chosen place
     return render_template("weather.html", allL=allLocations, location = currentLocation,
                             loggedIn = log,
                             pic=weatherData["consolidated_weather"][0]["weather_state_abbr"],DateToday=weatherData["consolidated_weather"][0]["applicable_date"],
@@ -208,16 +210,17 @@ def weather():
 
 @app.route("/changeLocation", methods=['POST'])
 def changeLocation():
-    newLocation = request.form['location']
+    newLocation = request.form['location'] #new location selected from dropdown menu from weather.html
     username = session['username']
-    dbfunctions.updatePref(c, username, "location", newLocation)
+    dbfunctions.updatePref(c, username, "location", newLocation) #updates the current logged in user preference in weather location
     db.commit()
     return redirect(url_for('weather'))
 
 
-@app.route("/money/<amount>")
+@app.route("/money/<amount>") #amount is the amount of money that the user wants to be converted
 def money(amount):
-        if (checkAuth()):
+        if (checkAuth()): #checks if the user is logged in or not
+            #you can only change the base currency when you are logged in
             tableBase = dbfunctions.getUserPrefs(c, session['username'], "base_currency")
             first = tableBase[0]
             exchangeUrl = urlopen("https://api.exchangerate-api.com/v4/latest/" + first[0])
@@ -228,41 +231,42 @@ def money(amount):
         allData = json.loads(exchangeResponse)['rates']
         print(amount)
         am = float(amount)
-        if (checkAuth()):
-            tableBase2 = dbfunctions.getUserPrefs(c, session['username'], "base_currency")
+        if (checkAuth()): #different variables get pass to money.html so it will know what to display based on whether user is logged in
+            tableBase2 = dbfunctions.getUserPrefs(c, session['username'], "base_currency") #chosen base currency is stored in table for later use
             first2 = tableBase[0]
             return render_template("money.html", b = first2, d = allData, count = 1
                                     , a = am, loggedIn = True)
         else:
             return render_template("money.html", b = base, d = allData, count = 1
                                     , a = am, loggedIn = False)
-@app.route("/moneyprocess", methods=['POST','GET'])
+@app.route("/moneyprocess", methods=['POST','GET']) #changes the amount of money the user wants to be converted
 def moneyprocess():
-    i = request.form['amount']
-    info = float(i)
+    i = request.form['amount'] #gets the new amount of money the user wants to convert
+    info = float(i) #converts from string to float so it is able to be multiplied
     return redirect(url_for('money', amount = info))
 
 
-@app.route("/changeBase/<am>", methods=['POST'])
+@app.route("/changeBase/<am>", methods=['POST']) #changes the base type of currency the user wants
 def changeBase(am):
-    newBase = request.form['base']
+    newBase = request.form['base'] #gets submitted new currency from dropdown menu
     username = session['username']
-    dbfunctions.updatePref(c, username, "base_currency", newBase)
+    dbfunctions.updatePref(c, username, "base_currency", newBase) #update the user's prefered currency for next usage
     db.commit()
     return redirect(url_for('money', amount = am))
 
 
-@app.route("/account")
+@app.route("/account") #account management tab
 def account():
-    if (checkAuth()):
+    if (checkAuth()): #checks if logged in
         username = session['username']
         loggedIn = True
         return render_template("account.html", login = True, user = username)
     else:
+        #user will be prompted to log in if desired
         loggedIn = False
         return render_template("account.html", login = False)
 
-@app.route("/logout")
+@app.route("/logout") #to log the user out of his account
 def logout():
     print(session)
     session.pop('userID')
