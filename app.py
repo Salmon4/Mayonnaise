@@ -17,7 +17,7 @@ c = db.cursor() #facilitate db operations
 
 dbfunctions.setup(c)
 
-def checkAuth():
+def checkAuth(): #checks if the user is logged in
     print(session)
     if "userID" in session:
         return True
@@ -26,17 +26,15 @@ def checkAuth():
 
 @app.route("/")
 def root():
-    if checkAuth():
+    if checkAuth(): #checks if the user is logged in
         username = session['username']
         flash("Welcome " + username + ". You have been logged in successfully.")
-        redirect(url_for('home', currentTab = 1))
+        return redirect(url_for('account'))
     return render_template('homepage.html')
 
 
 @app.route("/createAccount")
 def createAccount():
-    if checkAuth():
-        redirect(url_for('home', currentTab = 1))
     return render_template("createAcc.html")
 
 @app.route("/logout")
@@ -81,7 +79,7 @@ def register():
 def login():
     # if already logged in, don't display login page
     if checkAuth():
-        return redirect(url_for('home', currentTab = 1))
+        return redirect(url_for('account'))
     else:
         return render_template('login.html')
 
