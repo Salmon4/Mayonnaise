@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block header %}
-  {%block title%} Create an account. {%endblock%}
+  {%block title%}  {%endblock%}
 {% endblock %}
 
 {% block body %}
@@ -9,7 +9,10 @@
   <i>{{ message }}</i>
   <br>
 {% endfor %}
+<center>
 <form action="/register" method="POST">
+  Create an account: <br>
+  <div style="width:50%">
   <label for="username">Username</label>
   <input type="text" name="username" required>
   <br>
@@ -21,5 +24,7 @@
   <br>
   <input type="submit" name="register-button" value="Sign Up">
   <p>Already have an account? <a href="/login">Log In</a></p>
+  </div>
 </form>
+</center>
 {% endblock %}

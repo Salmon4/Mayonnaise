@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Forgot Password{% endblock %}
+
+{% block body %}
+<center>
+	<h2>Forgot Password?</h2>
+	{% for message in get_flashed_messages() %}
+		<i>{{ message }}</i>
+		<br>
+	{% endfor %}
+
+	<div style="width:50%">
+	<form action="/acceptence" method="POST">
+    <br>
+    Oof
+    <br>
+    <br>
+		<input type="submit" name=":(" value="Accept Your Incompetence">
+    <br>
+    <br>
+	</form>
+	</div>
+	</center>
+{% endblock %}

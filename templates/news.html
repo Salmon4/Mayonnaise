@@ -10,10 +10,14 @@
           <p>{{msg}}</p>
           <br>
       {% endfor %}
+      <center>
+      <div style="width:50%">
       <form action="/search" method='POST'>
+          Search News:
           <input type="search" name="search" placeholder="Search..." class="animated-search-form" required>
           <input type="submit" value='Search'>
       </form>
+      </div>
       <br>
       {% if bool %}
       <form action='/yourNews'>
@@ -22,6 +26,7 @@
       {% else %}
             <a href="/login">Login</a> to add preferences.
       {% endif %}
+        </center>
       <br><br>
       <h4>Today's Top Headlines for the United States</h4>
       <br>
