@@ -168,7 +168,7 @@ def settopnews(c,news): #updates news article table to the latest one
 		if (description == None):
 			description = "None"
 		if (image == None):
-			image = "newspaper.jpg"
+			image = "https://cdn.britannica.com/25/93825-050-D1300547/collection-newspapers.jpg"
 		if (author == None):
 			author = "N/A"
 		c.execute(
