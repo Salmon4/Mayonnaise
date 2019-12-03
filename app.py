@@ -291,21 +291,22 @@ def sports():
     if checkAuth():
         username = session['username']
         #gets a list of user's NHL team prefs
-        userteams= sportsfunctions.getTeamsAdded(c, username)
+        nhl_userteams= sportsfunctions.getTeamsAdded(c, username)
         #allteams stores data on all nhl teams
-        allteams=data['teams']
+        nhl_allteams=data['teams']
         #userteamsdata stores data only on NHL teams user has added to prefs
         #get general team data from api
-        userteamsdata = sportsfunctions.getUserTeamData(c, username,userteams, allteams)
+        nhl_userteamsdata = sportsfunctions.getUserTeamData(c, username,nhl_userteams, nhl_allteams)
         #add most recent game data
-        userteamsdata = sportsfunctions.addMostRecentGame(userteamsdata)
+        nhl_userteamsdata = sportsfunctions.addMostRecentGame(nhl_userteamsdata)
         #add next game data
-        userteamsdata = sportsfunctions.addNextGame(userteamsdata)
+        nhl_userteamsdata = sportsfunctions.addNextGame(nhl_userteamsdata)
         # print(userteamsdata)
         #list of teams in dropdown = teams user has not added yet
-        teamsnotadded= sportsfunctions.getTeamsNotAdded(c, username, allteams)
+        nhlteamsnotadded= sportsfunctions.getTeamsNotAdded(c, username, nhl_allteams)
         # print(teamsnotadded)
-        return render_template("sports.html", loggedin=True, teams=teamsnotadded, user_teams=userteams, user_team_data=userteamsdata, NHLtoday=NHLtodayscores, NBAtoday=NBAtodayscores)
+        nfl_allteams = sportsfunctions.getNFLTeams()
+        return render_template("sports.html", loggedin=True, nhl_teams=nhlteamsnotadded, nhl_user_teams=nhl_userteams, nhl_user_team_data=nhl_userteamsdata, NHLtoday=NHLtodayscores, nfl_teams=nfl_allteams, NBAtoday=NBAtodayscores)
     else:
         return render_template("sports.html", logeedin=False, NHLtoday=NHLtodayscores, NBAtoday=NBAtodayscores)
 
