@@ -16,6 +16,7 @@
     clear: both;
   }
   </style>
+    <h3><center><u>Weather in {{location}}</u></center></h3>
 <center>
     {% if loggedIn %}
       Location:
@@ -32,12 +33,12 @@
       </form>
     {% endif %}
 </center>
-    <h3>Weather in {{location}}</h3>
       <div class="grid-x grid-padding-x">
         <div class="medium-12 cell">
           <div class="success callout">
-          <div class="row">
-            <div class="column">
+            <center>
+
+
 
 
               <h1> {{DateToday}}</h1>
@@ -46,16 +47,14 @@
               <div>Temperature today: {{TempToday}} °C</div>
               <div>Lowest today: {{LowestTemp}} °C</div>
               <div>Highest today: {{HighestTemp}} °C</div>
-            </div>
-            <div class = "column">
-              <br>
-              <br>
-              <br>
+
+
                   Humidity: {{humidity}}
                   <br>
                   WindSpeed: {{windspeed}}
-              </div>
-            </div>
+
+
+            </center>
           </div>
         </div>
       </div>
