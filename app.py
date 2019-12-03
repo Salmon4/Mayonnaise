@@ -85,6 +85,16 @@ def login():
     else:
         return render_template('login.html')
 
+@app.route("/oof", methods=["POST"])
+def oof():
+    #this is sad
+    return render_template('oof.html')
+
+@app.route("/acceptence", methods=["POST"])
+def acceptence():
+    #this is sad
+    return redirect(url_for('login'))
+
 @app.route("/auth", methods=["POST"])
 def auth():
     username = request.form['username']

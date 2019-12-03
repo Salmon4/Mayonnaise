@@ -3,12 +3,13 @@
 {% block title %}Login{% endblock %}
 
 {% block body %}
+<center>
 	<h2>Login</h2>
 	{% for message in get_flashed_messages() %}
 		<i>{{ message }}</i>
 		<br>
 	{% endfor %}
-	
+	<div style="width:50%">
 	<form action="/auth" method="POST">
 		<label for="username">Username</label>
 		<input type="text" name="username" required>
@@ -17,6 +18,13 @@
 		<input type="password" name="password" required>
 		<br>
 		<input type="submit" name="login-button" value="Log In">
-		<p>Don't have an account? <a href="/createAccount">Sign Up</a></p>
 	</form>
+	<form action="/oof" method="POST">
+		<br>
+		<input type="submit" name="Forgot Password" value="Forgot Password">
+	</form>
+	<br>
+	<p>Don't have an account? <a href="/createAccount">Sign Up</a></p>
+	</div>
+	</center>
 {% endblock %}
