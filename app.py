@@ -111,7 +111,7 @@ def auth():
         flash("Welcome " + username + ". You have been logged in successfully.")
         return redirect(url_for('account'))
 
-@app.route("/news")
+@app.route("/news") #where the news article will be displayed
 def news():
     loggedIn = True
     if (not(checkAuth())):
@@ -123,7 +123,7 @@ def news():
         data = top_headlines['articles']
         dbfunctions.settopnews(c,data)
         news = dbfunctions.gettopnews(c)
-    return render_template("news.html",bool = loggedIn, articles=news)
+    return render_template("news.html",bool = loggedIn, articles=news) 
 
 @app.route("/yourNews")
 def usernews():
