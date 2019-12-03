@@ -33,6 +33,6 @@ Brandon Chen
     
 
 # Instructions
-1. Clone this repo using the SSH or HTTPS
+1. Clone this repo using the HTTPS
 2. In your virtual environment run $pip install -r requirements.txt
 3. Run $python app.py
