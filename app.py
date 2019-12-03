@@ -39,6 +39,12 @@ def createAccount():
         redirect(url_for('home', currentTab = 1))
     return render_template("createAcc.html")
 
+@app.route("/logout")
+def logOut():
+    if checkAuth():
+        session.pop('userID')
+    return redirect("account")
+
 @app.route("/register", methods=["POST"])
 def register():
     print(request)
@@ -157,8 +163,8 @@ def weather():
     else:
         weatherUrl = urlopen("https://www.metaweather.com/api/location/2459115/")
         log = False
-    allLocations = {'New York':'2459115','London':'44418','San Francisco':'2487956', 'Canada':'23424775', 'Mexico':'23424900',
-    'Boston':'2367105', 'Chicago':'2379574', 'Brazil':'23424768', 'United Kingdom':'23424975'}
+    allLocations = {'New York':'2459115','London':'44418','San Francisco':'2487956', 'Canada':'23424775',
+    'Boston':'2367105', 'Chicago':'2379574', 'United Kingdom':'23424975'}
 
 
     weatherResponse = weatherUrl.read()

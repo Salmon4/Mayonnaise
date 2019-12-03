@@ -7,6 +7,7 @@
   {% if loggedIn %}
     Your base currency is:
     <form action="/changeBase/{{a}}" method="POST">
+      <div style="width:20%">
       <select name="base">
         <option disabled selected>{{b[0]}}</option>
         {% for currency in d %}
@@ -14,6 +15,7 @@
         {% endfor %}
         <input type="submit" value="Submit" name="submit-butom">
       </select>
+      </div>
     </form>
   {% else %}
     Your base currency is: {{b}}
@@ -24,6 +26,7 @@
     Amount: <div style="width:20%"><input type="text" name="amount" value={{a}}></div>
     <input type="submit" value="Submit">
   </form>
+  <br>
   </center>
   <div class="grid-x grid-padding-x">
   {% for key in d %}

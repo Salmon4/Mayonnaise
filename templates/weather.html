@@ -16,11 +16,11 @@
     clear: both;
   }
   </style>
-
-    <!-- ================================================================= WEATHER ======================================================================= -->
+<center>
     {% if loggedIn %}
-      Your base currency is:
+      Location:
       <form action="/changeLocation" method="POST">
+        <div style="width:20%">
         <select name="location">
           <option disabled selected>{{location}}</option>
           {% for place in allL %}
@@ -28,12 +28,13 @@
           {% endfor %}
           <input type="submit" value="Submit" name="submit-butom">
         </select>
+        </div>
       </form>
     {% endif %}
-
+</center>
     <h3>Weather in {{location}}</h3>
       <div class="grid-x grid-padding-x">
-        <div class="medium-10 cell">
+        <div class="medium-12 cell">
           <div class="success callout">
           <div class="row">
             <div class="column">
@@ -115,7 +116,16 @@
 
       </div>
     </div>
-    </div>
-    <!-- ================================================================= WEATHER ======================================================================= -->
+    <div class="small-2 cell">
+      <div class="secondary callout">
+        <h5>2100-04-31</h5>
+        <img src="./meatball.png" width="150" height="10" alt = "cloudly with a chance of meatball">
 
+        <div>Temperature: Hot °C</div>
+        <div>Lowest: 100 °C</div>
+        <div>Highest: 0 °C</div>
+
+      </div>
+    </div>
+    </div>
 {% endblock %}

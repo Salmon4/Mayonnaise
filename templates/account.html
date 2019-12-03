@@ -4,7 +4,10 @@
 
 {% block body %}
 {% if login %}
-  Hello {{user}}!
+  Hello {{user}}!<br><br>
+  <form action="/logout">
+    <input type="submit" name="Log Out" value="LogOut">
+  </form>
 {% else %}
   Hello stranger!
   <div class="grid-x grid-padding-x">
