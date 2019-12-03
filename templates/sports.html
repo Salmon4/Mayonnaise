@@ -55,6 +55,19 @@
 
   {% endfor %}
   </div>
+  {% if loggedin %}
+
+  <form action="/addsport" method="POST">
+    <label for="nfl_team">Select team to add to preferences:</label>
+    <select name="nfl_team">
+      <option disabled selected>-- select a team --</option>
+      {% for team in nfl_teams %}
+      <option value="{{team.FullName}}">{{team.FullName}}</option>
+      {% endfor %}
+      <input type="submit" value="Submit" name="submit-butom">
+    </select>
+  </form>
+  {% endif %}
 
   <h1>NHL</h1>
   <h3><small>Today's Scores:</small></h3>
@@ -149,10 +162,10 @@
         </div>
 
 					<form action="/addsport" method="POST">
-						<label for="team">Select team to add to preferences:</label>
-						<select name="team">
+						<label for="nhl_team">Select team to add to preferences:</label>
+						<select name="nhl_team">
 						  <option disabled selected>-- select a team --</option>
-						  {% for team in teams %}
+						  {% for team in nhl_teams %}
 						  <option value="{{team.name}}">{{team.name}}</option>
 						  {% endfor %}
 						  <input type="submit" value="Submit" name="submit-butom">
