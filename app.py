@@ -275,23 +275,33 @@ def logout():
 
 @app.route("/sports")
 def sports():
+    #get all nhl teams, read into data
     u = urlopen("https://statsapi.web.nhl.com/api/v1/teams")
     response = u.read()
     data = json.loads(response)
+    #update nhl_today and nba_today tables and returns its data
+    #used to display scores for today (displayed even if not logged in)
     NHLtodayscores = sportsfunctions.getNHLTodayScores(c)
     NBAtodayscores = sportsfunctions.getNBAToday(c)
-    print(NBAtodayscores)
+    #print(NBAtodayscores)
     db.commit()
     #print(NHLtodayscores)
     # username = session['username']
     if checkAuth():
         username = session['username']
+        #gets a list of user's NHL team prefs
         userteams= sportsfunctions.getTeamsAdded(c, username)
+        #allteams stores data on all nhl teams
         allteams=data['teams']
+        #userteamsdata stores data only on NHL teams user has added to prefs
+        #get general team data from api
         userteamsdata = sportsfunctions.getUserTeamData(c, username,userteams, allteams)
+        #add most recent game data
         userteamsdata = sportsfunctions.addMostRecentGame(userteamsdata)
+        #add next game data
         userteamsdata = sportsfunctions.addNextGame(userteamsdata)
         # print(userteamsdata)
+        #list of teams in dropdown = teams user has not added yet
         teamsnotadded= sportsfunctions.getTeamsNotAdded(c, username, allteams)
         # print(teamsnotadded)
         return render_template("sports.html", loggedin=True, teams=teamsnotadded, user_teams=userteams, user_team_data=userteamsdata, NHLtoday=NHLtodayscores, NBAtoday=NBAtodayscores)
