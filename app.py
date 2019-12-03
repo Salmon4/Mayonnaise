@@ -1,7 +1,7 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import Flask, render_template, redirect, url_for, session, flash, request
 from urllib.request import urlopen
 import json
-import sqlite3, os
+import sqlite3, os, requests
 from utl import dbfunctions, sportsfunctions
 from newsapi import NewsApiClient
 
@@ -123,7 +123,7 @@ def news():
         data = top_headlines['articles']
         dbfunctions.settopnews(c,data)
         news = dbfunctions.gettopnews(c)
-    return render_template("news.html",bool = loggedIn, articles=news) 
+    return render_template("news.html",bool = loggedIn, articles=news)
 
 @app.route("/yourNews")
 def usernews():
