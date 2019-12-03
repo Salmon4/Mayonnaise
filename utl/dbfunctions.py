@@ -39,6 +39,14 @@ def setup(c):
 				away_score integer,
 				status text
 				);""")
+	resetbusiness(c)
+	resetnews(c)
+	resethealth(c)
+	resetentertainment(c)
+	resetscience(c)
+	resetgeneral(c)
+	resetsports(c)
+	resettechnology(c)
 
 def gettopnews(c):#gets all articles
 	c.execute("SELECT * FROM topnews")
