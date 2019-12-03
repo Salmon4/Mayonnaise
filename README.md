@@ -4,19 +4,18 @@ Mayonnaise News is a website that gives information on current topics like news,
 
 # Roster and Roles
 Lauren Pehlivanian
-  - Working on News API to display articles.
-    - Implementing searches for articles on both sides of political spectrum
+  - Sports API
   
 Albert Wan
-  - Working on metaweather API.
+  - Metaweather API.
 
 Biraj Chowdhury
-  - Sports API
-  -
+  - Working on News API to display articles.
+    - Implementing searches for articles on both sides of political spectrum
 
 Brandon Chen
-  - Stock API
-  -
+  - Foreign Currency Exchange API
+
 
 # API Used
   - Google News API
@@ -30,11 +29,10 @@ Brandon Chen
     
   - Sports API
     -https://docs.google.com/document/d/1_CkEqysrBYJQ7XZBEWMpMrWhCQb0HPMPLGLknhnDtsA/edit
-    
-  - Stock API
+
     
 
 # Instructions
-1. Clone this repo using the SSH or HTTPS
+1. Clone this repo using the HTTPS
 2. In your virtual environment run $pip install -r requirements.txt
 3. Run $python app.py

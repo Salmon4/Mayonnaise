@@ -133,7 +133,8 @@ wanA -- 2019-12-2 14:50
 Finished celsius and added more locations.
 
 chenB -- 2019-12-2 22:10
-Added some comments to app.py and mayonnaise.db. Added forgot password and made some elements more eye pleasing.
+Added some comments to app.py and mayonnaise.db. Added forgot password and made some elements more eye pleasing. Added mayonnaise and
+meatball image.
 
 Team -- 2019-11-20
 Actions we will take to improve based on the assigned reading:
