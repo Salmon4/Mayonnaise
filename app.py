@@ -174,7 +174,8 @@ def weather():
         weatherUrl = urlopen("https://www.metaweather.com/api/location/2459115/")
         log = False
     allLocations = {'New York':'2459115','London':'44418','San Francisco':'2487956',
-    'Boston':'2367105', 'Chicago':'2379574'} #this is all of our locations that the user can look at with the Where On Earth ID (WOE)
+    'Boston':'2367105', 'Chicago':'2379574', 'El Paso, Texas':'2397816', 'Seattle, Washington':'2490383',
+        'Honolulu, Hawaii':'2423945','Baltimore, Maryland':'2358820'} #this is all of our locations that the user can look at with the Where On Earth ID (WOE)
 
 
     weatherResponse = weatherUrl.read()
