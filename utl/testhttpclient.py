@@ -38,6 +38,7 @@ headers = {
 
 response = requests.request("GET", url, headers=headers, params=querystring)
 data = response.json()
+
 print(response.json())
 
 
