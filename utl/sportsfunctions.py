@@ -101,6 +101,7 @@ def addNextGame(teamdata):
             teamdata[i]['nextgame'] = "No upcoming games."
     return teamdata
 #----NBA---------------------------------------------------------------------------------------------------------------------------
+#NOT ACTUALLY USING NBA DATA // API IS OUTDATED AND THERE IS NO FREE UPDATED ONE. :( :(
 def getNBAToday(c):
     c.execute("SELECT * FROM nba_scores;")
     scores = c.fetchall()
