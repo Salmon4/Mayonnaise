@@ -132,6 +132,9 @@ account for your next session. Default location is New York.
 wanA -- 2019-12-2 14:50
 Finished celsius and added more locations.
 
+chenB -- 2019-12-2 22:10
+Added some comments to app.py and mayonnaise.db. Added forgot password and made some elements more eye pleasing.
+
 Team -- 2019-11-20
 Actions we will take to improve based on the assigned reading:
 1. We should share code with our teammates to review/debug. You shouldn't be defensive about your errors as debugging helps improve
