@@ -318,9 +318,13 @@ def dropdown():
 def addsport():
     if request.method=="POST":
         print(request.form)
-        team = request.form['team']
         username = session['username']
-        dbfunctions.addUserPref(c, username, "nhl_team", team)
+        if "nhl_team" in request.form:
+            team = request.form['nhl_team']
+            dbfunctions.addUserPref(c, username, "nhl_team", team)
+        if "nfl_team" in request.form:
+            team = request.form['nfl_team']
+            dbfunctions.addUserPref(c, username, "nfl_team", team)
         db.commit()
     return redirect(url_for("sports"))
 
