@@ -3,6 +3,7 @@
 {% endblock %}
 
 {% block body %}
+<center>
     <br>
     <form action='/news'>
         <input type='submit' value="Back to Top Headlines">
@@ -13,6 +14,7 @@
         <br>
     {% endfor %}
     <br>
+    <div style="width:50%">
     <form action="/addcategory" method="POST">
         <label for="category">Select A Category You Wish To Follow:</label>
         <select name="category">
@@ -23,6 +25,7 @@
             <input type="submit" value="Submit" name="submit-butom">
         </select>
     </form>
+    </div>
     <br>
     <h5>Your News </h5>
     <div class="grid-x grid-padding-x">
@@ -36,4 +39,5 @@
             <p>{{article[0][0:10]}}</p>
         </div>
         {% endfor %}
+        </center>
 {% endblock %}
