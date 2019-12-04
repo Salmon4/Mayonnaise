@@ -39,8 +39,11 @@ Everyone
   - Currency Exchange
     -https://docs.google.com/document/d/1yTckLoGBHA-C37hhukXOc76Jh_770L7m3Moj-wMFeUU/edit
     
-  - Sports API
+  - NHL API
     -https://docs.google.com/document/d/1_CkEqysrBYJQ7XZBEWMpMrWhCQb0HPMPLGLknhnDtsA/edit
+    
+   - SportsData.io API
+    -https://docs.google.com/document/d/1yw1VfXMQ27hSFvTeBtobT2NwGGCulfky3fuzj5toyn8/edit
 
     
 
