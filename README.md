@@ -47,4 +47,4 @@ Everyone
 # Instructions
 1. Clone this repo using the HTTPS --> https://github.com/Salmon4/Mayonnaise.git
 2. In your virtual environment, change directory to /doc and run "$pip install -r requirements.txt"
-3. Go back to root directory with "$cd .." and run "$python app.py"
+3. Go back to root directory with "$cd .." and run "$python3 app.py"
