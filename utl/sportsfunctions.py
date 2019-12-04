@@ -119,7 +119,6 @@ def getNBAToday(c):
     response = requests.request("GET", url, headers=headers, params=querystring)
     data = response.json()
     data = data['data']
-    print(data)
     if len(scores) < 3:
         for game in data:
             gameID = game['id']
