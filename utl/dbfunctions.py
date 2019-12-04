@@ -39,6 +39,15 @@ def setup(c):
 				away_score integer,
 				status text
 				);""")
+	c.execute("""CREATE TABLE IF NOT EXISTS nfl_scores(
+				datetime text,
+				gameID integer,
+				home text,
+				away text,
+				home_score integer,
+				away_score integer,
+				status text
+				);""")
 	resetbusiness(c)
 	resetnews(c)
 	resethealth(c)
