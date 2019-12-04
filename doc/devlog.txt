@@ -116,32 +116,63 @@ chenB -- 2019-11-30 19:03
 Added function that allows the user to input how much of the base currency they want to convert. Displayed foreign currency will change
 accordingly and is in floats to account for cents. Default is 1.
 
-chenB -- 2019-12-1 16:29
+chenB -- 2019-12-01 16:29
 Able to change the base currency when converting money. It is always USD by default when account is created but afterwards both amount
 and currency type is remembered when changed.
 
-chowdhuryB -- 2019-12-2 00:01
+chowdhuryB -- 2019-12-02 00:01
 Added personalization for news. Users can now choose out of 7 catergories and news that fall into those catergories will be displayed for the user.
 Added catergories tables in the database that store news from each user so the news api is only hit once every day.
 Added buttons that allow users to switch back and forth between their personalized news and the top stories
 
-chenB -- 2019-12-1 21:59
-In weather tab, you can change the location of the weather displayed when logged in. It will also associate that location with your 
+chenB -- 2019-12-01 21:59
+In weather tab, you can change the location of the weather displayed when logged in. It will also associate that location with your
 account for your next session. Default location is New York.
 
-wanA -- 2019-12-2 14:50
+wanA -- 2019-12-02 14:50
 Finished celsius and added more locations.
 
-chenB -- 2019-12-2 22:10
+pehlivanianL -- 2019-12-02 14:55
+Did research and found free NFL api, wrote 2 functions to read in and store data from api.
+
+pehlivanianL -- 2019-12-02 17:30
+Fixed the formatting on cards in sports.html. Also added feature that displays if the game is live, upcoming, or finished.
+Tested NBA API more, added nba_scores database and started writing function to add today's scores to database.
+
+pehlivanianL -- 2019-12-02 18:26
+Finished working function to get today's nba scores and add to table. Added cards on sports.html to display today's games.
+Switched from using http.client to requests to get nba api data (to turn it into json)
+
+chenB -- 2019-12-02 22:10
 Added some comments to app.py and mayonnaise.db. Added forgot password and made some elements more eye pleasing. Added mayonnaise and
 meatball image.
 
-wanA -- 2019-12-2 22:54
-Added correct cities and deleted invalid locations. 
+pehlivanianL -- 2019-12-02 22:26
+Added comments to /sports.
 
-chenB -- 2019-12-3 19:05
+wanA -- 2019-12-02 22:54
+Added correct cities and deleted invalid locations.
+
+pehlivanianL -- 2019-12-03 14:56
+Fixed formatting on NHL cards.
+
+pehlivanianL -- 2019-12-03 18:01
+Continued testing nba api. Realized it will not work because it is outdated.
+Added addteam form for NFL team.
+
+chenB -- 2019-12-03 19:05
 Changed colors of some callouts. Replaced image with gif. Added background color. Drew and uploaded flag. Fixed design doc to be more
 accurate and uploaded it.
+
+pehlivanianL -- 2019-12-03 23:44
+Finished adding NFL section: form, today's scores, and stats of user preference teams. Added functions to get nfl team data, and add today's scores to table.
+Made function that only makes api request for current season week if the entry in table is outdated (to conserve api calls).
+Finished formatting in sports.html- cards are all formatted correctly now.
+Fixed functions that only get teams not added (for form).
+
+
+pehlivanianL -- 2019-12-04 00:50
+Added user's sports data to accounts page. Fixed formatting of button and text.
 
 Team -- 2019-11-20
 Actions we will take to improve based on the assigned reading:
