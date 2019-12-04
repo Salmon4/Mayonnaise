@@ -17,13 +17,17 @@
   <p>{{msg}}</p>
   {% endfor %}
 
-  <h1>NBA</h1>
+  <h1>NFL</h1>
   <h3><small>Today's Scores:</small></h3>
+  {% if NFLtoday == "No games played or scheduled for today." %}
+  {{ NFLtoday }}
+  <br>
+  {% else %}
   <div class="grid-x grid-padding-x">
-  {% for game in NBAtoday %}
+  {% for game in NFLtoday %}
     <div class="columns medium-4">
       <div class="card" style="width: 400px; padding=15px">
-        {% if game[6] == "Final" %}
+        {% if game[6] == 1 %}
 
           {% if game[4] > game[5] %}
           <span style="text-align:center"> <strong style="color:green">{{game[2]}}</strong> <span style'color:black'>vs.</span> <strong style="color:red">{{game[3]}}</strong></span>
@@ -39,7 +43,7 @@
           <span>{{game[4]}} - {{game[5]}}</span>
           {% endif %}
 
-        {% elif "Qtr" in game[6] %}
+        {% elif game[4] != 0 or game[5] != 0 %}
         <h6 style="color:red">Live:</h6>
         <span><strong>{{game[2]}}</strong> vs. <strong>{{game[3]}}</strong></span>
         <span>{{game[4]}} - {{game[5]}}</span>
@@ -55,22 +59,60 @@
 
   {% endfor %}
   </div>
+  {% endif %}
   {% if loggedin %}
 
+  <br><br>
+  <h3><small>Scores From Your Teams:</small></h3>
   <form action="/addsport" method="POST">
     <label for="nfl_team">Select team to add to preferences:</label>
     <select name="nfl_team">
       <option disabled selected>-- select a team --</option>
-      {% for team in nfl_teams %}
+      {% for team in nfl_teams_not_added %}
       <option value="{{team.FullName}}">{{team.FullName}}</option>
       {% endfor %}
       <input type="submit" value="Submit" name="submit-butom">
     </select>
   </form>
+<br>
+      <div class="grid-x grid-padding-x">
+      {% for team in nfl_user_team_data %}
+      <div class="columns medium-4">
+      <div class="card" style="width: 400px; padding=15px">
+        <div class="card-divider">
+          <h4 style="text-align:center;">{{team.Name}}</h4>
+        </div>
+        <!-- <img src="assets/img/generic/rectangle-1.jpg"> -->
+        <div class="card-section">
+          <strong>Conference:</strong> {{team.Conference}}
+          <br>
+          <strong>Division:</strong> {{team.Division}}
+        </div>
+        <div class="card-section">
+          <strong>Percentage: </strong><span style="color:blue;">{{team.Percentage}}</span>
+          <br>
+          <strong>Points For: </strong><span style="color:green;">{{team.PointsFor}}</span>
+          <br>
+          <strong>Points Against: </strong><span style="color:red;">{{team.PointsAgainst}}</span>
+          <br>
+          <strong>Touchdowns: </strong><span style="color:blue;">{{team.Touchdowns}}</span>
+          <br>
+          <strong>Total Division Wins: </strong><span style="color:green;">{{team.DivisionWins}}</span>
+          <br>
+          <strong>Total Division Losses: </strong><span style="color:red;">{{team.DivisionLosses}}</span>
+        </div>
+      </div>
+    </div>
+      {% endfor %}
+    </div>
+
   {% endif %}
 
   <h1>NHL</h1>
   <h3><small>Today's Scores:</small></h3>
+  {% if NHLtoday == "No games played or scheduled for today." %}
+  {{ NHLtoday }}
+  {% else %}
   <div class="grid-x grid-padding-x">
   {% for game in NHLtoday %}
     <div class="columns medium-4">
@@ -83,13 +125,13 @@
         <span><strong>{{game[2]}}</strong> vs. <strong>{{game[3]}}</strong></span>
         <span>{{game[4]}} - {{game[5]}}</span>
         {% elif game[4] > game[5] %}
-        <span> <strong style="color:green">{{game[2]}}> vs. <strong style="color:red">{{game[3]}}</span>
+        <span> <strong style="color:green">{{game[2]}}</strong> vs. <strong style="color:red">{{game[3]}}</strong></span>
         <!-- <br> -->
-        <span> <strong style="color:green">{{game[4]}}> - <strong style="color:red">{{game[5]}}</span>
+        <span> <strong style="color:green">{{game[4]}}</strong> - <strong style="color:red">{{game[5]}}</strong></span>
         {% elif game[4] < game[5] %}
-        <span> <strong style="color:red">{{game[2]}}> vs. <strong style="color:green">{{game[3]}}</span>
+        <span> <strong style="color:red">{{game[2]}}</strong> vs. <strong style="color:green">{{game[3]}}</strong></span>
         <!-- <br> -->
-        <span> <strong style="color:red">{{game[4]}}> - <strong style="color:green">{{game[5]}}</span>
+        <span> <strong style="color:red">{{game[4]}}</strong> - <strong style="color:green">{{game[5]}}</strong></span>
         {% else %}
         <span><strong>{{game[2]}}</strong> vs. <strong>{{game[3]}}</strong></span>
         <!-- <br> -->
@@ -101,6 +143,7 @@
 
   {% endfor %}
   </div>
+  {% endif %}
 
 				{% if loggedin %}
 					<!-- <h2>Your teams:</h2>
@@ -110,10 +153,22 @@
 					{% endfor %} -->
 
 					<!-- Cards for each team -->
-
+<br><br>
       <h3><small>Scores From Your Teams:</small></h3>
+
+      <form action="/addsport" method="POST">
+        <label for="nhl_team">Select team to add to preferences:</label>
+        <select name="nhl_team">
+          <option disabled selected>-- select a team --</option>
+          {% for team in nhl_teams %}
+          <option value="{{team.name}}">{{team.name}}</option>
+          {% endfor %}
+          <input type="submit" value="Submit" name="submit-butom">
+        </select>
+      </form>
+      <br><br>
           <div class="grid-x grid-padding-x">
-					{% for team in user_team_data %}
+					{% for team in nhl_user_team_data %}
           <div class="columns medium-4">
 					<div class="card" style="width: 400px; padding=15px">
 						<div class="card-divider">
@@ -123,7 +178,7 @@
 						<div class="card-section">
 						  <a href="{{team.officialSiteUrl}}">Official Team Site</a>
 						  <br>
-						  <strong>{{team.venue.city}}, {{team.locationName}}</strong>
+						  <strong>Abbreviation:</strong>{{team.abbreviation}}
 						</div>
 						<div class="card-section">
               <br>
@@ -134,17 +189,17 @@
 						    <strong>Date:</strong> {{team.prevgame.gameDate.split('T')[0]}}
 						    <br>
 						    {% if team.prevgame.teams.away.score > team.prevgame.teams.home.score %}
-						    <span style="color:green">{{team.prevgame.teams.away.team.name}}</span> vs. <span style="color:red">{{team.prevgame.teams.home.team.name}}</span>
+						    <span style="text-align:center"><span style="color:green">{{team.prevgame.teams.away.team.name}}</span> vs. <span style="color:red">{{team.prevgame.teams.home.team.name}}</span></span>
 						    <br>
-						    <span style="color:green">{{team.prevgame.teams.away.score}}</span> - <span style="color:red">{{team.prevgame.teams.home.score}}</span>
+						    <span style="text-align:center"><span style="color:green">{{team.prevgame.teams.away.score}}</span> - <span style="color:red">{{team.prevgame.teams.home.score}}</span></span>
 						    {% elif team.prevgame.teams.away.score < team.prevgame.teams.home.score %}
-						    <span style="color:red">{{team.prevgame.teams.away.team.name}}</span> vs. <span style="color:green">{{team.prevgame.teams.home.team.name}}</span>
+						    <span style="text-align:center"><span style="color:red">{{team.prevgame.teams.away.team.name}}</span> vs. <span style="color:green">{{team.prevgame.teams.home.team.name}}</span></span>
 						    <br>
-						    <span style="color:red">{{team.prevgame.teams.away.score}}</span> - <span style="color:green">{{team.prevgame.teams.home.score}}</span>
+						    <span style="text-align:center"><span style="color:red">{{team.prevgame.teams.away.score}}</span> - <span style="color:green">{{team.prevgame.teams.home.score}}</span></span>
 						    {% else %}
-						    <span>{{team.prevgame.teams.away.team.name}}</span> vs. <span>{{team.prevgame.teams.home.team.name}}</span>
+						    <span style="text-align:center"><span>{{team.prevgame.teams.away.team.name}}</span> vs. <span>{{team.prevgame.teams.home.team.name}}</span></span>
 						    <br>
-						    <span>{{team.prevgame.teams.away.score}} - {{team.prevgame.teams.home.score}}</span>
+						    <span style="text-align:center">{{team.prevgame.teams.away.score}} - {{team.prevgame.teams.home.score}}</span>
 						    {% endif %}
 						 {% endif %}
              <h6><small>Next Game:</small></h6>
@@ -161,18 +216,9 @@
 					{% endfor %}
         </div>
 
-					<form action="/addsport" method="POST">
-						<label for="nhl_team">Select team to add to preferences:</label>
-						<select name="nhl_team">
-						  <option disabled selected>-- select a team --</option>
-						  {% for team in nhl_teams %}
-						  <option value="{{team.name}}">{{team.name}}</option>
-						  {% endfor %}
-						  <input type="submit" value="Submit" name="submit-butom">
-						</select>
-					</form>
+
 				{% else %}
-					<a href="/login">Login</a> to view and add preferences.
+					<a href="/login" class="button">Login</a> to view and add preferences.
 				{% endif %}
 
 
