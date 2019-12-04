@@ -46,7 +46,12 @@ def setup(c):
 				away text,
 				home_score integer,
 				away_score integer,
-				status text
+				status int
+				);""")
+	c.execute("""CREATE TABLE IF NOT EXISTS nfl_week(
+				datetime text,
+				weekday int,
+				week int
 				);""")
 	resetbusiness(c)
 	resetnews(c)
