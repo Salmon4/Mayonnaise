@@ -140,7 +140,8 @@ wanA -- 2019-12-2 22:54
 Added correct cities and deleted invalid locations. 
 
 chenB -- 2019-12-3 19:05
-Changed colors of some callouts. Replaced image with gif. Added background color. Drew and uploaded flag.
+Changed colors of some callouts. Replaced image with gif. Added background color. Drew and uploaded flag. Fixed design doc to be more
+accurate and uploaded it.
 
 Team -- 2019-11-20
 Actions we will take to improve based on the assigned reading:
