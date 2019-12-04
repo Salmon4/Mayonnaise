@@ -259,8 +259,11 @@ def account():
         username = session['username']
         loggedIn = True
         newsPrefs = dbfunctions.getUserPrefs(c,username,"news")
+        NHL_teams = dbfunctions.getUserPrefs(c,username,"nhl_team")
+        NFL_teams = dbfunctions.getUserPrefs(c,username,"nfl_team")
         print(newsPrefs)
-        return render_template("account.html", login = True, user = username, news = newsPrefs)
+        print(NHL_teams)
+        return render_template("account.html", login = True, user = username, news = newsPrefs, NHLteams = NHL_teams, NFLteams = NFL_teams)
     else:
         #user will be prompted to log in if desired
         loggedIn = False
