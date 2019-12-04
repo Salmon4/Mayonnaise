@@ -33,12 +33,9 @@ def getNHLUserTeamData(c, username, userteams, teamsdata):
 #retreives scores from today, adds them to databse if today's data is incomplete
 # only adds 4 scores to database
 def getNHLTodayScores(c):
-    # c.execute("INSERT INTO nhl_scores VALUES(?, ?, ?, ?, ?)", ("s", 2, "d", "d", 1, 2))
     c.execute("SELECT * FROM nhl_scores;")
     scores = c.fetchall()
-    #print(len(scores))
     #delete data from table if it's outdated:
-    # if len(scores) > 0 && scores[0][0].split("T")[0] != date:
     if len(scores) > 0 and scores[0][0] != date:
         c.execute("DELETE FROM nhl_scores;")
     #api data:
@@ -47,8 +44,7 @@ def getNHLTodayScores(c):
     data = json.loads(response)
     data = data['dates'][0]['games']
     #only add to database if database is missing info
-    #print(data)
-
+    #re-get nhl_scores in case they were reset
     c.execute("SELECT * FROM nhl_scores;")
     scores = c.fetchall()
 
@@ -69,7 +65,8 @@ def getNHLTodayScores(c):
                     alreadyAdded = True
                     if tuple[6].__contains__("In Progress") or tuple[6].__contains__("Scheduled"):
                         c.execute("UPDATE nhl_scores SET home_score = ?, away_score = ?, status = ? WHERE gameID = ? ", (game['teams']['home']['score'], game['teams']['away']['score'], game['status']['detailedState'], gamePk))
-                    #if game is already in table, but was in progress/not started before, update:
+                    #^if game is already in table, but was in progress/not started before, update:
+            #add to table if hasn't been added yet
             if not alreadyAdded:
                 c.execute("INSERT INTO nhl_scores VALUES (?, ?, ?, ?, ?, ?, ?)", (date, gamePk, game['teams']['home']['team']['name'],  game['teams']['away']['team']['name'], game['teams']['home']['score'], game['teams']['away']['score'], game['status']['detailedState']))
     #by nowthe table is updated, so return data from the table.
@@ -90,6 +87,7 @@ def addMostRecentGame(teamdata):
         response = u.read()
         data = json.loads(response)
         #print(data)
+        #only add game if team has played games this szn
         if "previousGameSchedule" in data['teams'][0]:
             teamdata[i]['prevgame'] = data['teams'][0]['previousGameSchedule']['dates'][0]['games'][0]
         else:
@@ -153,13 +151,14 @@ def getNBAToday(c):
     scores = c.fetchall()
     return scores
 #--------------NFL-------------------------------------------------------------------------------
-#gets all teams
+#gets all teams as well data for each one
 def getNFLTeams():
     u = urlopen("https://api.sportsdata.io/v3/nfl/scores/json/Teams?key=e02ffffce823403aa4fc815b9aa7f667")
     response = u.read()
     data = json.loads(response)
     return data
 
+#returns a list of teams user has added to preferences (converts from list of tuples to list)
 def getNFLTeamsList(c, username):
     teams = dbfunctions.getUserPrefs(c, username, "nfl_team")
     if teams is None:
@@ -173,7 +172,7 @@ def getNFLTeamsList(c, username):
 def getNFLTeamsNotAdded(c, username, teams):
     userteams = getNFLTeamsList(c, username)
     teams[:] = [team for team in teams if team['FullName'] not in userteams]
-    
+
     return teams
 
 #gets all players on a given team
@@ -225,13 +224,7 @@ def getNFLToday(c):
     c.execute("SELECT * FROM nfl_scores;")
     scores = c.fetchall()
 
-    # u = urlopen("https://api.sportsdata.io/v3/nfl/scores/json/CurrentWeek?key=e02ffffce823403aa4fc815b9aa7f667")
-    # response = u.read()
-    # data = json.loads(response)
-    # week = int(data)
-    #print(len(scores))
     #delete data from table if it's outdated:
-    # if len(scores) > 0 && scores[0][0].split("T")[0] != date:
     if len(scores) > 0 and scores[0][0] != date:
         c.execute("DELETE FROM nfl_scores;")
         c.execute("SELECT * FROM nfl_scores;")
@@ -261,9 +254,10 @@ def getNFLToday(c):
                     # print(tuple)
                     if gameID in tuple:
                         alreadyAdded = True
+                        #if game is already in table, but was in progress/not started before, update:
                         if tuple[6] == 0:
                             c.execute("UPDATE nhl_scores SET home_score = ?, away_score = ?, status = ? WHERE gameID = ?", (game['Score'], game['OpponentScore'], game['IsGameOver'], gameID))
-                        #if game is already in table, but was in progress/not started before, update:
+                #insert game if it hasn't already been added
                 if not alreadyAdded:
                     c.execute("INSERT INTO nfl_scores VALUES (?, ?, ?, ?, ?, ?, ?)", (date, gameID, game['Team'],  game['Opponent'], game['Score'], game['OpponentScore'], game['IsGameOver']))
     c.execute("SELECT * FROM nfl_scores;")
@@ -284,7 +278,7 @@ def getNFLTeamsAdded(c,username):
     out = []
 
     for team in teams:
-        team = team[1]
+        team = team[1] #team[1] is where the preference is stored
         for teamdata in data:
             if teamdata['Name'] == team:
                 out.append(teamdata)

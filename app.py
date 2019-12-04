@@ -289,23 +289,21 @@ def sports():
     u = urlopen("https://statsapi.web.nhl.com/api/v1/teams")
     response = u.read()
     data = json.loads(response)
-    #update nhl_today and nba_today tables and returns its data
+    #update nhl_today and nfl_today tables and returns its data
     #used to display scores for today (displayed even if not logged in)
     NHLtodayscores = sportsfunctions.getNHLTodayScores(c)
-    NBAtodayscores = sportsfunctions.getNBAToday(c)
+    #NBAtodayscores = sportsfunctions.getNBAToday(c)
     NFLtodayscores = sportsfunctions.getNFLToday(c)
     print(len(NFLtodayscores))
     print("today done")
-    #print(NBAtodayscores)
     db.commit()
-    #print(NHLtodayscores)
-    # username = session['username']
     if checkAuth():
         username = session['username']
         #gets a list of user's NHL team prefs
         nhl_userteams= sportsfunctions.getNHLTeamsAdded(c, username)
-        #allteams stores data on all nhl teams
+        #allteams stores data on all nhl/nfl teams
         nhl_allteams=data['teams']
+        nfl_allteams = sportsfunctions.getNFLTeams()
         #userteamsdata stores data only on NHL teams user has added to prefs
         #get general team data from api
         nhl_userteamsdata = sportsfunctions.getNHLUserTeamData(c, username,nhl_userteams, nhl_allteams)
@@ -313,15 +311,10 @@ def sports():
         nhl_userteamsdata = sportsfunctions.addMostRecentGame(nhl_userteamsdata)
         #add next game data
         nhl_userteamsdata = sportsfunctions.addNextGame(nhl_userteamsdata)
-        # print(userteamsdata)
-        #list of teams in dropdown = teams user has not added yet
-        nhlteamsnotadded= sportsfunctions.getNHLTeamsNotAdded(c, username, nhl_allteams)
-        # print(teamsnotadded)
-        print("nhl done")
-        nfl_allteams = sportsfunctions.getNFLTeams()
-        print("nfl all teams done")
         nfl_userteamsdata = sportsfunctions.getNFLTeamsAdded(c, username)
         print("nfl user teams done")
+        #list of teams in dropdown = teams user has not added yet
+        nhlteamsnotadded= sportsfunctions.getNHLTeamsNotAdded(c, username, nhl_allteams)
         nfl_teamsnotadded = sportsfunctions.getNFLTeamsNotAdded(c, username, nfl_allteams)
         return render_template("sports.html", loggedin=True, nhl_teams=nhlteamsnotadded, nhl_user_teams=nhl_userteams, nhl_user_team_data=nhl_userteamsdata, NHLtoday=NHLtodayscores, nfl_teams=nfl_allteams, NFLtoday=NFLtodayscores, nfl_user_team_data=nfl_userteamsdata, nfl_teams_not_added=nfl_teamsnotadded)
     else:
