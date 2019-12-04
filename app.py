@@ -318,7 +318,7 @@ def sports():
         nfl_teamsnotadded = sportsfunctions.getNFLTeamsNotAdded(c, username, nfl_allteams)
         return render_template("sports.html", loggedin=True, nhl_teams=nhlteamsnotadded, nhl_user_teams=nhl_userteams, nhl_user_team_data=nhl_userteamsdata, NHLtoday=NHLtodayscores, nfl_teams=nfl_allteams, NFLtoday=NFLtodayscores, nfl_user_team_data=nfl_userteamsdata, nfl_teams_not_added=nfl_teamsnotadded)
     else:
-        return render_template("sports.html", logeedin=False, NHLtoday=NHLtodayscores, NBAtoday=NBAtodayscores, NFLtoday=NFLtodayscores)
+        return render_template("sports.html", logeedin=False, NHLtoday=NHLtodayscores, NFLtoday=NFLtodayscores)
 
 @app.route("/dropdown")
 def dropdown():
