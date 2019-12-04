@@ -11,17 +11,37 @@
 {% if login %}
   <h3><center>Hello {{user}}!</center></h3><br><br>
   <br>
-  <h5><center>Your News Catergories</center></h5>
-  <br>
+  <h5><center><strong>Your News Catergories</strong></center></h5>
   {% for topic in news %}
-  <center>{{topic[0]}}</center>
+  <span><center>{{topic[0]}}</center>
   <form action="/removepreference/{{topic[0]}}">
       <center>
-      <input type="submit" name="Remove Preference" value="Remove" style="display: inline;">
+      <input type="submit" class = "alert button" name="Remove Preference" value="Remove" style="display: inline;">
       </center>
   </form>
-  <br>
+  </span>
   {% endfor %}
+  <br>
+  <h5><center><strong>Your Sports Preferences</strong></center></h5>
+  <h4><center><small>NFL Teams</small></center></h4>
+  {% for team in NFLteams %}
+  <center>{{team[0]}}</center>
+  <form action="/removepreference/{{team[0]}}">
+      <center>
+      <input type="submit" class="alert button" name="Remove Preference" value="Remove" style="display: inline;">
+      </center>
+  </form>
+  {% endfor %}
+  <h4><center><small>NHL Teams</small></center></h4>
+  {% for team in NHLteams %}
+  <center>{{team[0]}}</center>
+  <form action="/removepreference/{{team[0]}}">
+      <center>
+      <input type="submit" class="alert button" name="Remove Preference" value="Remove" style="display: inline;">
+      </center>
+  </form>
+  {% endfor %}
+
   <br>
   <form action="/logout">
     <input type="submit" name="Log Out" value="Log Out">
