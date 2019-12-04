@@ -23,9 +23,12 @@
       <form action="/changeLocation" method="POST">
         <div style="width:20%">
         <select name="location">
-          <option disabled selected>{{location}}</option>
           {% for place in allL %}
-            <option value="{{allL.get(place)}}">{{place}}</option>
+            {% if place == location %}
+              <option value="{{allL.get(place)}}" selected>{{place}}</option>
+            {% else %}
+              <option value="{{allL.get(place)}}">{{place}}</option>
+            {% endif %}
           {% endfor %}
           <input type="submit" value="Submit" name="submit-butom">
         </select>
