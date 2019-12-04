@@ -47,21 +47,30 @@ def getNHLTodayScores(c):
     data = data['dates'][0]['games']
     #only add to database if database is missing info
     #print(data)
-    if len(scores) < 3:
-        for game in data:
-            gamePk = game['gamePk']
-            # print(gamePk)
-            #check if this gamePk is already in the table
-            if len(scores) == 0:
-                c.execute("INSERT INTO nhl_scores VALUES (?, ?, ?, ?, ?, ?, ?)", (date, gamePk, game['teams']['home']['team']['name'],  game['teams']['away']['team']['name'], game['teams']['home']['score'], game['teams']['away']['score'], game['status']['detailedState']))
-            else:
-                for tuple in scores:
-                    # print(tuple)
-                    if gamePk not in tuple:
-                        c.execute("INSERT INTO nhl_scores VALUES (?, ?, ?, ?, ?, ?, ?)", (date, gamePk, game['teams']['home']['team']['name'],  game['teams']['away']['team']['name'], game['teams']['home']['score'], game['teams']['away']['score'], game['status']['detailedState']))
+
+    c.execute("SELECT * FROM nhl_scores;")
+    scores = c.fetchall()
+
+    alreadyAdded = False
+
+    for game in data:
+        gamePk = game['gamePk']
+        # print(gamePk)
+        #check if this gamePk is already in the table
+        if len(scores) == 0:
+            c.execute("INSERT INTO nhl_scores VALUES (?, ?, ?, ?, ?, ?, ?)", (date, gamePk, game['teams']['home']['team']['name'],  game['teams']['away']['team']['name'], game['teams']['home']['score'], game['teams']['away']['score'], game['status']['detailedState']))
+
+        else:
+            alreadyAdded = False
+            for tuple in scores:
+                # print(tuple)
+                if gamePk in tuple:
+                    alreadyAdded = True
+                    if tuple[6].__contains__("In Progress") or tuple[6].__contains__("Scheduled"):
+                        c.execute("UPDATE nhl_scores SET home_score = ?, away_score = ?, status = ? WHERE gameID = ? ", (game['teams']['home']['score'], game['teams']['away']['score'], game['status']['detailedState'], gamePk))
                     #if game is already in table, but was in progress/not started before, update:
-                    elif game[6].__contains__("In Progress") or game[6].__contains__("Scheduled"):
-                        c.execute("UPDATE nhl_scores SET home_score = ?, away_score = ?, status = ? WHERE gamePk = ? ", (game['teams']['home']['score'], game['teams']['away']['score'], game['status']['detailedState'], gamePk))
+            if not alreadyAdded:
+                c.execute("INSERT INTO nhl_scores VALUES (?, ?, ?, ?, ?, ?, ?)", (date, gamePk, game['teams']['home']['team']['name'],  game['teams']['away']['team']['name'], game['teams']['home']['score'], game['teams']['away']['score'], game['status']['detailedState']))
     #by nowthe table is updated, so return data from the table.
     c.execute("SELECT * FROM nhl_scores;")
     scores = c.fetchall()
@@ -158,3 +167,42 @@ def getNFLPlayers(teamname):
     return data
 
 #gets current standings (top 3 teams)
+def getNFLStandings():
+    return 0
+
+#updates nfl_scores database, returns data from table
+def getNFLToday(c):
+    c.execute("SELECT * FROM nba_scores;")
+    scores = c.fetchall()
+    #print(len(scores))
+    #delete data from table if it's outdated:
+    # if len(scores) > 0 && scores[0][0].split("T")[0] != date:
+    if len(scores) > 0 and scores[0][0] != date:
+        c.execute("DELETE FROM nba_scores;")
+    u = urlopen("https://api.sportsdata.io/v3/nfl/scores/json/GameStats/"+datetime.date.today().year+"?key=e02ffffce823403aa4fc815b9aa7f667")
+    response = u.read()
+    data = json.loads(response)
+    print(data)
+    c.execute("SELECT * FROM nba_scores;")
+    scores = c.fetchall()
+    if len(scores) < 3:
+        for game in data:
+            gameID = game['id']
+            # print(gamePk)
+            #check if this gamePk is already in the table
+            if len(scores) == 0:
+                #print("len=0inserting")
+                c.execute("INSERT INTO nfl_scores VALUES (?, ?, ?, ?, ?, ?, ?)", (date, gameID, game['home_team']['full_name'],  game['visitor_team']['full_name'], game['home_team_score'], game['visitor_team_score'], game['status']))
+            else:
+                for tuple in scores:
+                    # print(tuple)
+                    if gameID not in tuple:
+                        #print("inserting")
+                        c.execute("INSERT INTO nba_scores VALUES (?, ?, ?, ?, ?, ?, ?)", (date, gameID, game['home_team']['full_name'],  game['visitor_team']['full_name'], game['home_team_score'], game['visitor_team_score'], game['status']))
+                    #if game is already in table, but was in progress/not started before, update:
+                    elif game[6] != "Final":
+                        c.execute("UPDATE nba_scores SET home_score = ?, away_score = ?, status = ? WHERE gameID = ? ", (game['home_team_score'], game['visitor_team_score'], game['status'], gameID))
+    #by nowthe table is updated, so return data from the table.
+    c.execute("SELECT * FROM nba_scores;")
+    scores = c.fetchall()
+    return scores
