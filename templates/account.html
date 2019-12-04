@@ -3,13 +3,15 @@
 {% endblock %}
 
 {% block body %}
+<center>
 {% if login %}
-  Hello {{user}}!<br><br>
+  <h3><center>Hello {{user}}!</center></h3><br><br>
   <form action="/logout">
-    <input type="submit" name="Log Out" value="LogOut">
+    <input type="submit" name="Log Out" value="Log Out">
+
   </form>
 {% else %}
-  Hello stranger!
+  <h3><center>Hello stranger!</center></h3>
   <div class="grid-x grid-padding-x">
     <div class="large-6 medium-6 cell">
       <div class="primary callout">
@@ -27,5 +29,6 @@
     </div>
   </div>
 {% endif %}
-
+</center>
+<br>
 {% endblock %}
