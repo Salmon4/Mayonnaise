@@ -3,11 +3,29 @@
 {% endblock %}
 
 {% block body %}
+{% for msg in get_flashed_messages() %}
+    <p>{{msg}}</p>
+    <br>
+{% endfor %}
 {% if login %}
   Hello {{user}}!<br><br>
+  <br>
+  <h5><center>Your News Catergories</center></h5>
+  <br>
+  {% for topic in news %}
+  <center>{{topic[0]}}</center>
+  <form action="/removepreference/{{topic[0]}}">
+      <center>
+      <input type="submit" name="Remove Preference" value="Remove" style="display: inline;">
+      </center>
+  </form>
+  <br>
+  {% endfor %}
+  <br>
   <form action="/logout">
     <input type="submit" name="Log Out" value="LogOut">
   </form>
+
 {% else %}
   Hello stranger!
   <div class="grid-x grid-padding-x">

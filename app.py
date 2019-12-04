@@ -261,11 +261,21 @@ def account():
     if (checkAuth()): #checks if logged in
         username = session['username']
         loggedIn = True
-        return render_template("account.html", login = True, user = username)
+        newsPrefs = dbfunctions.getUserPrefs(c,username,"news")
+        print(newsPrefs)
+        return render_template("account.html", login = True, user = username, news = newsPrefs)
     else:
         #user will be prompted to log in if desired
         loggedIn = False
         return render_template("account.html", login = False)
+
+@app.route("/removepreference/<pref>")
+def remove(pref):
+    if (checkAuth()):
+        username = session['username']
+        dbfunctions.removePref(c,username,pref)
+        flash("Removed " + pref + " from Preferences")
+    return redirect(url_for('account'))
 
 @app.route("/logout") #to log the user out of his account
 def logout():

@@ -341,3 +341,6 @@ def getUserPrefs(c, username, pref_area): #gets all rows of the specified user w
 
 def updatePref(c , username, pref_area, pref): #updates prefence row of specified area with the new preference of the user
 	c.execute("UPDATE "+username+" SET preference = '"+pref+"' WHERE area = ?", (pref_area,))
+
+def removePref(c,username,pref):
+	c.execute("DELETE FROM " +username+ " WHERE preference = ?",(pref,))
