@@ -10,9 +10,12 @@
     <form action="/changeBase/{{a}}" method="POST">
       <div style="width:20%">
       <select name="base">
-        <option disabled selected>{{b[0]}}</option>
         {% for currency in d %}
-          <option value="{{currency}}">{{currency}}</option>
+          {% if currency == b[0] %}
+            <option value="{{currency}}" selected>{{currency}}</option>
+          {% else %}
+            <option value="{{currency}}">{{currency}}</option>
+          {% endif %}
         {% endfor %}
         <input type="submit" value="Submit" name="submit-butom">
       </select>

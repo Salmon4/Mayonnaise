@@ -19,7 +19,6 @@ c.execute("drop table nfl_scores;")
 dbfunctions.setup(c)
 
 def checkAuth(): #checks if the user is logged in
-    print(session)
     if "userID" in session:
         return True
     else:
@@ -46,7 +45,6 @@ def logOut(): #logs out the user and redirects to login page
 
 @app.route("/register", methods=["POST"])
 def register():
-    print(request)
     if request.method == "POST":
         username = request.form['username']
         password = request.form['password']
@@ -134,7 +132,6 @@ def usernews():
     types = ['business','health','general','science','technology','sports','entertainment'] #all the categories of news
     yourPrefs = dbfunctions.getUserPrefs(c,user,'news')
     news = []
-    print(yourPrefs)
     for pref in yourPrefs:
         if (pref != []):
             pref = pref[0]
@@ -231,7 +228,6 @@ def money(amount):
         exchangeResponse = exchangeUrl.read()
         base = json.loads(exchangeResponse)['base']
         allData = json.loads(exchangeResponse)['rates']
-        print(amount)
         am = float(amount)
         if (checkAuth()): #different variables get pass to money.html so it will know what to display based on whether user is logged in
             tableBase2 = dbfunctions.getUserPrefs(c, session['username'], "base_currency") #chosen base currency is stored in table for later use
@@ -262,15 +258,24 @@ def account():
     if (checkAuth()): #checks if logged in
         username = session['username']
         loggedIn = True
-        return render_template("account.html", login = True, user = username)
+        newsPrefs = dbfunctions.getUserPrefs(c,username,"news")
+        print(newsPrefs)
+        return render_template("account.html", login = True, user = username, news = newsPrefs)
     else:
         #user will be prompted to log in if desired
         loggedIn = False
         return render_template("account.html", login = False)
 
+@app.route("/removepreference/<pref>")
+def remove(pref):
+    if (checkAuth()):
+        username = session['username']
+        dbfunctions.removePref(c,username,pref)
+        flash("Removed " + pref + " from Preferences")
+    return redirect(url_for('account'))
+
 @app.route("/logout") #to log the user out of his account
 def logout():
-    print(session)
     session.pop('userID')
     session.pop('username')
     return redirect(url_for('root'))
