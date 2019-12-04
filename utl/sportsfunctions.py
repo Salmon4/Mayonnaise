@@ -153,7 +153,7 @@ def getNBAToday(c):
 #--------------NFL-------------------------------------------------------------------------------
 #gets all teams as well data for each one
 def getNFLTeams():
-    u = urlopen("https://api.sportsdata.io/v3/nfl/scores/json/Teams?key=e02ffffce823403aa4fc815b9aa7f667")
+    u = urlopen("https://api.sportsdata.io/v3/nfl/scores/json/Teams?key=a5f39026df8640e18f44f1b0c8e0685f")
     response = u.read()
     data = json.loads(response)
     return data
@@ -178,7 +178,7 @@ def getNFLTeamsNotAdded(c, username, teams):
 #gets all players on a given team
 #teamname = its abbreviation
 def getNFLPlayers(teamname):
-    u = urlopen("https://api.sportsdata.io/v3/nfl/scores/json/Players/"+teamname+"?key=e02ffffce823403aa4fc815b9aa7f667")
+    u = urlopen("https://api.sportsdata.io/v3/nfl/scores/json/Players/"+teamname+"?key=a5f39026df8640e18f44f1b0c8e0685f")
     response = u.read()
     data = json.loads(response)
     return data
@@ -195,7 +195,7 @@ def getNFLWeek(c):
     date = d.strftime('%Y-%m-%d')
     if len(week) == 0:
         print("updating season week")
-        u = urlopen("https://api.sportsdata.io/v3/nfl/scores/json/CurrentWeek?key=e02ffffce823403aa4fc815b9aa7f667")
+        u = urlopen("https://api.sportsdata.io/v3/nfl/scores/json/CurrentWeek?key=a5f39026df8640e18f44f1b0c8e0685f")
         response = u.read()
         data = json.loads(response)
         week = int(data)
@@ -209,7 +209,7 @@ def getNFLWeek(c):
     diff = today - last_updated
     if diff > 7 or (datetime.datetime.today().weekday() == 0 and week[0][0] != date):
         print("updating season week")
-        u = urlopen("https://api.sportsdata.io/v3/nfl/scores/json/CurrentWeek?key=e02ffffce823403aa4fc815b9aa7f667")
+        u = urlopen("https://api.sportsdata.io/v3/nfl/scores/json/CurrentWeek?key=a5f39026df8640e18f44f1b0c8e0685f")
         response = u.read()
         data = json.loads(response)
         week = int(data)
@@ -229,8 +229,15 @@ def getNFLToday(c):
         c.execute("DELETE FROM nfl_scores;")
         c.execute("SELECT * FROM nfl_scores;")
         scores = c.fetchall()
+
     #api data:
-    u = urlopen("https://api.sportsdata.io/v3/nfl/scores/json/TeamGameStats/2019/"+"13"+"?key=e02ffffce823403aa4fc815b9aa7f667")
+    #first get season week #:
+    u = urlopen("https://api.sportsdata.io/v3/nfl/scores/json/CurrentWeek?key=a5f39026df8640e18f44f1b0c8e0685f")
+    response = u.read()
+    data = json.loads(response)
+    week = int(data)
+    #get team stats
+    u = urlopen("https://api.sportsdata.io/v3/nfl/scores/json/TeamGameStats/2019/"+str(week)+"?key=a5f39026df8640e18f44f1b0c8e0685f")
     response = u.read()
     data = json.loads(response)
     #only add to database if database is missing info
@@ -271,7 +278,7 @@ def getNFLTeamsAdded(c,username):
     c.execute("SELECT * FROM "+username+" WHERE area = 'nfl_team'")
     teams = c.fetchall()
 
-    u = urlopen("https://api.sportsdata.io/v3/nfl/scores/json/Standings/2019?key=e02ffffce823403aa4fc815b9aa7f667")
+    u = urlopen("https://api.sportsdata.io/v3/nfl/scores/json/Standings/2019?key=a5f39026df8640e18f44f1b0c8e0685f")
     response = u.read()
     data = json.loads(response)
 
