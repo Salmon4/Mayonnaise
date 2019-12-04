@@ -15,6 +15,7 @@ DB_FILE = "mayonnaise.db"
 db = sqlite3.connect(DB_FILE, check_same_thread=False) #open if file exists, otherwise create
 c = db.cursor() #facilitate db operations
 
+c.execute("drop table nfl_scores;")
 dbfunctions.setup(c)
 
 def checkAuth(): #checks if the user is logged in
@@ -284,6 +285,9 @@ def sports():
     #used to display scores for today (displayed even if not logged in)
     NHLtodayscores = sportsfunctions.getNHLTodayScores(c)
     NBAtodayscores = sportsfunctions.getNBAToday(c)
+    NFLtodayscores = sportsfunctions.getNFLToday(c)
+    print(len(NFLtodayscores))
+    print("today done")
     #print(NBAtodayscores)
     db.commit()
     #print(NHLtodayscores)
@@ -291,24 +295,29 @@ def sports():
     if checkAuth():
         username = session['username']
         #gets a list of user's NHL team prefs
-        nhl_userteams= sportsfunctions.getTeamsAdded(c, username)
+        nhl_userteams= sportsfunctions.getNHLTeamsAdded(c, username)
         #allteams stores data on all nhl teams
         nhl_allteams=data['teams']
         #userteamsdata stores data only on NHL teams user has added to prefs
         #get general team data from api
-        nhl_userteamsdata = sportsfunctions.getUserTeamData(c, username,nhl_userteams, nhl_allteams)
+        nhl_userteamsdata = sportsfunctions.getNHLUserTeamData(c, username,nhl_userteams, nhl_allteams)
         #add most recent game data
         nhl_userteamsdata = sportsfunctions.addMostRecentGame(nhl_userteamsdata)
         #add next game data
         nhl_userteamsdata = sportsfunctions.addNextGame(nhl_userteamsdata)
         # print(userteamsdata)
         #list of teams in dropdown = teams user has not added yet
-        nhlteamsnotadded= sportsfunctions.getTeamsNotAdded(c, username, nhl_allteams)
+        nhlteamsnotadded= sportsfunctions.getNHLTeamsNotAdded(c, username, nhl_allteams)
         # print(teamsnotadded)
+        print("nhl done")
         nfl_allteams = sportsfunctions.getNFLTeams()
-        return render_template("sports.html", loggedin=True, nhl_teams=nhlteamsnotadded, nhl_user_teams=nhl_userteams, nhl_user_team_data=nhl_userteamsdata, NHLtoday=NHLtodayscores, nfl_teams=nfl_allteams, NBAtoday=NBAtodayscores)
+        print("nfl all teams done")
+        nfl_userteamsdata = sportsfunctions.getNFLTeamsAdded(c, username)
+        print("nfl user teams done")
+        nfl_teamsnotadded = sportsfunctions.getNFLTeamsNotAdded(c, username, nfl_allteams)
+        return render_template("sports.html", loggedin=True, nhl_teams=nhlteamsnotadded, nhl_user_teams=nhl_userteams, nhl_user_team_data=nhl_userteamsdata, NHLtoday=NHLtodayscores, nfl_teams=nfl_allteams, NFLtoday=NFLtodayscores, nfl_user_team_data=nfl_userteamsdata, nfl_teams_not_added=nfl_teamsnotadded)
     else:
-        return render_template("sports.html", logeedin=False, NHLtoday=NHLtodayscores, NBAtoday=NBAtodayscores)
+        return render_template("sports.html", logeedin=False, NHLtoday=NHLtodayscores, NBAtoday=NBAtodayscores, NFLtoday=NFLtodayscores)
 
 @app.route("/dropdown")
 def dropdown():
